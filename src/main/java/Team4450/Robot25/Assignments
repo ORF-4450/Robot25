@@ -1,0 +1,138 @@
+Port and Button Assignments.
+
+CTRE CAN Ports
+Port	Device			Description
+-----------------------------------------------------------------------------------
+21      CANdle          The CTRE CANdle LED controller
+
+SparkMax CAN Ports
+Port	Device			Description
+-----------------------------------------------------------------------------------
+1       SparkFlex       FL drive motor.
+2       SparkMax        FL steer motor.
+3       SparkFlex       FR drive motor.
+4       SparkMax        FR steer motor.
+5       SparkFlex       RL drive motor.
+6       SparkMax        RL steer motor.
+7       SparkFlex       RR drive motor.
+8       SparkMax        RR steer motor.
+
+
+SparkMax CAN Limit Switches (Plugged into the controllers)
+Port    Type            Description
+-----------------------------------------------------------------------------------
+13      Forward         QMRN Beam Break note sensor for shooter.
+
+
+PWM Ports
+Port	Device			Description
+-----------------------------------------------------------------------------------
+
+
+PDP Ports
+Port	Device			Description
+-----------------------------------------------------------------------------------
+20      REV PDH         REV power distribution Hub.
+20      CTRE PDB        CTRE distribution board.
+
+
+PCM 0 Ports
+Port	Device blk-pos	Description
+-----------------------------------------------------------------------------------
+       
+
+PCM 1 Ports
+Port	Device blk-pos	Description
+-----------------------------------------------------------------------------------
+
+
+Digital I/O Ports
+Port	Device			Description
+-----------------------------------------------------------------------------------
+
+
+Analog I/O Ports
+Port	Device			Description
+-----------------------------------------------------------------------------------
+
+
+Driver GamePad - Left Joystick
+Button Name				Function
+-----------------------------------------------------------------------------------
+Y Axis					Forward/Backward driving.
+X Axis                  Left/Right strafe (sideways movement).
+
+
+Driver GamePad - Right Joystick
+Button Name				Function
+-----------------------------------------------------------------------------------
+X Axis                  Rotate.
+
+
+Driver GamePad - Buttons
+Button Name				Function
+-----------------------------------------------------------------------------------
+LEFT_TRIGGER            
+RIGHT_TRIGGER           
+LEFT_BUMPER             Slow Mode (hold)
+RIGHT_BUMPER            Alternate Rotation (hold + R Stick)
+POV_0
+POV_90                   
+POV_180
+POV_270                 
+BACK                    Toggle Field Relative
+START                   Reset Gyro
+A                       
+B                       [reserved]
+X                       Park Wheels
+Y                       
+
+
+Utility GamePad - Left Joystick
+Button Name				Function
+-----------------------------------------------------------------------------------
+
+
+Utility GamePad - Right Joystick
+Button Name				Function
+-----------------------------------------------------------------------------------
+
+
+Utility GamePad - Buttons
+Button Name				Function
+-----------------------------------------------------------------------------------
+A                       
+B                       
+X                       
+Y                       
+LEFT_TRIGGER            
+RIGHT_TRIGGER           
+LEFT_BUMPER             
+RIGHT_BUMPER            
+BACK                    
+POV_0                   
+POV_90                  
+POV_180                 
+POV_270                 
+
+
+Dashboard Indicators/Controls
+Name					Type			Description
+-----------------------------------------------------------------------------------
+AutoTarget				boolean			True when targeting code is running.
+TargetLocked			boolean			True when targeting completed with target
+                                        detected.
+Disabled				boolean			True when robot is disabled.
+Auto Mode				boolean			True when robot is in autonomous mode.
+Teleop Mode				boolean			True when robot is in teleop mode.
+FMS						boolean			True when robot is connected to the FMS.
+Brakes					boolean			True when drive motors are in brake mode.
+Low Battery				boolean			True when battery is low.
+Overload				boolean			True when brownout has occurred.
+Auto Program            Chooser         List of autonomous programs.
+Autonomous active       boolean         True if any auto program is active.
+Field Oriented          boolean         True when swerve drive is in field orientation mode.
+Alternate Drive         boolean         True when alternate driving mode is enabled.
+
+Drive Base gearbox ratios: MaxSwerve 12 tooth pinion for approx 16.1 f/s or 4.9 m/s.
+
