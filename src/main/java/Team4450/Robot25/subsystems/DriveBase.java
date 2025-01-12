@@ -86,7 +86,6 @@ public class DriveBase extends SubsystemBase {
   // the REV swerve code example this class is based on. Yes, its confusing.
   private final AHRS    navx = RobotContainer.navx.getAHRS();
 
-  //rich private SimDouble     simAngle; // navx sim.
   private double        simAngle; // used to drive navx sim.
 
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
@@ -906,35 +905,6 @@ public class DriveBase extends SubsystemBase {
             this // Reference to this subsystem to set requirements
     );
   }
-
-    // 2024 code:
-    //rich AutoBuilder.configureHolonomic(
-    //   this::getPosePP, // Robot pose supplier
-    //   this::resetOdometryPP, // Method to reset odometry (will be called if your auto has a starting pose)
-    //   this::getChassisSpeedsPP, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-    //   this::driveChassisSpeedsPP, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-    //   new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-    //           new PIDConstants(AutoConstants.kHolonomicPathFollowerP, 0.0, 0.0), // Translation PID constants
-    //           rotPID, // Rotation PID constants
-    //           DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
-    //           DriveConstants.kDriveBaseRadius, // Drive base radius in meters. Distance from robot center to furthest module.
-
-    //           // below tells PP "don't do any random moving without explicit instructions": will probably change in future
-    //           // new ReplanningConfig(false, false)
-    //           new ReplanningConfig(true, false)
-    //   ),
-    //   () -> {
-    //       // Boolean supplier that controls when the path will be mirrored for the red alliance
-    //       // This will flip the path being followed to the red side of the field.
-    //       // THE ORIGIN WILL REMAIN ON THE BLUE SIDE.
- 
-    //       var alliance = Constants.alliance;
-          
-    //       return alliance == DriverStation.Alliance.Red;
-    //   },
-    //   this // Reference to this subsystem to set requirements
-//    );
-//  }
 
   /**
    * Returns an Optional value of the desired rotation (yaw) to override PathPlanner,

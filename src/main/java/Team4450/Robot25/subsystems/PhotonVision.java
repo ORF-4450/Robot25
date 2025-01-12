@@ -53,7 +53,7 @@ public class PhotonVision extends SubsystemBase
     private Field2d                 field = new Field2d();
 
     // change the field layout for other years!
-    private final AprilTagFields    fields = AprilTagFields.k2024Crescendo; //rich change for 2025.
+    private final AprilTagFields    fields = AprilTagFields.k2025Reefscape; 
     private AprilTagFieldLayout     fieldLayout;
     private PhotonPoseEstimator     poseEstimator;
 
@@ -88,7 +88,6 @@ public class PhotonVision extends SubsystemBase
         camera = new PhotonCamera(cameraName);
         this.robotToCam = robotToCam;
         fieldLayout = AprilTagFieldLayout.loadField(fields);
-        //richfieldLayout = fields.loadAprilTagLayoutField();
 
         // adds a simulated camera to the vision sim: "real" camera will
         // act just like normal on real robot and in sim! ask cole on slack if this isn't working
@@ -154,17 +153,6 @@ public class PhotonVision extends SubsystemBase
             
             case OBJECT_TRACKING:
                 // approximate coordinates of on-field game pieces
-                addNoteSimTarget(2.9, 7, 0);
-                addNoteSimTarget(2.9, 5.6, 1);
-                addNoteSimTarget(2.9, 4.1, 2);
-                addNoteSimTarget(8.3, 7.5, 3);
-                addNoteSimTarget(8.3, 5.8, 4);
-                addNoteSimTarget(8.3, 4.1, 5);
-                addNoteSimTarget(8.3, 2.4, 6);
-                addNoteSimTarget(8.3, 0.75, 7);
-                addNoteSimTarget(13.65, 7, 8);
-                addNoteSimTarget(13.65, 5.6, 9);
-                addNoteSimTarget(13.65, 4.1, 10);
                 // test note:
                 // addNoteSimTarget(5, 5, 10);
                 break;

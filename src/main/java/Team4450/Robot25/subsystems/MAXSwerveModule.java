@@ -79,8 +79,6 @@ public class MAXSwerveModule implements Sendable {
     // them. This is useful in case a SPARK controller is swapped out.
     drivingSparkFlex.configure(drivingConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     turningSparkMax.configure(turningConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    //richdrivingSparkFlex.restoreFactoryDefaults();
-    //turningSparkMax.restoreFactoryDefaults();
 
     // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
     drivingEncoder = drivingSparkFlex.getEncoder();
@@ -92,40 +90,29 @@ public class MAXSwerveModule implements Sendable {
     turningConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
     turningPIDController = turningSparkMax.getClosedLoopController();
 
-    //richdrivingPIDController.setFeedbackDevice(drivingEncoder);
-    //turningPIDController.setFeedbackDevice(turningEncoder);
-
     // Apply position and velocity conversion factors for the driving encoder. The
     // native units for position and velocity are rotations and RPM, respectively,
     // but we want meters and meters per second to use with WPILib's swerve APIs.
     drivingConfig.encoder.positionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
     drivingConfig.encoder.velocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
-    //richdrivingEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
-    //drivingEncoder.setVelocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
 
     // Apply position and velocity conversion factors for the turning encoder. We
     // want these in radians and radians per second to use with WPILib's swerve
     // APIs.
     turningConfig.absoluteEncoder.positionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
     turningConfig.absoluteEncoder.velocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
-    //richturningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
-    //richturningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the MAXSwerve Module.
     turningConfig.absoluteEncoder.inverted(ModuleConstants.kTurningEncoderInverted);
-    //richturningEncoder.setInverted(ModuleConstants.kTurningEncoderInverted);
 
     // Enable PID wrap around for the turning motor. This will allow the PID
     // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
     // to 10 degrees will go through 0 rather than the other direction which is a
     // longer route.
     turningConfig.closedLoop.positionWrappingEnabled(true);
-    //richturningPIDController.setPositionPIDWrappingEnabled(true);
     turningConfig.closedLoop.positionWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
-    //richturningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
     turningConfig.closedLoop.positionWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
-    //richturningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
 
     // Set the PID gains for the driving motor. Note these are example gains, and you
     // may need to tune them for your own robot!
@@ -134,17 +121,9 @@ public class MAXSwerveModule implements Sendable {
                                   ModuleConstants.kDrivingD,
                                   ModuleConstants.kDrivingFF);
 
-    //rich drivingPIDController.setP(ModuleConstants.kDrivingP);   
-    // drivingPIDController.setI(ModuleConstants.kDrivingI);
-    // drivingPIDController.setD(ModuleConstants.kDrivingD);
-    // drivingPIDController.setFF(ModuleConstants.kDrivingFF);
-
     drivingConfig.closedLoop.outputRange(ModuleConstants.kDrivingMinOutput, 
                                          ModuleConstants.kDrivingMaxOutput);
     
-    //richdrivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
-    //                                    ModuleConstants.kDrivingMaxOutput);
-
     // Set the PID gains for the turning motor. Note these are example gains, and you
     // may need to tune them for your own robot!
     turningConfig.closedLoop.pidf(ModuleConstants.kTurningP,
@@ -152,43 +131,24 @@ public class MAXSwerveModule implements Sendable {
                                   ModuleConstants.kTurningD,
                                   ModuleConstants.kTurningFF);
 
-    //rich turningPIDController.setP(ModuleConstants.kTurningP);
-    // turningPIDController.setI(ModuleConstants.kTurningI);
-    // turningPIDController.setD(ModuleConstants.kTurningD);
-    // turningPIDController.setFF(ModuleConstants.kTurningFF);
-    
     turningConfig.closedLoop.outputRange(ModuleConstants.kTurningMinOutput, 
                                          ModuleConstants.kTurningMaxOutput);
 
-    //richturningPIDController.setOutputRange(ModuleConstants.kTurningMinOutput,
-    //                                    ModuleConstants.kTurningMaxOutput);
-
     drivingConfig.idleMode(ModuleConstants.kDrivingMotorIdleMode);
-    //richdrivingSparkFlex.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
     
     turningConfig.idleMode(ModuleConstants.kTurningMotorIdleMode);
-    //richturningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
     
     drivingConfig.smartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
-    //drivingSparkFlex.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
     
     turningConfig.smartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
-    //richturningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
     // Save the SPARK configurations. If a SPARK browns out during
     // operation, it will maintain the above configurations.
     drivingSparkFlex.configure(drivingConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    //richdrivingSparkFlex.burnFlash();
     turningSparkMax.configure(turningConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    //richturningSparkMax.burnFlash();
 
     this.chassisAngularOffset = chassisAngularOffset;
-    
-    //rich if (RobotBase.isSimulation())
-    //   desiredState.angle = new Rotation2d();
-    // else
-    //   desiredState.angle = new Rotation2d(turningEncoder.getPosition());
-    
+        
     drivingEncoder.setPosition(0);
     
     if (RobotBase.isSimulation()) 
@@ -199,10 +159,8 @@ public class MAXSwerveModule implements Sendable {
       // registering the motor controller with the REV sim is still needed.
 
       turningSim = new SparkSim(turningSparkMax, DCMotor.getNeo550(1));
-      //richREVPhysicsSim.getInstance().addSparkMax(turningSparkMax, DCMotor.getNeo550(1));
-
+  
       drivingSim = new SparkSim(drivingSparkFlex, DCMotor.getNeoVortex(1));
-      //richREVPhysicsSim.getInstance().addSparkMax(drivingSparkFlex, DCMotor.getNEO(1));
     }
   }
 
@@ -252,20 +210,12 @@ public class MAXSwerveModule implements Sendable {
    */
   public void setDesiredState(SwerveModuleState desiredState) {
     // Apply chassis angular offset to the desired state.
-    //richdesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
     desiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(chassisAngularOffset));
     
-    //rich SwerveModuleState correctedDesiredState = new SwerveModuleState();
-    // correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
-    // correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(chassisAngularOffset));
-
     //SmartDashboard.putNumber(moduleLocation + " desired speed", correctedDesiredState.speedMetersPerSecond);
 
     // Optimize the reference state to avoid spinning further than 90 degrees.
     desiredState.optimize(new Rotation2d(turningEncoder.getPosition()));
-
-    //richSwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
-    //    new Rotation2d(turningEncoder.getPosition()));
 
     // Command driving and turning SPARK controllers towards their respective setpoints.
     drivingPIDController.setReference(desiredState.speedMetersPerSecond, SparkMax.ControlType.kVelocity);
@@ -277,13 +227,6 @@ public class MAXSwerveModule implements Sendable {
 
     currentSimVelocity = desiredState.speedMetersPerSecond;
 
-    //rich drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, SparkMax.ControlType.kVelocity);
-    // turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), SparkMax.ControlType.kPosition);
-
-    // currentSimAngle = optimizedDesiredState.angle.getRadians();
-
-    // currentSimVelocity = optimizedDesiredState.speedMetersPerSecond;
-    
     double distancePer20Ms = currentSimVelocity / 50.0;
 
     currentSimPosition += distancePer20Ms;

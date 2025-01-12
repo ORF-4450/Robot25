@@ -223,17 +223,6 @@ public class RobotContainer
 									driverController.getRightXDS(),
 									driverController));
 
-		// up and down on left operator controller joystick pivots shooter assembly
-		// up and down on right operator controller joystick moves elevator assembly
-		
-		// new RunCommand(
-		// 	() -> driveBase.drive(
-		// 		-MathUtil.applyDeadband(driverController.getLeftY(), DRIVE_DEADBAND),
-		// 		-MathUtil.applyDeadband(driverController.getLeftX(), DRIVE_DEADBAND),
-		// 		-MathUtil.applyDeadband(driverController.getRightX(), DRIVE_DEADBAND),
-		// 		false),
-		// 	driveBase));
-
 		// Start the compressor, PDP and camera feed monitoring Tasks.
 
    		// monitorCompressorThread = MonitorCompressor.getInstance(pressureSensor);
