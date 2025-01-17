@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF25-01.11.25";
+	public static String		PROGRAM_NAME = "ORF25-01.16.25";
 
 	public static Robot			robot;
 
@@ -44,13 +44,13 @@ public final class Constants
 
     // CAMERAS 
 
-    public static Transform3d   CAMERA_SHOOTER_TRANSFORM = new Transform3d(
-        new Translation3d(0, 0, 0.5207), // change last value to height in METERS of lens
-        new Rotation3d(0, Math.toRadians(-10), Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
+    public static Transform3d   CAMERA_TAG_TRANSFORM = new Transform3d(
+        new Translation3d(0, 0.33, 0), // change last value to height in METERS of lens
+        new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
     // the names of the cameras in the PhotonVision software
-    public static String        CAMERA_SHOOTER = "Arducam_OV9281_USB_Camera (1)";
+    public static String        CAMERA_TAG = "HD_USB_Camera";
 
     public static final int     REV_PDB = 20;
     public static final int     CTRE_CANDLE = 21;
@@ -83,7 +83,7 @@ public final class Constants
         public static final double kMaxSpeedMetersPerSecond = 4.92;  // 1.0; Speed limited for demos.
         //public static final double kMaxSpeedMetersPerSecond = ModuleConstants.kDriveWheelFreeSpeedRps; // max speed
         public static final double kMaxAngularSpeed = 1.5 * (2 * Math.PI); // radians per second (1.5 rots / sec)
-        public static final double kSlowModeFactor = .50; // 50% of normal.
+        public static final double kSlowModeFactor = .30; // 50% of normal.
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.
@@ -94,13 +94,13 @@ public final class Constants
         // Chassis configuration:
 
         // Distance between centers of right and left wheels
-        public static final double kTrackWidth = Units.inchesToMeters(29);
+        public static final double kTrackWidth = Units.inchesToMeters(23.5);
 
         // Distance between front and back wheel centers
-        public static final double kWheelBase = Units.inchesToMeters(29);
+        public static final double kWheelBase = Units.inchesToMeters(23.5);
 
         // Drive base radius in meters. Distance from robot center to furthest module.
-        public static final double kDriveBaseRadius = .45;
+        public static final double kDriveBaseRadius = .42;
 
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),

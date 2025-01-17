@@ -10,6 +10,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import Team4450.Lib.CameraFeed;
 import Team4450.Lib.XboxController;
 import Team4450.Robot25.commands.DriveCommand;
+import Team4450.Robot25.commands.DriveToTag;
 import Team4450.Robot25.commands.PointToYaw;
 import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
@@ -52,7 +53,7 @@ public class RobotContainer
 
 	public static ShuffleBoard	shuffleBoard;
 	public static DriveBase 	driveBase;
-	public static PhotonVision	pvShooterCamera;
+	public static PhotonVision	pvTagCamera;
 	private Candle        		candle = null;
 	
 	// Subsystem Default Commands.
@@ -168,7 +169,7 @@ public class RobotContainer
 
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
-		pvShooterCamera = new PhotonVision(CAMERA_SHOOTER, PipelineType.POSE_ESTIMATION, CAMERA_SHOOTER_TRANSFORM);
+		pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
 
 		// if (RobotBase.isReal()) 
 		// {
@@ -355,6 +356,9 @@ public class RobotContainer
 		// toggle brake mode
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new InstantCommand(driveBase::toggleBrakeMode));
+
+		new Trigger(() -> driverController.getBButton())
+			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
 		
 		// -------- Utility pad buttons ----------
 		

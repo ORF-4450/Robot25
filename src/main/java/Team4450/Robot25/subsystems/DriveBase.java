@@ -784,8 +784,8 @@ public class DriveBase extends SubsystemBase {
   }
 
   /**
-   * Enables tracking: overrides the drive command's joystick rotation input
-   * and instead uses user provided values as emulated joystick input (to track to game peices or tags)
+   * Enables tracking: overrides the drive command's joystick translation & rotation input
+   * and instead uses user provided values as emulated joystick input (to track AprilTags)
    */
   public void enableTracking() {
     Util.consoleLog();
