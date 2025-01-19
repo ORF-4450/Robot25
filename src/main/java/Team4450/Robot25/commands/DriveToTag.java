@@ -19,7 +19,7 @@ import Team4450.Robot25.subsystems.DriveBase;
  */
 
 public class DriveToTag extends Command {
-    PIDController rotationController = new PIDController(0.008, 0, 0); // for rotating drivebase
+    PIDController rotationController = new PIDController(0.02, 0, 0); // for rotating drivebase
     PIDController translationController = new PIDController(0.02, 0, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
     PhotonVision photonVision;
@@ -48,11 +48,12 @@ public class DriveToTag extends Command {
         if(initialFieldRel)
             robotDrive.toggleFieldRelative();
         robotDrive.enableTracking();
+        robotDrive.enableTrackingSlowMode();
         
         rotationController.setSetpoint(0);
-        rotationController.setTolerance(1.5);
+        rotationController.setTolerance(0.5);
 
-        translationController.setSetpoint(-19); // target should be at -15 pitch
+        translationController.setSetpoint(-15); // target should be at -15 pitch
         translationController.setTolerance(0.5);
 
         SmartDashboard.putString("DriveToTag", "Tag Tracking Initialized");
@@ -92,6 +93,7 @@ public class DriveToTag extends Command {
         
         robotDrive.setTrackingRotation(Double.NaN);
         robotDrive.disableTracking();
+        robotDrive.disableTrackingSlowMode();
         robotDrive.clearPPRotationOverride();
 
         SmartDashboard.putString("DriveToTag", "Tag Tracking Ended");

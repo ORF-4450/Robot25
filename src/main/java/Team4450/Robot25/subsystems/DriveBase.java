@@ -833,6 +833,26 @@ public class DriveBase extends SubsystemBase {
     updateDS();
   }
 
+public void enableTrackingSlowMode(){
+
+  speedLimiter = DriveConstants.kTrackingModeFactor;
+  rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
+
+  Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+  updateDS();
+
+}
+
+public void disableTrackingSlowMode(){
+
+  Util.consoleLog();
+
+  speedLimiter = 1;
+  rotSpeedLimiter = 1;
+
+  updateDS();
+  
+}
   /**
    * Sets an override rotation joystick value for tracking to objects or tags. Must call enableTracking first!
    * Setting commandedRotation as NaN temporarily disables tracking without a call to disableTrackiing.

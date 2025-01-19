@@ -45,7 +45,7 @@ public final class Constants
     // CAMERAS 
 
     public static Transform3d   CAMERA_TAG_TRANSFORM = new Transform3d(
-        new Translation3d(0, 0.33, 0), // change last value to height in METERS of lens
+        new Translation3d(0, 0.33, 0.28), // change last value to height in METERS of lens
         new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
@@ -85,6 +85,10 @@ public final class Constants
         public static final double kMaxAngularSpeed = 1.5 * (2 * Math.PI); // radians per second (1.5 rots / sec)
         public static final double kSlowModeFactor = .30; // 50% of normal.
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
+        
+        //TrackingMode Speed:
+        public static final double kTrackingModeFactor = 0.40;
+        public static final double kRotTrackingModeFactor = 0.20;
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.
         public static final double kDirectionSlewRate = Double.POSITIVE_INFINITY; // radians per second.
