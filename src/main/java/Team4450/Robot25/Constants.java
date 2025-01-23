@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF25-01.11.25";
+	public static String		PROGRAM_NAME = "ORF25-01.20.25";
 
 	public static Robot			robot;
 
@@ -93,14 +93,14 @@ public final class Constants
 
         // Chassis configuration:
 
-        // Distance between centers of right and left wheels
-        public static final double kTrackWidth = Units.inchesToMeters(29);
+        // Distance between centers of right and left wheels in meters.
+        public static final double kTrackWidth = Units.inchesToMeters(23.5);
 
-        // Distance between front and back wheel centers
-        public static final double kWheelBase = Units.inchesToMeters(29);
+        // Distance between front and back wheel centersin meters.
+        public static final double kWheelBase = Units.inchesToMeters(23.5);
 
         // Drive base radius in meters. Distance from robot center to furthest module.
-        public static final double kDriveBaseRadius = .45;
+        public static final double kDriveBaseRadius = .42;
 
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),
