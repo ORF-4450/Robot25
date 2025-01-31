@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF25-01.16.25";
+	public static String		PROGRAM_NAME = "ORF25-01.30.25VR";
 
 	public static Robot			robot;
 
@@ -45,7 +45,7 @@ public final class Constants
     // CAMERAS 
 
     public static Transform3d   CAMERA_TAG_TRANSFORM = new Transform3d(
-        new Translation3d(0, 0.33, 0.28), // change last value to height in METERS of lens
+        new Translation3d(0, 0.32, 0.28), // change last value to height in METERS of lens
         new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
