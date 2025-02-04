@@ -64,7 +64,7 @@ public final class Constants
 	public static final int		ALGAE_EXTEND = 2;		
 	public static final int		ALGAE_PIVOT = 4;    
 
-    
+
     public static final double INTAKE_SPEED = 0.90;
     
     // CAMERAS 
@@ -84,11 +84,9 @@ public final class Constants
 	public static final int		DRIVER_PAD = 0, UTILITY_PAD = 1;
     public static final double  DRIVE_DEADBAND = 0.1, ROTATION_DEADBAND = .1;
 
-	// Pneumatic valve controller port assignments.
-	//public static final int		COMPRESSOR = 0;
 	  
 	// Analog Input port assignments.
-	
+	public static final int PRESSURE_SENSOR = 1;
 	// LCD display line number constants showing class where the line is set.
 	public static final int		LCD_1 = 1;	    // Robot, Auto Commands.
 	public static final int		LCD_2 = 2;	    // Swerve Drive command.
