@@ -7,8 +7,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import Team4450.Robot25.subsystems.PhotonVision;
 
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import Team4450.Robot25.Constants;
 import Team4450.Robot25.subsystems.DriveBase;
 
 
@@ -19,23 +23,32 @@ import Team4450.Robot25.subsystems.DriveBase;
  */
 
 public class DriveToTag extends Command {
-    PIDController rotationController = new PIDController(0.02, 0, 0); // for rotating drivebase
-    PIDController translationController = new PIDController(0.02, 0, 0); // for moving drivebase in X,Y plane
+    PIDController rotationController = new PIDController(0.02, 0.1, 0); // for rotating drivebase
+    PIDController translationControllerX = new PIDController(0.5, 0.2, 0); // for moving drivebase in X,Y plane
+    PIDController translationControllerY = new PIDController(0.5, 0.2, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
     PhotonVision photonVision;
+    private double targetRobotX;
+    private double targetRobotY;
+    private double targetRobotRot;
     private boolean alsoDrive;
     private boolean initialFieldRel;
     /**
      * @param robotDrive the drive subsystem
      */
-    public DriveToTag (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel) {
+
+    public DriveToTag (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel, double targetRobotX, double targetRobotY, double targetRobotRot) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
+        this.targetRobotX = targetRobotX;
+        this.targetRobotY = targetRobotY;
+        this.targetRobotRot = targetRobotRot;
 
         if (alsoDrive) addRequirements(robotDrive);
 
-        SendableRegistry.addLW(translationController, "DriveToTag Translation PID");
+        SendableRegistry.addLW(translationControllerX, "DriveToTag Translation PID");
+        SendableRegistry.addLW(translationControllerY, "DriveToTag Translation PID");
         SendableRegistry.addLW(rotationController, "DriveToTag Rotation PID");
     }
 
@@ -50,11 +63,15 @@ public class DriveToTag extends Command {
         robotDrive.enableTracking();
         robotDrive.enableTrackingSlowMode();
         
-        rotationController.setSetpoint(0);
+        rotationController.setSetpoint(targetRobotRot);
         rotationController.setTolerance(0.5);
 
-        translationController.setSetpoint(-15); // target should be at -15 pitch
-        translationController.setTolerance(0.5);
+        // translationControllerX.setSetpoint(-15); // target should be at -15 pitch
+        translationControllerX.setSetpoint(targetRobotX - Constants.xCameraOffset);
+        translationControllerX.setTolerance(0.5);
+
+        translationControllerY.setSetpoint(targetRobotY - Constants.yCameraOffset);
+        translationControllerY.setTolerance(0.5);
 
         SmartDashboard.putString("DriveToTag", "Tag Tracking Initialized");
     }
@@ -62,24 +79,57 @@ public class DriveToTag extends Command {
     @Override
     public void execute() {
       // logic for chosing "closest" target in PV subsystem
+    
+        Optional<EstimatedRobotPose> target = photonVision.getEstimatedPose();
 
-        PhotonTrackedTarget target = photonVision.getClosestTarget();
+        // PhotonTrackedTarget target = photonVision.getClosestTarget();
         
-        if (target == null) {
+        if (target == null || !target.isPresent()) {
             robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
             robotDrive.clearPPRotationOverride();
             return;
         }
 
-        double rotation = rotationController.calculate(target.getYaw()); // attempt to minimize
-        double movement = translationController.calculate(target.getPitch()); // attempt to minimize
+        // what about being on the red or blue side
+        Util.consoleLog(String.valueOf(target.get().estimatedPose.getX()));
+        Util.consoleLog(String.valueOf(target.get().estimatedPose.getY()));
+        // Util.consoleLog(String.valueOf(target.get().estimatedPose.getY()));
+        double movementX;
+        double movementY;
+        double rotation;
 
-        Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
+        if (target.get().estimatedPose.getX() < targetRobotX - Constants.xCameraOffset - 0.5 || target.get().estimatedPose.getX() > targetRobotX - Constants.xCameraOffset + 0.5) {
+            movementX = translationControllerX.calculate(target.get().estimatedPose.getX());
+        } else {
+            movementX = 0;
+        }
+        if (target.get().estimatedPose.getY() < targetRobotY - Constants.yCameraOffset - 0.5 || target.get().estimatedPose.getY() > targetRobotY - Constants.yCameraOffset + 0.5) {
+            movementY = translationControllerY.calculate(target.get().estimatedPose.getY());
+        } else {
+            movementY = 0;
+        }
+        if (robotDrive.getGyroYaw() < targetRobotRot - Math.toRadians(1) || robotDrive.getGyroYaw() > targetRobotRot + Math.toRadians(1)) {
+            rotation = rotationController.calculate(robotDrive.getGyroYaw());
+        } else {
+            rotation = 0;
+        }
+
+        // double rotation = rotationController.calculate(target.getYaw()); // attempt to minimize
+        // double movementX = translationControllerX.calculate(target.getPitch()); // attempt to minimize
+
+        // Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movementX);
+
+        // if (alsoDrive) {
+        //     robotDrive.driveRobotRelative(-movementX, 0, rotation);
+        // } else {
+        //     robotDrive.setTrackingRotation(rotation);
+        // }
 
         if (alsoDrive) {
-            robotDrive.driveRobotRelative(-movement, 0, rotation);
+            robotDrive.driveRobotRelative(movementX, movementY, rotation);
+            // robotDrive.driveRobotRelative(movementX, 0, 0); // testing just x
         } else {
-            robotDrive.setTrackingRotation(rotation);
+            robotDrive.setTrackingRotation(0);
         }
         
     }
