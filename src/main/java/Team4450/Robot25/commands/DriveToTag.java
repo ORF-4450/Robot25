@@ -98,17 +98,21 @@ public class DriveToTag extends Command {
         double movementY;
         double rotation;
 
-        if (target.get().estimatedPose.getX() < targetRobotX - Constants.xCameraOffset - 0.5 || target.get().estimatedPose.getX() > targetRobotX - Constants.xCameraOffset + 0.5) {
+        double toleranceX = 0.1;
+        double toleranceY = 0.1;
+        double toleranceRot = 1;
+
+        if (target.get().estimatedPose.getX() < targetRobotX - Constants.xCameraOffset - toleranceX || target.get().estimatedPose.getX() > targetRobotX - Constants.xCameraOffset + toleranceX) {
             movementX = translationControllerX.calculate(target.get().estimatedPose.getX());
         } else {
             movementX = 0;
         }
-        if (target.get().estimatedPose.getY() < targetRobotY - Constants.yCameraOffset - 0.5 || target.get().estimatedPose.getY() > targetRobotY - Constants.yCameraOffset + 0.5) {
+        if (target.get().estimatedPose.getY() < targetRobotY - Constants.yCameraOffset - toleranceY || target.get().estimatedPose.getY() > targetRobotY - Constants.yCameraOffset + toleranceY) {
             movementY = translationControllerY.calculate(target.get().estimatedPose.getY());
         } else {
             movementY = 0;
         }
-        if (robotDrive.getGyroYaw() < targetRobotRot - Math.toRadians(1) || robotDrive.getGyroYaw() > targetRobotRot + Math.toRadians(1)) {
+        if (robotDrive.getGyroYaw() < targetRobotRot - Math.toRadians(toleranceRot) || robotDrive.getGyroYaw() > targetRobotRot + Math.toRadians(toleranceRot)) {
             rotation = rotationController.calculate(robotDrive.getGyroYaw());
         } else {
             rotation = 0;
