@@ -41,7 +41,32 @@ public final class Constants
     public static String                     functionMarker = "-".repeat(30);
 
 	// Non-drive base motor controller port assignments
+    public static final int     CORAL_MANIPULATOR = 9;
+    public static final int     ALGAE_MANIPULATOR = 10;
 
+    //ELEVATOR:
+    public static final int     ELEVATOR_LEFT = 11;
+    public static final int     ELEVATOR_RIGHT = 12;
+
+    //(NOTES) ELEVATOR_WINCH_FACTOR is a conversion factor from motor rotations to meters of height change.
+    //ELEVATOR_WINCH_FACTOR is multiplied by native rotations of motor shaft 
+    // to get height change in MAXSpline shaft since startup or last encoder reset.
+    // math explanation:
+    // ratio is (1.0 / (1014.0 / 55.0)) spool rots for every turn of shaft
+    // * 2pi for radians traveled/angular displacement * spool radius in meters to get linear displacement
+    // 1.25 inch radius is 0.03175 meters (source: looked it up)
+    // idk why it has to be negative, probably the gears swap rotation, not a big deal tho
+    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (1014.0 / 55.0)) * (2 * Math.PI) * 0.03175; //NEEDS TO BE CHANGED TO ACTUAL VALUE
+
+    // Pneumatic valve controller port assignments.
+	public static final int		COMPRESSOR = 0;
+	public static final int		CORAL_PIVOT = 0;		
+	public static final int		ALGAE_EXTEND = 2;		
+	public static final int		ALGAE_PIVOT = 4;    
+
+    
+    public static final double INTAKE_SPEED = 0.90;
+    
     // CAMERAS 
 
     public static Transform3d   CAMERA_TAG_TRANSFORM = new Transform3d(
