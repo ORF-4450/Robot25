@@ -74,6 +74,9 @@ public final class Constants
         new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
+    public static double xCameraOffset = 0;
+    public static double yCameraOffset = 0;
+
     // the names of the cameras in the PhotonVision software
     public static String        CAMERA_TAG = "HD_USB_Camera";
 
