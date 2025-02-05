@@ -3,6 +3,7 @@ package Team4450.Robot25.commands;
 import Team4450.Lib.Util;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import Team4450.Robot25.subsystems.PhotonVision;
@@ -23,9 +24,9 @@ import Team4450.Robot25.subsystems.DriveBase;
  */
 
 public class DriveToTag extends Command {
-    PIDController rotationController = new PIDController(0.02, 0.1, 0); // for rotating drivebase
-    PIDController translationControllerX = new PIDController(0.5, 0.2, 0); // for moving drivebase in X,Y plane
-    PIDController translationControllerY = new PIDController(0.5, 0.2, 0); // for moving drivebase in X,Y plane
+    PIDController rotationController = new PIDController(0.02, 0, 0); // for rotating drivebase
+    PIDController translationControllerX = new PIDController(0.4, 0.1, 0); // for moving drivebase in X,Y plane
+    PIDController translationControllerY = new PIDController(0.4, 0.1, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
     PhotonVision photonVision;
     private double targetRobotX;
@@ -33,6 +34,12 @@ public class DriveToTag extends Command {
     private double targetRobotRot;
     private boolean alsoDrive;
     private boolean initialFieldRel;
+    private double targetX;
+    private double targetY;
+    private double lastTargetX;
+    private double lastTargetY;
+    private boolean firstLoop;
+    private int iCount;
     /**
      * @param robotDrive the drive subsystem
      */
@@ -44,6 +51,7 @@ public class DriveToTag extends Command {
         this.targetRobotX = targetRobotX;
         this.targetRobotY = targetRobotY;
         this.targetRobotRot = targetRobotRot;
+        this.firstLoop = true;
 
         if (alsoDrive) addRequirements(robotDrive);
 
@@ -80,35 +88,38 @@ public class DriveToTag extends Command {
     public void execute() {
       // logic for chosing "closest" target in PV subsystem
     
-        Optional<EstimatedRobotPose> target = photonVision.getEstimatedPose();
+        Optional<EstimatedRobotPose> ttarget = photonVision.getEstimatedPose();
 
-        // PhotonTrackedTarget target = photonVision.getClosestTarget();
-        
-        if (target == null || !target.isPresent()) {
+        if (ttarget == null || !ttarget.isPresent()) {
             robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
             robotDrive.clearPPRotationOverride();
             return;
         }
 
-        // what about being on the red or blue side
-        Util.consoleLog(String.valueOf(target.get().estimatedPose.getX()));
-        Util.consoleLog(String.valueOf(target.get().estimatedPose.getY()));
-        // Util.consoleLog(String.valueOf(target.get().estimatedPose.getY()));
+        if (iCount < 7 && !firstLoop) {
+            targetX = (ttarget.get().estimatedPose.getX() + lastTargetX) / 2;
+            targetY = (ttarget.get().estimatedPose.getY() + lastTargetY) / 2;
+            iCount += 1;
+        } else {
+            iCount = 0;
+            firstLoop = true;
+        }
+     
         double movementX;
         double movementY;
         double rotation;
 
-        double toleranceX = 0.1;
-        double toleranceY = 0.1;
-        double toleranceRot = 1;
+        double toleranceX = 0.2;
+        double toleranceY = 0.2;
+        double toleranceRot = 2;
 
-        if (target.get().estimatedPose.getX() < targetRobotX - Constants.xCameraOffset - toleranceX || target.get().estimatedPose.getX() > targetRobotX - Constants.xCameraOffset + toleranceX) {
-            movementX = translationControllerX.calculate(target.get().estimatedPose.getX());
+        if (targetX < targetRobotX - Constants.xCameraOffset - toleranceX || targetX > targetRobotX - Constants.xCameraOffset + toleranceX) {
+            movementX = translationControllerX.calculate(targetX);
         } else {
             movementX = 0;
         }
-        if (target.get().estimatedPose.getY() < targetRobotY - Constants.yCameraOffset - toleranceY || target.get().estimatedPose.getY() > targetRobotY - Constants.yCameraOffset + toleranceY) {
-            movementY = translationControllerY.calculate(target.get().estimatedPose.getY());
+        if (targetY < targetRobotY - Constants.yCameraOffset - toleranceY || targetY > targetRobotY - Constants.yCameraOffset + toleranceY) {
+            movementY = translationControllerY.calculate(targetY);
         } else {
             movementY = 0;
         }
@@ -118,20 +129,11 @@ public class DriveToTag extends Command {
             rotation = 0;
         }
 
-        // double rotation = rotationController.calculate(target.getYaw()); // attempt to minimize
-        // double movementX = translationControllerX.calculate(target.getPitch()); // attempt to minimize
-
-        // Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movementX);
-
-        // if (alsoDrive) {
-        //     robotDrive.driveRobotRelative(-movementX, 0, rotation);
-        // } else {
-        //     robotDrive.setTrackingRotation(rotation);
-        // }
-
         if (alsoDrive) {
             robotDrive.driveRobotRelative(movementX, movementY, rotation);
-            // robotDrive.driveRobotRelative(movementX, 0, 0); // testing just x
+            firstLoop = false;
+            lastTargetX = targetX;
+            lastTargetY = targetY;
         } else {
             robotDrive.setTrackingRotation(0);
         }

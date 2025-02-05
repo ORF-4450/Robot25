@@ -63,8 +63,8 @@ public class GetPoseEsimate extends Command {
         }
 
         // What about being on the red or blue side
-        Util.consoleLog(String.valueOf(target.get().estimatedPose.getX()));
-        Util.consoleLog(String.valueOf(target.get().estimatedPose.getY()));
+        // Create a odometry function moveToFrom(robotx, roboty, robotrot, targetx, targety, targetrot)
+        Util.consoleLog(String.valueOf(target.get().estimatedPose.getX()), String.valueOf(target.get().estimatedPose.getY()));
     }
     @Override
     public void end(boolean interrupted) {
