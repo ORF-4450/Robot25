@@ -10,6 +10,7 @@ import Team4450.Robot25.subsystems.PhotonVision;
 
 import java.util.Optional;
 
+import org.opencv.ml.EM;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -109,9 +110,9 @@ public class DriveToTag extends Command {
         double movementY;
         double rotation;
 
-        double toleranceX = 0.2;
-        double toleranceY = 0.2;
-        double toleranceRot = 2;
+        double toleranceX = 0.15;
+        double toleranceY = 0.15;
+        double toleranceRot = 1;
 
         if (targetX < targetRobotX - Constants.xCameraOffset - toleranceX || targetX > targetRobotX - Constants.xCameraOffset + toleranceX) {
             movementX = translationControllerX.calculate(targetX);
@@ -127,6 +128,10 @@ public class DriveToTag extends Command {
             rotation = rotationController.calculate(robotDrive.getGyroYaw());
         } else {
             rotation = 0;
+        }
+
+        if (movementX == 0 && movementY == 0 && rotation == 0) {
+            return;
         }
 
         if (alsoDrive) {

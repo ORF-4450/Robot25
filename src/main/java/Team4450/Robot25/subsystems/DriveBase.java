@@ -336,7 +336,7 @@ public class DriveBase extends SubsystemBase {
    * times, including re-zeroing gyro to be 180 on red. We set the flag to
    * change it as soon as teleop starts! Other teams simply reverse their joystick
    * values on Red, but because we are doing such advanced control replicating
-   * joystick inputs that I didn't want to mess with that (-cole)
+   * joystick inputs that I didn't want to mess with that (-Cole)
    * @param pose the pose
    */
   public void resetOdometryPP(Pose2d pose) {
@@ -382,10 +382,10 @@ public class DriveBase extends SubsystemBase {
       double inputTranslationDir = Math.atan2(ySpeed, xSpeed);
 
       // Calculate the direction slew rate based on an estimate of the lateral acceleration
-      // cole note: basically this stuff (from Rev's starter code) limits how fast you can change path
+      // Cole note: basically this stuff (from Rev's starter code) limits how fast you can change path
       // direction. it has effect of rounding out sharp turns but can be quite disorienting for drivers
       // so we put the slew rate to infinity so it doesn't affect anything. we only use rotation and magnitude
-      // slew rate limiting - cole 2024
+      // slew rate limiting - Cole 2024
       double directionSlewRate;
 
       // BEGIN REV CODE THAT IS KIND OF WEIRD BUT WORKS ============================================
