@@ -13,6 +13,7 @@ import Team4450.Robot25.commands.DriveToLeft;
 import Team4450.Robot25.commands.DriveToTag;
 import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
+import Team4450.Robot25.commands.OuttakeCoral;
 import Team4450.Robot25.commands.PointToYaw;
 import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
@@ -414,9 +415,9 @@ public class RobotContainer
 		new Trigger(() -> utilityController.getLeftTrigger() && !elevatedManipulator.intakeDoesTheAlgaeInsteadOfCoral)
 			.toggleOnTrue(new IntakeCoral(coralManipulator, elevatedManipulator));
 		
+		//Runs coral manipulator outtake if the elevator and manipulator are in the correct position.
 		new Trigger(() -> utilityController.getRightTrigger())
-			.whileTrue(new InstantCommand(coralManipulator::startOuttaking));
-	}
+			.toggleOnTrue(new OuttakeCoral(coralManipulator, elevatedManipulator));}
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
