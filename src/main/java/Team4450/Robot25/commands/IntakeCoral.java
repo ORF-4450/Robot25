@@ -12,20 +12,16 @@ public class IntakeCoral extends Command {
     private final CoralManipulator coralManipulator;
     private final ElevatedManipulator elevatedManipulator;
 
-    private static enum State{MOVING, INTAKE, OUTTAKE, STOP};
+    private static enum State{MOVING, INTAKE, STOP};
     private State state = State.INTAKE;
 
-    public IntakeCoral(CoralManipulator coralManipulator, ElevatedManipulator elevatedManipulator, boolean shooting){
+    public IntakeCoral(CoralManipulator coralManipulator, ElevatedManipulator elevatedManipulator){
         this.coralManipulator = coralManipulator;
         this.elevatedManipulator = elevatedManipulator;
 
         addRequirements(coralManipulator, elevatedManipulator);
 
         SmartDashboard.putString("Intake Coral Status", state.name());
-    }
-
-    public IntakeCoral(CoralManipulator coralManipulator, ElevatedManipulator elevatedManipulator){
-        this(coralManipulator, elevatedManipulator, false);
     }
 
     public void initialize(){
@@ -44,14 +40,25 @@ public class IntakeCoral extends Command {
                 
             case INTAKE:
                 coralManipulator.startIntaking();
+
+                if(elevatedManipulator.hasCoral())
+                    state = State.STOP;
+                    SmartDashboard.putString("Intake Coral Status", state.name());
                 break;
-                
-            case OUTTAKE:
-                coralManipulator.startOuttaking();
-                break;
+
             case STOP:
                 coralManipulator.stop();
                 break;
         }
+    }
+
+    public boolean isFinished(){
+        return state == State.STOP;
+    }
+
+    public void end(boolean interrupted){
+        Util.consoleLog("interrupted=%b", interrupted);
+        coralManipulator.stop();
+        SmartDashboard.putString("Intake Coral Status", state.name());
     }
 }

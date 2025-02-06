@@ -72,18 +72,18 @@ X Axis                  Rotate.
 Driver GamePad - Buttons
 Button Name				Function
 -----------------------------------------------------------------------------------
-LEFT_TRIGGER            
-RIGHT_TRIGGER           
+LEFT_TRIGGER            Drive To Left Branch
+RIGHT_TRIGGER           Drive to Right Branch
 LEFT_BUMPER             Slow Mode (hold)
 RIGHT_BUMPER            Alternate Rotation (hold + R Stick)
-POV_0
-POV_90                   
-POV_180
-POV_270                 
+POV_0 (DPAD UP)
+POV_90 (DPAD RIGHT)             
+POV_180 (DPAD DOWN)
+POV_270 (DPAD LEFT)             
 BACK                    Toggle Field Relative
 START                   Reset Gyro
-A                       
-B                       [reserved]
+A                       Brake Mode
+B                       Drive To Center of AprilTag
 X                       Park Wheels
 Y                       
 
@@ -101,16 +101,16 @@ Button Name				Function
 Utility GamePad - Buttons
 Button Name				Function
 -----------------------------------------------------------------------------------
-A                       
-B                       
-X                       
-Y                       
+A                       Set L2 Coral Scoring Position                     
+B                       Set L3 Coral Scoring Position
+X                       Set L1 Coral Scoring Position
+Y                       Set L4 Coral Scoring Position
 LEFT_TRIGGER            
-RIGHT_TRIGGER           
+RIGHT_TRIGGER           Outtake Coral
 LEFT_BUMPER             
 RIGHT_BUMPER            
 BACK                    
-POV_0                   
+POV_0                    
 POV_90                  
 POV_180                 
 POV_270                 

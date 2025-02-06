@@ -13,7 +13,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -21,8 +21,8 @@ public class AlgaeManipulator extends SubsystemBase {
     private SparkFlex algaeMotor = new SparkFlex(ALGAE_MANIPULATOR, MotorType.kBrushless);
     private SparkFlexConfig algaeConfig = new SparkFlexConfig();
 
-    private ValveDA algaePivot = new ValveDA(ALGAE_PIVOT);
-    private ValveDA algaeExtend = new ValveDA(ALGAE_EXTEND);
+    private ValveDA algaePivot = new ValveDA(ALGAE_PIVOT, PneumaticsModuleType.REVPH);
+    private ValveDA algaeExtend = new ValveDA(ALGAE_EXTEND, PneumaticsModuleType.REVPH);
 
     private boolean isRunning = false;
     public boolean algaePivotStatus = false;
@@ -33,10 +33,18 @@ public class AlgaeManipulator extends SubsystemBase {
 
         algaeMotor.configure(algaeConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        algaeConfig.follow(algaeMotor);
-
         Util.consoleLog("Algae Manipulator Initialized");
         }
+        
+    public void intialize(){
+        pivotDown();
+        retractIn();
+
+        algaePivotStatus = false;
+        algaeExtendStatus = false;
+
+        updateDS();
+    }
     
 
     public void start(double speedfactor){
@@ -82,7 +90,6 @@ public class AlgaeManipulator extends SubsystemBase {
         updateDS();
 
     }
-
     
     public void pivotDown(){
         Util.consoleLog();

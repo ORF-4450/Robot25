@@ -7,24 +7,37 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import Team4450.Lib.CameraFeed;
-import Team4450.Lib.XboxController;
 import Team4450.Robot25.commands.DriveCommand;
 import Team4450.Robot25.commands.DriveToRight;
 import Team4450.Robot25.commands.DriveToLeft;
 import Team4450.Robot25.commands.DriveToTag;
+import Team4450.Robot25.commands.GetPoseEsimate;
+import Team4450.Robot25.commands.IntakeCoral;
+import Team4450.Robot25.commands.OuttakeCoral;
 import Team4450.Robot25.commands.PointToYaw;
 import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
+import Team4450.Robot25.commands.Preset;
+
+import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.Candle;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
 import Team4450.Robot25.subsystems.ShuffleBoard;
+import Team4450.Robot25.subsystems.ElevatedManipulator.PresetPosition;
 import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
+import Team4450.Robot25.subsystems.CoralManipulator;
+import Team4450.Robot25.subsystems.ElevatedManipulator;
+
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
+import Team4450.Lib.CameraFeed;
+import Team4450.Lib.XboxController;
+import Team4450.Lib.MonitorCompressor;
+
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
@@ -33,6 +46,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -57,6 +71,9 @@ public class RobotContainer
 	public static DriveBase 	driveBase;
 	public static PhotonVision	pvTagCamera;
 	private Candle        		candle = null;
+	private CoralManipulator    coralManipulator;
+	private ElevatedManipulator elevatedManipulator;
+	private AlgaeManipulator    algaeManipulator;
 	
 	// Subsystem Default Commands.
 
@@ -83,19 +100,19 @@ public class RobotContainer
 	private XboxController			driverController =  new XboxController(DRIVER_PAD);
 	public static XboxController	utilityController = new XboxController(UTILITY_PAD);
 
-	//private AnalogInput			pressureSensor = new AnalogInput(PRESSURE_SENSOR);
+	private AnalogInput			pressureSensor = new AnalogInput(PRESSURE_SENSOR);
 	  
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
 	private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
-	// PneumaticsControlModule class controls the PCM. New for 2022.
-	//private PneumaticsControlModule	pcm = new PneumaticsControlModule(COMPRESSOR);
+	// PneumaticHub class controls the REV Pneumatics Hub Module. New for 2025.
+	private PneumaticHub	pneumaticHub = new PneumaticHub(COMPRESSOR);
 
 	// Navigation board.
 	public static NavX			navx;
 
 	private MonitorPDP     		monitorPDPThread;
-	//private MonitorCompressor	monitorCompressorThread;
+	private MonitorCompressor	monitorCompressorThread;
     private CameraFeed			cameraFeed;
     
 	// Trajectories we load manually.
@@ -226,12 +243,12 @@ public class RobotContainer
 									driverController.getRightXDS(),
 									driverController));
 
-		// Start the compressor, PDP and camera feed monitoring Tasks.
+		//Start the compressor, PDP and camera feed monitoring Tasks.
 
-   		// monitorCompressorThread = MonitorCompressor.getInstance(pressureSensor);
-   		// monitorCompressorThread.setDelay(1.0);
-   		// monitorCompressorThread.SetLowPressureAlarm(50);
-   		// monitorCompressorThread.start();
+   		monitorCompressorThread = MonitorCompressor.getInstance(pressureSensor);
+   		monitorCompressorThread.setDelay(1.0);
+   		monitorCompressorThread.SetLowPressureAlarm(50);
+   		monitorCompressorThread.start();
 		
    		monitorPDPThread = MonitorPDP.getInstance(pdp);
    		monitorPDPThread.start();
@@ -359,17 +376,48 @@ public class RobotContainer
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new InstantCommand(driveBase::toggleBrakeMode));
 
+		//Drive to the AprilTag
 		new Trigger(() -> driverController.getBButton())
-			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
+			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.5, 0));
+
+		// new Trigger(() -> driverController.getXButton())
+		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
 		
+		//Drive to the Right Branch, offsetting from AprilTag
 		new Trigger(()-> driverController.getRightTrigger())
 			.whileTrue(new DriveToRight(driveBase, pvTagCamera, true, true));
 
 		new Trigger(() -> driverController.getLeftTrigger())
 			.whileTrue(new DriveToLeft(driveBase, pvTagCamera, true, true));
 		// -------- Utility pad buttons ----------
+
+		//Moves the coral manipulator/elevator to the intake position for the coral station.
+		new Trigger(() -> utilityController.getRightBumper())
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_STATION_INTAKE));
 		
-	}
+		//Moves the coral manipulator/elevator to the L1 Branch scoring position
+		new Trigger(() -> utilityController.getXButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1));
+
+		//Moves the coral manipulator/elevator to the L2 Branch scoring position.
+		new Trigger(() -> utilityController.getAButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
+
+		//Moves the coral manipulator/elevator to the L3 Branch scoring position.
+		new Trigger(() -> utilityController.getBButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));
+
+		//Moves the coral manipulator/elevator to the L4 Branch scoring position.
+		new Trigger(() -> utilityController.getYButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
+		
+		//Runs coral manipulator intake if the elevator and manipulator are in the correct position.
+		new Trigger(() -> utilityController.getLeftTrigger() && !elevatedManipulator.intakeDoesTheAlgaeInsteadOfCoral)
+			.toggleOnTrue(new IntakeCoral(coralManipulator, elevatedManipulator));
+		
+		//Runs coral manipulator outtake if the elevator and manipulator are in the correct position.
+		new Trigger(() -> utilityController.getRightTrigger())
+			.toggleOnTrue(new OuttakeCoral(coralManipulator, elevatedManipulator));}
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -450,10 +498,10 @@ public class RobotContainer
 	{
 		// This code turns on/off the automatic compressor management if requested by DS. Putting this
 		// here is a convenience since this function is called at each mode change.
-		// if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
-		// 	pcm.enableCompressorDigital();
-		// else
-		// 	pcm.disableCompressor();
+		if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
+			pneumaticHub.enableCompressorDigital();
+		else
+			pneumaticHub.disableCompressor();
 		
 		pdp.clearStickyFaults();
 		//pcm.clearAllStickyFaults(); // Add back if we use a commpressor.
