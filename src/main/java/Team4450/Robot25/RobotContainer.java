@@ -7,25 +7,36 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import Team4450.Lib.CameraFeed;
-import Team4450.Lib.XboxController;
 import Team4450.Robot25.commands.DriveCommand;
 import Team4450.Robot25.commands.DriveToTag;
 import Team4450.Robot25.commands.GetPoseEsimate;
+import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.PointToYaw;
 import Team4450.Robot25.commands.SetTargetPose;
 import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
 import Team4450.Robot25.commands.GoToPose;
+import Team4450.Robot25.commands.Preset;
+
+import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.Candle;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
 import Team4450.Robot25.subsystems.ShuffleBoard;
+import Team4450.Robot25.subsystems.ElevatedManipulator.PresetPosition;
 import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
+import Team4450.Robot25.subsystems.CoralManipulator;
+import Team4450.Robot25.subsystems.ElevatedManipulator;
+
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
+import Team4450.Lib.CameraFeed;
+import Team4450.Lib.XboxController;
+import Team4450.Lib.MonitorCompressor;
+
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
@@ -36,6 +47,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -60,6 +72,9 @@ public class RobotContainer
 	public static DriveBase 	driveBase;
 	public static PhotonVision	pvTagCamera;
 	private Candle        		candle = null;
+	private CoralManipulator    coralManipulator;
+	private ElevatedManipulator elevatedManipulator;
+	private AlgaeManipulator    algaeManipulator;
 	
 	// Subsystem Default Commands.
 
@@ -86,19 +101,19 @@ public class RobotContainer
 	private XboxController			driverController =  new XboxController(DRIVER_PAD);
 	public static XboxController	utilityController = new XboxController(UTILITY_PAD);
 
-	//private AnalogInput			pressureSensor = new AnalogInput(PRESSURE_SENSOR);
+	private AnalogInput			pressureSensor = new AnalogInput(PRESSURE_SENSOR);
 	  
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
 	private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
 	// PneumaticsControlModule class controls the PCM. New for 2022.
-	//private PneumaticsControlModule	pcm = new PneumaticsControlModule(COMPRESSOR);
+	private PneumaticHub	pneumaticHub = new PneumaticHub(COMPRESSOR);
 
 	// Navigation board.
 	public static NavX			navx;
 
 	private MonitorPDP     		monitorPDPThread;
-	//private MonitorCompressor	monitorCompressorThread;
+	private MonitorCompressor	monitorCompressorThread;
     private CameraFeed			cameraFeed;
     
 	// Trajectories we load manually.
@@ -230,12 +245,12 @@ public class RobotContainer
 									driverController.getRightXDS(),
 									driverController));
 
-		// Start the compressor, PDP and camera feed monitoring Tasks.
+		//Start the compressor, PDP and camera feed monitoring Tasks.
 
-   		// monitorCompressorThread = MonitorCompressor.getInstance(pressureSensor);
-   		// monitorCompressorThread.setDelay(1.0);
-   		// monitorCompressorThread.SetLowPressureAlarm(50);
-   		// monitorCompressorThread.start();
+   		monitorCompressorThread = MonitorCompressor.getInstance(pressureSensor);
+   		monitorCompressorThread.setDelay(1.0);
+   		monitorCompressorThread.SetLowPressureAlarm(50);
+   		monitorCompressorThread.start();
 		
    		monitorPDPThread = MonitorPDP.getInstance(pdp);
    		monitorPDPThread.start();
@@ -375,6 +390,10 @@ public class RobotContainer
 		new Trigger(()-> driverController.getXButton())
 			.onTrue(new SetTargetPose(driveBase, new Pose2d(11.5, 4.3, new Rotation2d(0))));
 		// -------- Utility pad buttons ----------
+		new Trigger(() -> utilityController.getAButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_STATION_INTAKE));
+		new Trigger(() -> utilityController.getLeftTrigger())
+			.onTrue(new IntakeCoral(coralManipulator, elevatedManipulator));
 		
 	}
 
@@ -457,10 +476,10 @@ public class RobotContainer
 	{
 		// This code turns on/off the automatic compressor management if requested by DS. Putting this
 		// here is a convenience since this function is called at each mode change.
-		// if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
-		// 	pcm.enableCompressorDigital();
-		// else
-		// 	pcm.disableCompressor();
+		if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
+			pneumaticHub.enableCompressorDigital();
+		else
+			pneumaticHub.disableCompressor();
 		
 		pdp.clearStickyFaults();
 		//pcm.clearAllStickyFaults(); // Add back if we use a commpressor.
