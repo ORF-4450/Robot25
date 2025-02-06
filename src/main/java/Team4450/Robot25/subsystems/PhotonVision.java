@@ -65,7 +65,7 @@ public class PhotonVision extends SubsystemBase
     /**
      * Create an instance of PhotonVision class for a camera with a default transform. (One per camera)
      * @param cameraName the name in PhotonVision used for the camera like HD_USB_Camera
-     *                   (likely from manufacturer, best not to change it to avoid conflict issues -cole)
+     *                   (likely from manufacturer, best not to change it to avoid conflict issues -Cole)
      * @param pipelineType the PipelineType of what it's going to be used for
      */
     public PhotonVision(String cameraName, PipelineType pipelineType) {
@@ -79,7 +79,7 @@ public class PhotonVision extends SubsystemBase
     /**
      * Create an instance of PhotonVision class for a camera with a default transform. (One per camera)
      * @param cameraName the name in PhotonVision used for the camera like HD_USB_Camera
-     *                   (likely from manufacturer, best not to change it to avoid conflict issues -cole)
+     *                   (likely from manufacturer, best not to change it to avoid conflict issues -Cole)
      * @param pipelineType the PipelineType of what it's going to be used for
      * @param robotToCam a Tranformation3d of the camera relative to the bottom center of the robot (off floor).
      */
@@ -90,7 +90,7 @@ public class PhotonVision extends SubsystemBase
         fieldLayout = AprilTagFieldLayout.loadField(fields);
 
         // adds a simulated camera to the vision sim: "real" camera will
-        // act just like normal on real robot and in sim! ask cole on slack if this isn't working
+        // act just like normal on real robot and in sim! ask Cole on slack if this isn't working
         // you can manually change the 680x680 resolution and FOV
         if (RobotBase.isSimulation()) {
             visionSim = new VisionSystemSim(cameraName);
