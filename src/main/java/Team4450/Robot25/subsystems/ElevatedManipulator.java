@@ -17,14 +17,12 @@ public class ElevatedManipulator extends SubsystemBase {
         /* Coral Scoring Position L4 */ CORAL_SCORING_L4,
         /* Algae Removing Position L2 */ ALGAE_REMOVE_L2,
         /*Algae Removing Position L3 */ ALGAE_REMOVE_L3,
-        /*Algae Removing Position L4 */ ALGAE_REMOVE_L4,
         /* Alage Net Scoring Position */ ALGAE_NET_SCORING,
         /* No Position */ NONE,
     };
 
     public boolean intakeDoesTheAlgaeInsteadOfCoral = true;
-    private double endGoalElevatorPosition;
-
+    private double endGoalElevatorHeight;
 
     private boolean endGoalCoralPivotStatus;
 
@@ -46,62 +44,55 @@ public class ElevatedManipulator extends SubsystemBase {
         
         switch(position){
             case CORAL_STATION_INTAKE:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = true;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 break;
             case CORAL_SCORING_L1:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 break;
 
             case CORAL_SCORING_L2:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 break;
             
             case CORAL_SCORING_L3:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 break;
 
             case CORAL_SCORING_L4:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 break;
 
             case ALGAE_REMOVE_L2:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
                 break;
             
             case ALGAE_REMOVE_L3:
-                endGoalElevatorPosition = 0.0;
-                endGoalCoralPivotStatus = false;
-                endGoalAlgaeExtendStatus = true;
-                endGoalAlgaePivotStatus = false;
-                break;
-            
-            case ALGAE_REMOVE_L4:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
                 break;
             
             case ALGAE_NET_SCORING:
-                endGoalElevatorPosition = 0.0;
+                endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = true;
@@ -119,7 +110,7 @@ public class ElevatedManipulator extends SubsystemBase {
         this.endGoalCoralPivotStatus = coralPivotStatus;
         this.endGoalAlgaeExtendStatus = algaeExtendStatus;
         this.endGoalAlgaePivotStatus = algaePivotStatus;
-        this.endGoalElevatorPosition = elevatorPosition;
+        this.endGoalElevatorHeight = elevatorPosition;
 
         return execute();
     }
@@ -146,12 +137,12 @@ public class ElevatedManipulator extends SubsystemBase {
         }
 
         if (atTarget) {
-            if (isElevatorAtTarget(endGoalElevatorPosition)) {
-                elevator.setElevatorHeight(endGoalElevatorPosition);
+            if (isElevatorAtTarget(endGoalElevatorHeight)) {
+                elevator.setElevatorHeight(endGoalElevatorHeight);
                 elevator.move(0);
                 SmartDashboard.putString("Elevator Position Phase", "Elevator at Target");
             } else {
-                elevator.setElevatorHeight(endGoalElevatorPosition);
+                elevator.setElevatorHeight(endGoalElevatorHeight);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Elevator Height");
             }
         }
@@ -167,6 +158,9 @@ public class ElevatedManipulator extends SubsystemBase {
         elevator.unlockPosition();
     }
 
+    public boolean hasCoral(){
+        return coralManipulator.hasCoral();
+    }
     private boolean isElevatorAtTarget(double height){
         return elevator.isElevatorAtTarget(height);
     }
