@@ -45,7 +45,7 @@ public class RemoveAlgae extends Command {
                 break;
 
             case REMOVE:
-                algaeManipulator.startOuttaking();
+                algaeManipulator.startIntaking();
                 break;
 
             case RETURN:
