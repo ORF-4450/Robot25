@@ -17,7 +17,6 @@ public class ElevatedManipulator extends SubsystemBase {
         /* Coral Scoring Position L4 */ CORAL_SCORING_L4,
         /* Algae Removing Position L2 */ ALGAE_REMOVE_L2,
         /*Algae Removing Position L3 */ ALGAE_REMOVE_L3,
-        /*Algae Removing Position L4 */ ALGAE_REMOVE_L4,
         /* Alage Net Scoring Position */ ALGAE_NET_SCORING,
         /* No Position */ NONE,
     };
@@ -87,13 +86,6 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
             
             case ALGAE_REMOVE_L3:
-                endGoalElevatorPosition = 0.0;
-                endGoalCoralPivotStatus = false;
-                endGoalAlgaeExtendStatus = true;
-                endGoalAlgaePivotStatus = false;
-                break;
-            
-            case ALGAE_REMOVE_L4:
                 endGoalElevatorPosition = 0.0;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
