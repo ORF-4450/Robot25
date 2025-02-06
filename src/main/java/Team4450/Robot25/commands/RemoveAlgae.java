@@ -12,7 +12,7 @@ public class RemoveAlgae extends Command {
     private final AlgaeManipulator algaeManipulator;
     private final ElevatedManipulator elevatedManipulator;
 
-    private static enum State{MOVING, LV2EXTEND, LV3EXTEND, REMOVE, RETURN, STOP};
+    private static enum State{LV2EXTEND, LV3EXTEND, REMOVE, RETURN, STOP};
     private State state = State.RETURN;
 
     public RemoveAlgae(AlgaeManipulator algaeManipulator, ElevatedManipulator elevatedManipulator){
@@ -25,19 +25,13 @@ public class RemoveAlgae extends Command {
     }
 
     public void initialize(){
-        state = State.MOVING;
+        state = State.RETURN;
         elevatedManipulator.executeSetPosition(PresetPosition.NONE);
         SmartDashboard.putString("Algae Manipulator Status", state.name());
     }
 
     public void execute(){
         switch(state){
-            case MOVING:
-                if(elevatedManipulator.executeSetPosition(PresetPosition.CORAL_STATION_INTAKE))
-                    state = State.REMOVE;
-                    SmartDashboard.putString("Intake Coral Status", state.name());
-                break;
-                
             case LV2EXTEND:
                 elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_REMOVE_L2);
                 algaeManipulator.extendOut();
