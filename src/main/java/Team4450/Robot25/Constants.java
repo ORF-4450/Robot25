@@ -64,7 +64,7 @@ public final class Constants
 	public static final int		ALGAE_EXTEND = 2;		
 	public static final int		ALGAE_PIVOT = 4;    
 
-    
+
     public static final double INTAKE_SPEED = 0.90;
     
     // CAMERAS 
@@ -73,6 +73,9 @@ public final class Constants
         new Translation3d(0, 0.32, 0.28), // change last value to height in METERS of lens
         new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
+
+    public static double xCameraOffset = 0;
+    public static double yCameraOffset = 0;
 
     // the names of the cameras in the PhotonVision software
     public static String        CAMERA_TAG = "HD_USB_Camera";
@@ -84,11 +87,9 @@ public final class Constants
 	public static final int		DRIVER_PAD = 0, UTILITY_PAD = 1;
     public static final double  DRIVE_DEADBAND = 0.1, ROTATION_DEADBAND = .1;
 
-	// Pneumatic valve controller port assignments.
-	//public static final int		COMPRESSOR = 0;
 	  
 	// Analog Input port assignments.
-	
+	public static final int PRESSURE_SENSOR = 1;
 	// LCD display line number constants showing class where the line is set.
 	public static final int		LCD_1 = 1;	    // Robot, Auto Commands.
 	public static final int		LCD_2 = 2;	    // Swerve Drive command.

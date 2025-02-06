@@ -6,13 +6,15 @@ import static Team4450.Robot25.Constants.CORAL_MANIPULATOR;
 import static Team4450.Robot25.Constants.CORAL_PIVOT;
 
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkLimitSwitch;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,7 +22,9 @@ public class CoralManipulator extends SubsystemBase {
     private SparkFlex coralMotor = new SparkFlex(CORAL_MANIPULATOR, MotorType.kBrushless);
     private SparkFlexConfig coralConfig = new SparkFlexConfig();
 
-    private ValveDA coralPivot = new ValveDA(CORAL_PIVOT);
+    private SparkLimitSwitch coralSensor;
+
+    private ValveDA coralPivot = new ValveDA(CORAL_PIVOT, PneumaticsModuleType.REVPH);
 
     private boolean isRunning = false;
     public boolean coralPivotStatus = false;
@@ -30,11 +34,23 @@ public class CoralManipulator extends SubsystemBase {
 
         coralMotor.configure(coralConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        coralConfig.follow(coralMotor);
+        coralSensor = coralMotor.getForwardLimitSwitch();
 
         Util.consoleLog("Coral Manipulator Initialized");
         }
     
+    public void intialize(){
+        pivotDown();
+
+        coralPivotStatus = false;
+
+        updateDS();
+    }
+    
+    public boolean hasCoral(){
+
+        return coralSensor.isPressed();
+    }
 
     public void start(double speedfactor){
 
