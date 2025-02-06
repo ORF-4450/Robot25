@@ -104,7 +104,7 @@ public class RobotContainer
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
 	private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
-	// PneumaticsControlModule class controls the PCM. New for 2022.
+	// PneumaticHub class controls the REV Pneumatics Hub Module. New for 2025.
 	private PneumaticHub	pneumaticHub = new PneumaticHub(COMPRESSOR);
 
 	// Navigation board.
@@ -375,23 +375,47 @@ public class RobotContainer
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new InstantCommand(driveBase::toggleBrakeMode));
 
+		//Drive to the AprilTag
 		new Trigger(() -> driverController.getBButton())
 			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.5, 0));
 
-		new Trigger(() -> driverController.getXButton())
-			.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
+		// new Trigger(() -> driverController.getXButton())
+		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
 		
+		//Drive to the Right Branch, offsetting from AprilTag
 		new Trigger(()-> driverController.getRightTrigger())
 			.whileTrue(new DriveToRight(driveBase, pvTagCamera, true, true));
 
 		new Trigger(() -> driverController.getLeftTrigger())
 			.whileTrue(new DriveToLeft(driveBase, pvTagCamera, true, true));
 		// -------- Utility pad buttons ----------
-		new Trigger(() -> utilityController.getAButton())
-			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_STATION_INTAKE));
-		new Trigger(() -> utilityController.getLeftTrigger())
-			.onTrue(new IntakeCoral(coralManipulator, elevatedManipulator));
+
+		//Moves the coral manipulator/elevator to the intake position for the coral station.
+		new Trigger(() -> utilityController.getRightBumper())
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_STATION_INTAKE));
 		
+		//Moves the coral manipulator/elevator to the L1 Branch scoring position
+		new Trigger(() -> utilityController.getXButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1));
+
+		//Moves the coral manipulator/elevator to the L2 Branch scoring position.
+		new Trigger(() -> utilityController.getAButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
+
+		//Moves the coral manipulator/elevator to the L3 Branch scoring position.
+		new Trigger(() -> utilityController.getBButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));
+
+		//Moves the coral manipulator/elevator to the L4 Branch scoring position.
+		new Trigger(() -> utilityController.getYButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
+		
+		//Runs coral manipulator intake if the elevator and manipulator are in the correct position.
+		new Trigger(() -> utilityController.getLeftTrigger() && !elevatedManipulator.intakeDoesTheAlgaeInsteadOfCoral)
+			.toggleOnTrue(new IntakeCoral(coralManipulator, elevatedManipulator));
+		
+		new Trigger(() -> utilityController.getRightTrigger())
+			.whileTrue(new InstantCommand(coralManipulator::startOuttaking));
 	}
 
 	/**
