@@ -10,13 +10,13 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import Team4450.Lib.CameraFeed;
 import Team4450.Lib.XboxController;
 import Team4450.Robot25.commands.DriveCommand;
-import Team4450.Robot25.commands.DriveToRight;
-import Team4450.Robot25.commands.DriveToLeft;
 import Team4450.Robot25.commands.DriveToTag;
 import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.PointToYaw;
+import Team4450.Robot25.commands.SetTargetPose;
 import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
+import Team4450.Robot25.commands.GoToPose;
 import Team4450.Robot25.subsystems.Candle;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
@@ -34,6 +34,8 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -68,7 +70,7 @@ public class RobotContainer
 	// command is added to the Scheduler to be run, its initialize method is called. Then on
 	// each scheduler run, as long as the command is still scheduled, its execute method is
 	// called followed by isFinished. If isFinished it false, the command remains in the
-	// scheduler list and on next run, execute is called followed by isFinihsed. If isFinished
+	// scheduler list and on next run, execute is called followed by isFinished. If isFinished
 	// returns true, the end method is called and the command is removed from the scheduler list.
 	// Now if you create another instance with new, you get the constructor again. But if you 
 	// are re-scheduling an existing command instance (like the ones above), you do not get the
@@ -186,8 +188,9 @@ public class RobotContainer
 
 		// This sets up the photonVision subsystem to constantly update the robotDrive odometry
 	    // with AprilTags (if it sees them). (As well as vision simulator)
-		// Rich Below commented out since no cameras on test robot.
-		// pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
+
+		// Not applicable anymore: Rich Below commented out since no cameras on test robot.
+		pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
@@ -360,17 +363,17 @@ public class RobotContainer
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new InstantCommand(driveBase::toggleBrakeMode));
 
-		new Trigger(() -> driverController.getBButton())
-			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.3, 0));
+		// new Trigger(() -> driverController.getBButton())
+		// 	.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.3, 0));
 
-		new Trigger(() -> driverController.getXButton())
-			.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
+		// new Trigger(() -> driverController.getXButton())
+		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
 		
-		new Trigger(()-> driverController.getRightTrigger())
-			.whileTrue(new DriveToRight(driveBase, pvTagCamera, true, true));
+		new Trigger(()-> driverController.getBButton())
+			.whileTrue(new GoToPose(driveBase, true, true));
 
-		new Trigger(() -> driverController.getLeftTrigger())
-			.whileTrue(new DriveToLeft(driveBase, pvTagCamera, true, true));
+		new Trigger(()-> driverController.getXButton())
+			.onTrue(new SetTargetPose(driveBase, new Pose2d(11.5, 4.3, new Rotation2d(0))));
 		// -------- Utility pad buttons ----------
 		
 	}

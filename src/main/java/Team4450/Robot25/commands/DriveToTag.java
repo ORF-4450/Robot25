@@ -35,8 +35,8 @@ public class DriveToTag extends Command {
     private double targetRobotRot;
     private boolean alsoDrive;
     private boolean initialFieldRel;
-    private double targetX;
-    private double targetY;
+    private double currentX;
+    private double currentY;
     private double lastTargetX;
     private double lastTargetY;
     private boolean firstLoop;
@@ -98,8 +98,8 @@ public class DriveToTag extends Command {
         }
 
         if (iCount < 7 && !firstLoop) {
-            targetX = (ttarget.get().estimatedPose.getX() + lastTargetX) / 2;
-            targetY = (ttarget.get().estimatedPose.getY() + lastTargetY) / 2;
+            currentX = (ttarget.get().estimatedPose.getX() + lastTargetX) / 2;
+            currentY = (ttarget.get().estimatedPose.getY() + lastTargetY) / 2;
             iCount += 1;
         } else {
             iCount = 0;
@@ -114,13 +114,13 @@ public class DriveToTag extends Command {
         double toleranceY = 0.15;
         double toleranceRot = 1;
 
-        if (targetX < targetRobotX - Constants.xCameraOffset - toleranceX || targetX > targetRobotX - Constants.xCameraOffset + toleranceX) {
-            movementX = translationControllerX.calculate(targetX);
+        if (currentX < targetRobotX - Constants.xCameraOffset - toleranceX || currentX > targetRobotX - Constants.xCameraOffset + toleranceX) {
+            movementX = translationControllerX.calculate(currentX);
         } else {
             movementX = 0;
         }
-        if (targetY < targetRobotY - Constants.yCameraOffset - toleranceY || targetY > targetRobotY - Constants.yCameraOffset + toleranceY) {
-            movementY = translationControllerY.calculate(targetY);
+        if (currentY < targetRobotY - Constants.yCameraOffset - toleranceY || currentY > targetRobotY - Constants.yCameraOffset + toleranceY) {
+            movementY = translationControllerY.calculate(currentY);
         } else {
             movementY = 0;
         }
@@ -137,8 +137,8 @@ public class DriveToTag extends Command {
         if (alsoDrive) {
             robotDrive.driveRobotRelative(movementX, movementY, rotation);
             firstLoop = false;
-            lastTargetX = targetX;
-            lastTargetY = targetY;
+            lastTargetX = currentX;
+            lastTargetY = currentY;
         } else {
             robotDrive.setTrackingRotation(0);
         }

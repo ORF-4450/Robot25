@@ -33,6 +33,7 @@ import Team4450.Lib.Talon_FX;
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -45,6 +46,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -293,6 +295,25 @@ public class DriveBase extends SubsystemBase {
    */
   public Pose2d getPose() {
     return odometry.getEstimatedPosition();
+  }
+
+  private Pose2d targetPose = new Pose2d(0, 0, new Rotation2d(0));
+
+  /**
+   * Set that target pose that the robot will try to get to while goToPose is being called.
+   * This will not ovoid any objects.
+   * @param targetPose
+   */
+  public void setTargetPose(Pose2d targetPose) {
+    this.targetPose = targetPose;
+  }
+
+  /**
+   * Get the pose set by setTargetPose function
+   * @return targetPose
+   */
+  public Pose2d getTargetPose() {
+    return this.targetPose;
   }
 
   /**
