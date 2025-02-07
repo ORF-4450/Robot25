@@ -1,6 +1,7 @@
 
 package Team4450.Robot25;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -74,6 +75,17 @@ public final class Constants
         new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
+    // Find positions
+    // map of positions for the robot to go to based on which april tag it sees
+    public static HashMap<Integer, Pose2d> aprilTagToPoseMap = new HashMap<>(); {
+        // april id, location to go to
+        aprilTagToPoseMap.put(10, new Pose2d(11.5, 4.5, new Rotation2d(Math.toRadians(30))));
+        aprilTagToPoseMap.put(11, new Pose2d(0, 0, new Rotation2d(Math.toRadians(0))));
+        aprilTagToPoseMap.put(12, new Pose2d(0, 0, new Rotation2d(Math.toRadians(0))));
+        aprilTagToPoseMap.put(13, new Pose2d(0, 0, new Rotation2d(Math.toRadians(0))));
+    }
+
+    //Find offsets
     public static double xCameraOffset = 0;
     public static double yCameraOffset = 0;
 
