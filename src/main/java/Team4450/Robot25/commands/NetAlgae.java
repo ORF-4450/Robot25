@@ -2,20 +2,18 @@ package Team4450.Robot25.commands;
 
 import Team4450.Lib.Util;
 import Team4450.Robot25.subsystems.AlgaeManipulator;
-import Team4450.Robot25.subsystems.ElevatedManipulator;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class RemoveAlgae extends Command {
+public class NetAlgae extends Command {
     private final AlgaeManipulator algaeManipulator;
 
     private static enum State{REMOVE, RETURN, STOP};
-    private State state = State.RETURN;
-
+    private State state = State.REMOVE;
     double startTime;
 
-    public RemoveAlgae(AlgaeManipulator algaeManipulator){
+    public NetAlgae(AlgaeManipulator algaeManipulator){
         this.algaeManipulator = algaeManipulator;
 
         addRequirements(algaeManipulator);
@@ -26,7 +24,6 @@ public class RemoveAlgae extends Command {
     public void initialize(){
         state = State.REMOVE;
         SmartDashboard.putString("Algae Manipulator Status", state.name());
-
         startTime = Util.timeStamp();
     }
 
@@ -34,14 +31,15 @@ public class RemoveAlgae extends Command {
         switch(state){
 
             case REMOVE:
-                algaeManipulator.startIntaking();
-                if(Util.timeStamp() - startTime > 2.0)
+                algaeManipulator.startOuttaking();
+                if(Util.timeStamp() - startTime > 3.0)
                     state = State.RETURN;
                 break;
 
             case RETURN:
                 algaeManipulator.retractIn();
-                if(algaeManipulator.algaeExtendStatus == false)
+                algaeManipulator.pivotUp();
+                if(algaeManipulator.algaeExtendStatus && algaeManipulator.algaePivotStatus== false)
                     state = State.STOP;
                 break;
 
