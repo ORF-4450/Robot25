@@ -226,7 +226,7 @@ public class Watchdog implements Closeable, Comparable<Watchdog> {
   }
 
 
-  @SuppressWarnings("all") // added by cole because I don't understand this file and its the last warning left in the code
+  @SuppressWarnings("all") // added by Cole because I don't understand this file and its the last warning left in the code
   private static void updateAlarm() {
     if (m_watchdogs.size() == 0) {
       NotifierJNI.cancelNotifierAlarm(m_notifier);

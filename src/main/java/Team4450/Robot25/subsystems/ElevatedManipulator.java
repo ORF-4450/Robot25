@@ -10,6 +10,7 @@ public class ElevatedManipulator extends SubsystemBase {
     public final Elevator elevator;
     
     public static enum PresetPosition{
+        /* Reset Position */ RESET,
         /* Coral Station Intaking Position */ CORAL_STATION_INTAKE,
         /* Coral Scoring Position L1 */ CORAL_SCORING_L1,
         /* Coral Scoring Position L2 */ CORAL_SCORING_L2,
@@ -43,6 +44,12 @@ public class ElevatedManipulator extends SubsystemBase {
         this.position = position;
         
         switch(position){
+            case RESET:
+                endGoalElevatorHeight = 0.0;
+                endGoalCoralPivotStatus = false;
+                endGoalAlgaeExtendStatus = false;
+                endGoalAlgaePivotStatus = false;
+
             case CORAL_STATION_INTAKE:
                 endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = true;

@@ -37,7 +37,7 @@ public class Elevator extends SubsystemBase {
     private final double TOLERANCE_COUNTS = 1.5;
     private final double START_COUNTS = 0.08 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
 
-    private double targetPosition = Double.NaN;
+    private double targetPosition = Double.NaN; //in units of Rotations
 
     public Elevator(){
         Util.consoleLog();
@@ -78,7 +78,8 @@ public class Elevator extends SubsystemBase {
         if (targetPosition > -5) 
             targetPosition = -5; 
 
-        //Main PID/Profile Loop
+        //Main PID/Profile Loop which is used to control the elevator, and uses targetPosition 
+        //which has units of rotations.  
         mainPID.setGoal(targetPosition);
         double nonclamped = mainPID.calculate(mainEncoder.getPosition());
         double motorOutput = Util.clampValue(nonclamped, 1);
@@ -115,18 +116,18 @@ public class Elevator extends SubsystemBase {
         motorMain.set(speed);  
     }
     
-    //Sets the target position of the elevator in meters
+    //Sets the target position of the elevator in meters, which is converted to rotations
     public void setElevatorHeight(double height){
-        targetPosition = height/ELEVATOR_WINCH_FACTOR; //meters to encoder counts
+        targetPosition = height/ELEVATOR_WINCH_FACTOR; //meters to rotations
     }
 
-    //Checks if the elevator is at the target position
+    //Checks if the elevator is at the target height by converting given height to rotations: returns rotations
     public boolean isElevatorAtTarget(double height){
         double setpoint = height/ELEVATOR_WINCH_FACTOR;
         return Math.abs(setpoint - mainEncoder.getPosition()) < TOLERANCE_COUNTS;
     }
 
-    //Gets the height of the elevator in meters by converting encoder counts to meters
+    //Gets the height of the elevator in meters by converting rotations to meters: returns meters
     public double getElevatorHeight(){
         double elevatorHeight = mainEncoder.getPosition() * ELEVATOR_WINCH_FACTOR;
         return elevatorHeight;

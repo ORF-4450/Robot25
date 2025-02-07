@@ -48,26 +48,28 @@ public class AlgaeManipulator extends SubsystemBase {
     
 
     public void start(double speedfactor){
-
         isRunning = Math.abs(speedfactor) > 0.02;
+        
         updateDS();
 
-        SmartDashboard.putNumber("Algae_SpeedFactor", speedfactor);
         algaeMotor.set(Util.clampValue(speedfactor, 1));
     }
 
     public void startIntaking(){
-        SmartDashboard.putBoolean("Intake Status", true);
+        isRunning = true;
         algaeMotor.set(-0.5);
-
+        updateDS();
     }
 
     public void startOuttaking(){
-        SmartDashboard.putBoolean("Intake Status", false);
+        isRunning = true;
         algaeMotor.set(0.5);
+        updateDS();
     }
     public void start(){
        start(1);
+       isRunning = true;
+       updateDS();
     }
 
     public void stop(){
@@ -87,6 +89,7 @@ public class AlgaeManipulator extends SubsystemBase {
         algaePivot.SetA();
     
         algaePivotStatus = true;
+
         updateDS();
 
     }
@@ -97,6 +100,7 @@ public class AlgaeManipulator extends SubsystemBase {
         algaePivot.SetB();
 
         algaePivotStatus = false;
+
         updateDS();
     }
 
@@ -106,6 +110,8 @@ public class AlgaeManipulator extends SubsystemBase {
         algaeExtend.SetA();
 
         algaeExtendStatus = true;
+
+        updateDS();
     }
 
     public void retractIn(){
@@ -114,6 +120,8 @@ public class AlgaeManipulator extends SubsystemBase {
         algaeExtend.SetB();
 
         algaeExtendStatus = false;
+
+        updateDS();
     }
 
     public void setAlgaePivot(boolean status){
@@ -121,9 +129,13 @@ public class AlgaeManipulator extends SubsystemBase {
 
         if (status == true){
             pivotUp();
+            algaePivotStatus = true;
         } else if (status == false){
             pivotDown();
+            algaePivotStatus = false;
         }
+    
+        updateDS();
     }
 
     public void setAlgaeExtend(boolean status){
@@ -131,12 +143,16 @@ public class AlgaeManipulator extends SubsystemBase {
 
         if (status == true){
             algaeExtend.SetA();
+            algaeExtendStatus = true;
         } else if (status == false){
             algaeExtend.SetB();
+            algaeExtendStatus = false;
         }
+        updateDS();
     }   
     private void updateDS() {
-        SmartDashboard.putBoolean("Algae Manipulator", isRunning);
-        SmartDashboard.putBoolean("Algae Pivot", algaePivotStatus);
+        SmartDashboard.putBoolean("Algae Manipulator Running", isRunning);
+        SmartDashboard.putBoolean("Algae Pivot On", algaePivotStatus);
+        SmartDashboard.putBoolean("Algae Extended Out", algaeExtendStatus);
     }
 }
