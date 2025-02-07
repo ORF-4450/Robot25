@@ -9,6 +9,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.DriveCommand;
 import Team4450.Robot25.commands.DriveToTag;
+import Team4450.Robot25.commands.DriveToLeft;
+import Team4450.Robot25.commands.DriveToRight;
 import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
@@ -370,10 +372,9 @@ public class RobotContainer
 		new Trigger(() -> driverController.getBackButton())
 			.onTrue(new InstantCommand(driveBase::toggleFieldRelative));
 
-		Holding x button sets X pattern to stop movement.
+		//Holding x button sets X pattern to stop movement.
 		new Trigger(() -> driverController.getXButton())
 				.whileTrue(new RunCommand(() -> driveBase.setX(), driveBase));
-			.whileTrue(new RunCommand(() -> driveBase.fxEncoder.reset(), driveBase));
 
 		// toggle brake mode
 		new Trigger(() -> driverController.getAButton())
@@ -391,11 +392,15 @@ public class RobotContainer
 		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
 		
 
-		//Drive to the Right Branch, offsetting from AprilTag
+		//Drive to the Right Branch, offsetting from AprilTag (using Pitch/Yaw)
 		new Trigger(()-> driverController.getRightTrigger())
 			.whileTrue(new DriveToRight(driveBase, pvTagCamera, true, true));
-
-    //Drive to the AprilTag using Pose information
+		
+		//Drive to the Left Branch, offsetting from AprilTag (using Pitch/Yaw
+		new Trigger(()-> driverController.getLeftTrigger())
+			.whileTrue(new DriveToLeft(driveBase, pvTagCamera, true, true));
+		
+    	//Drive to the AprilTag using Pose information
 		new Trigger(()-> driverController.getBButton())
 			.whileTrue(new GoToPose(driveBase, true, true));
 
@@ -406,7 +411,8 @@ public class RobotContainer
 
 		//Moves the coral manipulator/elevator to the intake position for the coral station.
 		new Trigger(() -> utilityController.getRightBumper())
-			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_STATION_INTAKE));
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_STATION_INTAKE)
+				.andThen(new IntakeCoral(coralManipulator, elevatedManipulator)));
 		
 		//Moves the coral manipulator/elevator to the L1 Branch scoring position
 		new Trigger(() -> utilityController.getXButton())
@@ -431,6 +437,9 @@ public class RobotContainer
 		//Runs coral manipulator outtake if the elevator and manipulator are in the correct position.
 		new Trigger(() -> utilityController.getRightTrigger())
 			.toggleOnTrue(new OuttakeCoral(coralManipulator, elevatedManipulator));}
+		
+		// //Runs algae manipulator intake if the elevator and manipulator are in the set position.
+		
 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
