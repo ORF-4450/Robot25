@@ -7,7 +7,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import Team4450.Robot25.Constants;
 import Team4450.Robot25.subsystems.DriveBase;
+import Team4450.Robot25.subsystems.PhotonVision;
 
 
 /**
@@ -23,17 +25,22 @@ public class GoToPose extends Command {
     PIDController translationControllerX = new PIDController(0.1, 0.1, 0); // for moving drivebase in X,Y plane
     PIDController translationControllerY = new PIDController(0.1, 0.1, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
+    PhotonVision photonVision;
     private boolean alsoDrive;
     private boolean initialFieldRel;
-    private boolean finished;
+    private boolean isFinished;
+    private double toleranceX = 0.05;
+    private double toleranceY = 0.05;
+    private double toleranceRot = 1;
     /**
      * @param robotDrive the drive subsystem
      */
 
-    public GoToPose (DriveBase robotDrive, boolean alsoDrive, boolean initialFieldRel) {
+    public GoToPose (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel) {
         this.robotDrive = robotDrive;
+        this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
-        finished = false;
+        isFinished = false;
 
         if (alsoDrive) addRequirements(robotDrive);
 
@@ -44,8 +51,19 @@ public class GoToPose extends Command {
 
     public void initialize () {
         Util.consoleLog();
+        
+        if (photonVision.hasTargets()) {
+            Util.consoleLog("TARGET FOUND");
+            Util.consoleLog("ID #:", String.valueOf(photonVision.getFiducialID()));
+            Util.consoleLog("Pose: ", Constants.aprilTagToPoseMap.get(photonVision.getFiducialID()).toString());
+            robotDrive.setTargetPose(Constants.aprilTagToPoseMap.get(photonVision.getFiducialID()));
+        } else {
+            Util.consoleLog("NO TARGET FOUND");
+            return;
+        }
 
         if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
+            Util.consoleLog("NO TARGET ASSIGNED");
             return;
         }
 
@@ -58,14 +76,14 @@ public class GoToPose extends Command {
         robotDrive.enableTrackingSlowMode();
         
         rotationController.setSetpoint(robotDrive.getTargetPose().getRotation().getRadians());
-        rotationController.setTolerance(0.5);
+        rotationController.setTolerance(toleranceRot);
 
         // translationControllerX.setSetpoint(-15); // target should be at -15 pitch
         translationControllerX.setSetpoint(robotDrive.getTargetPose().getX());
-        translationControllerX.setTolerance(0.5);
+        translationControllerX.setTolerance(toleranceX);
 
         translationControllerY.setSetpoint(robotDrive.getTargetPose().getY());
-        translationControllerY.setTolerance(0.5);
+        translationControllerY.setTolerance(toleranceY);
 
         SmartDashboard.putString("GoToPose", "Tag Tracking Initialized");
     }
@@ -87,10 +105,6 @@ public class GoToPose extends Command {
         double movementY;
         double rotation;
 
-        double toleranceX = 0.05;
-        double toleranceY = 0.05;
-        double toleranceRot = 1;
-
         Util.consoleLog(robotDrive.getTargetPose().toString());
         Util.consoleLog(String.valueOf(robotDrive.getPose().getX()));
 
@@ -111,7 +125,7 @@ public class GoToPose extends Command {
         }
 
         if (movementX == 0 && movementY == 0 && rotation == 0) {
-            finished = true;
+            isFinished = true;
             end(false);
             return;
         }
@@ -125,7 +139,7 @@ public class GoToPose extends Command {
     }
 
     public boolean isFinished() {
-        if (finished) {
+        if (isFinished) {
             return true;
         }
         return false;

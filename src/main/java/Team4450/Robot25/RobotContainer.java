@@ -4,19 +4,15 @@ package Team4450.Robot25;
 import static Team4450.Robot25.Constants.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.DriveCommand;
-import Team4450.Robot25.commands.DriveToTag;
 import Team4450.Robot25.commands.DriveToLeft;
 import Team4450.Robot25.commands.DriveToRight;
-import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
 import Team4450.Robot25.commands.PointToYaw;
 import Team4450.Robot25.commands.SetTargetPose;
-import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
 import Team4450.Robot25.commands.GoToPose;
 import Team4450.Robot25.commands.Preset;
@@ -54,11 +50,8 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -67,10 +60,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
+@SuppressWarnings("unused")
 public class RobotContainer 
 {
 	// Subsystems.
-
 	public static ShuffleBoard	shuffleBoard;
 	public static DriveBase 	driveBase;
 	public static PhotonVision	pvTagCamera;
@@ -402,8 +395,7 @@ public class RobotContainer
 		
     	//Drive to the AprilTag using Pose information
 		new Trigger(()-> driverController.getBButton())
-			.whileTrue(new GoToPose(driveBase, true, true));
-
+			.whileTrue(new GoToPose(driveBase, pvTagCamera, true, true));
 
 		new Trigger(()-> driverController.getYButton())
 			.onTrue(new SetTargetPose(driveBase, new Pose2d(11.5, 4.3, new Rotation2d(0))));
