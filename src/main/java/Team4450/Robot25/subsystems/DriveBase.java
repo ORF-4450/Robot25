@@ -313,7 +313,11 @@ public class DriveBase extends SubsystemBase {
    * @return targetPose
    */
   public Pose2d getTargetPose() {
-    return this.targetPose;
+    if (this.targetPose == null) {
+      return new Pose2d(0, 0, new Rotation2d(0));
+    } else {
+      return this.targetPose;
+    }
   }
 
   /**

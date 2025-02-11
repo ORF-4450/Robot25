@@ -10,7 +10,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import Team4450.Lib.CameraFeed;
 import Team4450.Lib.XboxController;
 import Team4450.Robot25.commands.DriveCommand;
-import Team4450.Robot25.commands.DriveToTag;
+import Team4450.Robot25.commands.SetTagBasedPostion;
 import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.PointToYaw;
 import Team4450.Robot25.commands.SetTargetPose;
@@ -373,7 +373,7 @@ public class RobotContainer
 			.whileTrue(new GoToPose(driveBase, true, true));
 
 		new Trigger(()-> driverController.getXButton())
-			.onTrue(new SetTargetPose(driveBase, new Pose2d(11.5, 4.3, new Rotation2d(0))));
+			.whileTrue(new SetTagBasedPostion(driveBase, pvTagCamera, true)); // True for scoring on left side
 		// -------- Utility pad buttons ----------
 		
 	}

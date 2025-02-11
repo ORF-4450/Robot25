@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import Team4450.Robot25.subsystems.DriveBase;
 
-
 /**
    * This function uses the current robot position estimate that is build from odometry and apriltags to go to a location on the field.
    * Will return imidiatly when the location is reached.
@@ -25,7 +24,10 @@ public class GoToPose extends Command {
     DriveBase robotDrive;
     private boolean alsoDrive;
     private boolean initialFieldRel;
-    private boolean finished;
+    private boolean isFinished;
+    private double toleranceX = 0.05;
+    private double toleranceY = 0.05;
+    private double toleranceRot = 1;
     /**
      * @param robotDrive the drive subsystem
      */
@@ -33,21 +35,19 @@ public class GoToPose extends Command {
     public GoToPose (DriveBase robotDrive, boolean alsoDrive, boolean initialFieldRel) {
         this.robotDrive = robotDrive;
         this.alsoDrive = alsoDrive;
-        finished = false;
+        isFinished = false;
 
         if (alsoDrive) addRequirements(robotDrive);
 
-        SendableRegistry.addLW(translationControllerX, "DriveToTag Translation PID");
-        SendableRegistry.addLW(translationControllerY, "DriveToTag Translation PID");
-        SendableRegistry.addLW(rotationController, "DriveToTag Rotation PID");
+        SendableRegistry.addLW(translationControllerX, "GoToPose Translation PID");
+        SendableRegistry.addLW(translationControllerY, "GoToPose Translation PID");
+        SendableRegistry.addLW(rotationController, "GoToPose Rotation PID");
     }
 
     public void initialize () {
         Util.consoleLog();
 
-        if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
-            return;
-        }
+        
 
         // store the initial field relative state to reset it later.
         initialFieldRel = robotDrive.getFieldRelative();
@@ -58,14 +58,14 @@ public class GoToPose extends Command {
         robotDrive.enableTrackingSlowMode();
         
         rotationController.setSetpoint(robotDrive.getTargetPose().getRotation().getRadians());
-        rotationController.setTolerance(0.5);
+        rotationController.setTolerance(toleranceRot);
 
         // translationControllerX.setSetpoint(-15); // target should be at -15 pitch
         translationControllerX.setSetpoint(robotDrive.getTargetPose().getX());
-        translationControllerX.setTolerance(0.5);
+        translationControllerX.setTolerance(toleranceX);
 
         translationControllerY.setSetpoint(robotDrive.getTargetPose().getY());
-        translationControllerY.setTolerance(0.5);
+        translationControllerY.setTolerance(toleranceY);
 
         SmartDashboard.putString("GoToPose", "Tag Tracking Initialized");
     }
@@ -77,19 +77,21 @@ public class GoToPose extends Command {
             return;
         }
 
+        if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
+            // Smartdashboard warning on target assignment (Upgrade)
+            Util.consoleLog("NO TARGET ASSIGNED");
+            return;
+        }
+        
         if (robotDrive.getTargetPose() == null || (robotDrive.getTargetPose().getX() == 0 && robotDrive.getTargetPose().getY() == 0)) {
             robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
             robotDrive.clearPPRotationOverride();
             return;
         }
-     
+
         double movementX;
         double movementY;
         double rotation;
-
-        double toleranceX = 0.05;
-        double toleranceY = 0.05;
-        double toleranceRot = 1;
 
         Util.consoleLog(robotDrive.getTargetPose().toString());
         Util.consoleLog(String.valueOf(robotDrive.getPose().getX()));
@@ -111,7 +113,7 @@ public class GoToPose extends Command {
         }
 
         if (movementX == 0 && movementY == 0 && rotation == 0) {
-            finished = true;
+            isFinished = true;
             end(false);
             return;
         }
@@ -125,7 +127,7 @@ public class GoToPose extends Command {
     }
 
     public boolean isFinished() {
-        if (finished) {
+        if (isFinished) {
             return true;
         }
         return false;
