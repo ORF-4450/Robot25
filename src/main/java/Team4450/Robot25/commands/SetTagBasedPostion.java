@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Tracer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import Team4450.Robot25.utility.AprilTagMap;
 import Team4450.Robot25.Constants;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
@@ -53,7 +54,7 @@ public class SetTagBasedPostion extends Command {
             // Set status on smartdashboard instead? (upgrade)
             Util.consoleLog("TARGET FOUND");
 
-            Pose2d aprilTagPose = Constants.aprilTagToPoseMap.get(target.getFiducialId());
+            Pose2d aprilTagPose = AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId());
             if (aprilTagPose != null) {
                 // Offset pose by robot dist
                 // Offset by left or right dist
@@ -74,7 +75,7 @@ public class SetTagBasedPostion extends Command {
                 Util.consoleLog("Target not on reef");
                 return;
             }
-            Util.consoleLog(String.valueOf(Constants.aprilTagToPoseMap.get(target.getFiducialId())));
+            Util.consoleLog(String.valueOf(AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId())));
         } else {
             // Set warning on smartdashboard instead? (Upgrade)
             Util.consoleLog("NO TARGET FOUND");

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import Team4450.Robot25.Constants;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
+import Team4450.Robot25.utility.AprilTagMap;
 
 /**
    * This function uses the current robot position estimate that is build from odometry and apriltags to go to a location on the field.
@@ -54,8 +55,8 @@ public class GoToPose extends Command {
         if (photonVision.hasTargets()) {
             Util.consoleLog("TARGET FOUND");
             Util.consoleLog("ID #:", String.valueOf(photonVision.getFiducialID()));
-            Util.consoleLog("Pose: ", Constants.aprilTagToPoseMap.get(photonVision.getFiducialID()).toString());
-            robotDrive.setTargetPose(Constants.aprilTagToPoseMap.get(photonVision.getFiducialID()));
+            Util.consoleLog("Pose: ", AprilTagMap.aprilTagToPoseMap.get(photonVision.getFiducialID()).toString());
+            robotDrive.setTargetPose(AprilTagMap.aprilTagToPoseMap.get(photonVision.getFiducialID()));
         } else {
             Util.consoleLog("NO TARGET FOUND");
             return;
