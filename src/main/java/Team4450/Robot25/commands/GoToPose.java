@@ -11,7 +11,6 @@ import Team4450.Robot25.Constants;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
 
-
 /**
    * This function uses the current robot position estimate that is build from odometry and apriltags to go to a location on the field.
    * Will return imidiatly when the location is reached.
@@ -44,9 +43,9 @@ public class GoToPose extends Command {
 
         if (alsoDrive) addRequirements(robotDrive);
 
-        SendableRegistry.addLW(translationControllerX, "DriveToTag Translation PID");
-        SendableRegistry.addLW(translationControllerY, "DriveToTag Translation PID");
-        SendableRegistry.addLW(rotationController, "DriveToTag Rotation PID");
+        SendableRegistry.addLW(translationControllerX, "GoToPose Translation PID");
+        SendableRegistry.addLW(translationControllerY, "GoToPose Translation PID");
+        SendableRegistry.addLW(rotationController, "GoToPose Rotation PID");
     }
 
     public void initialize () {
@@ -59,11 +58,6 @@ public class GoToPose extends Command {
             robotDrive.setTargetPose(Constants.aprilTagToPoseMap.get(photonVision.getFiducialID()));
         } else {
             Util.consoleLog("NO TARGET FOUND");
-            return;
-        }
-
-        if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
-            Util.consoleLog("NO TARGET ASSIGNED");
             return;
         }
 
@@ -95,12 +89,18 @@ public class GoToPose extends Command {
             return;
         }
 
+        if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
+            // Smartdashboard warning on target assignment (Upgrade)
+            Util.consoleLog("NO TARGET ASSIGNED");
+            return;
+        }
+        
         if (robotDrive.getTargetPose() == null || (robotDrive.getTargetPose().getX() == 0 && robotDrive.getTargetPose().getY() == 0)) {
             robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
             robotDrive.clearPPRotationOverride();
             return;
         }
-     
+
         double movementX;
         double movementY;
         double rotation;

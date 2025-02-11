@@ -4,6 +4,7 @@ package Team4450.Robot25;
 import static Team4450.Robot25.Constants.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.DriveCommand;
@@ -11,6 +12,8 @@ import Team4450.Robot25.commands.DriveToLeft;
 import Team4450.Robot25.commands.DriveToRight;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
+import Team4450.Robot25.commands.SetTagBasedPostion;
+import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.PointToYaw;
 import Team4450.Robot25.commands.SetTargetPose;
 import Team4450.Robot25.commands.UpdateVisionPose;
@@ -405,8 +408,8 @@ public class RobotContainer
 		new Trigger(()-> driverController.getBButton())
 			.whileTrue(new GoToPose(driveBase, pvTagCamera, true, true));
 
-		new Trigger(()-> driverController.getYButton())
-			.onTrue(new SetTargetPose(driveBase, new Pose2d(11.5, 4.3, new Rotation2d(0))));
+		new Trigger(()-> driverController.getXButton())
+			.whileTrue(new SetTagBasedPostion(driveBase, pvTagCamera, true)); // True for scoring on left side
 		// -------- Utility pad buttons ----------
 
 		//Moves the coral manipulator/elevator to the intake position for the coral station.
