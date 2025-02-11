@@ -37,6 +37,7 @@ import Team4450.Robot25.Constants.ModuleConstants;
  * Represents one of the (four hopefully) Rev MAXSwerve modules on the DriveBase.
  * This class should only be used by DriveBase, never interact with it individually.
  */
+@SuppressWarnings("unused")
 public class MAXSwerveModule implements Sendable {
   private final SparkFlex drivingSparkFlex;
   private final SparkMax  turningSparkMax;

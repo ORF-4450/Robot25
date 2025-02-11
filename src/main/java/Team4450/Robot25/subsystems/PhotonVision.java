@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * is handled through the Network Tables and the tables are wrapped by
  * by PhotonLib.
  */
+@SuppressWarnings("unused")
 public class PhotonVision extends SubsystemBase
 {
     private PhotonCamera            camera;
@@ -499,8 +500,8 @@ public class PhotonVision extends SubsystemBase
             
             for (int i = 0; i < estimatedPose.targetsUsed.size(); i++) {
                 int id = estimatedPose.targetsUsed.get(i).getFiducialId();
-                // if a target was used with ID > 16 then return no estimated pose
-                if (id > 16) {
+                // if a target was used with ID > 22 then return no estimated pose
+                if (id > 22) {
                     return Optional.empty();
                 }
                 
