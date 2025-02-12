@@ -1,7 +1,6 @@
 
 package Team4450.Robot25;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;

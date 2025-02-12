@@ -23,7 +23,7 @@ import Team4450.Robot25.subsystems.PhotonVision;
    * @return Void
    */
 
-public class SetTagBasedPostion extends Command {
+public class SetTagBasedPosition extends Command {
     DriveBase robotDrive;
     PhotonVision photonVision;
     private boolean scoreLeft;
@@ -31,7 +31,7 @@ public class SetTagBasedPostion extends Command {
      * @param robotDrive the drive subsystem
      */
 
-    public SetTagBasedPostion (DriveBase robotDrive, PhotonVision photonVision, boolean scoreLeft) {
+    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, boolean scoreLeft) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.scoreLeft = scoreLeft; // If true score on left side else score on right side
