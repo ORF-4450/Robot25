@@ -2,7 +2,7 @@ package Team4450.Robot25.commands;
 
 import Team4450.Lib.Util;
 import Team4450.Robot25.subsystems.AlgaeManipulator;
-import edu.wpi.first.wpilibj.RobotBase;
+// import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -33,7 +33,7 @@ public class NetAlgae extends Command {
             case REMOVE:
                 algaeManipulator.startOuttaking();
                 if(Util.timeStamp() - startTime > 3.0)
-                    state = State.RETURN;
+                    state = State.STOP;
                 break;
 
             case RETURN:

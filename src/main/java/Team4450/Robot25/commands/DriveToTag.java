@@ -7,14 +7,10 @@ import Team4450.Robot25.subsystems.PhotonVision;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import org.opencv.ml.EM;
 import org.photonvision.EstimatedRobotPose;
-import org.photonvision.targeting.PhotonTrackedTarget;
-
 import java.util.Optional;
 
 
@@ -90,17 +86,17 @@ public class DriveToTag extends Command {
     public void execute() {
       // logic for chosing "closest" target in PV subsystem
     
-        Optional<EstimatedRobotPose> ttarget = photonVision.getEstimatedPose();
+        Optional<EstimatedRobotPose> target = photonVision.getEstimatedPose();
 
-        if (ttarget == null || !ttarget.isPresent()) {
+        if (target == null || !target.isPresent()) {
             robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
             robotDrive.clearPPRotationOverride();
             return;
         }
 
         if (iCount < 7 && !firstLoop) {
-            currentX = (ttarget.get().estimatedPose.getX() + lastTargetX) / 2;
-            currentY = (ttarget.get().estimatedPose.getY() + lastTargetY) / 2;
+            currentX = (target.get().estimatedPose.getX() + lastTargetX) / 2;
+            currentY = (target.get().estimatedPose.getY() + lastTargetY) / 2;
             iCount += 1;
         } else {
             iCount = 0;
