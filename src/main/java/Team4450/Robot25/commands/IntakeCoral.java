@@ -12,7 +12,7 @@ public class IntakeCoral extends Command {
     private final ElevatedManipulator elevatedManipulator;
 
     private static enum State{MOVING, INTAKE, STOP};
-    private State state = State.INTAKE;
+    private State state = State.MOVING;
 
     public IntakeCoral(CoralManipulator coralManipulator, ElevatedManipulator elevatedManipulator){
         this.coralManipulator = coralManipulator;
@@ -34,17 +34,16 @@ public class IntakeCoral extends Command {
             case MOVING:
                 if(elevatedManipulator.executeSetPosition(PresetPosition.CORAL_STATION_INTAKE)) { //Checks if the manipulator and elevator are in the intake position
                     state = State.INTAKE; //Then move to the intake state
-                    SmartDashboard.putString("Intake Coral Status", state.name());
+                SmartDashboard.putString("Intake Coral Status", state.name());
                 }
                 break;
                 
             case INTAKE:
                 coralManipulator.startIntaking(); //Start intaking the coral
 
-                if(coralManipulator.hasCoral()){ //If the beam break sensor on the coral manipulator returns false, then stop intaking
+                if(coralManipulator.hasCoral()) //If the beam break sensor on the coral manipulator returns false, then stop intaking
                     state = State.STOP; //Switch the state of the switch case to STOP
-                    SmartDashboard.putString("Intake Coral Status", state.name());
-                }
+                SmartDashboard.putString("Intake Coral Status", state.name());
                 break;
 
             case STOP:
