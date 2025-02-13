@@ -82,7 +82,7 @@ public class Elevator extends SubsystemBase {
         //which has units of rotations.  
         mainPID.setGoal(targetPosition);
         double nonclamped = mainPID.calculate(mainEncoder.getPosition());
-        double motorOutput = Util.clampValue(nonclamped, 1);
+        double motorOutput = Util.clampValue(nonclamped, 0.25);
         SmartDashboard.putNumber("Elevator Speed", motorOutput);
         motorMain.set(motorOutput);
     }
