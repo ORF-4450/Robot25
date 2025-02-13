@@ -33,7 +33,7 @@ public class CoralManipulator extends SubsystemBase {
 
         coralMotor.configure(coralConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        coralSensor = coralMotor.getForwardLimitSwitch();
+        // coralSensor = coralMotor.getForwardLimitSwitch();
 
         Util.consoleLog("Coral Manipulator Initialized");
         }
@@ -84,7 +84,7 @@ public class CoralManipulator extends SubsystemBase {
         Util.consoleLog();
 
         coralMotor.stopMotor();
-        pivotDown();
+        // pivotDown();
 
         isRunning = false;
         coralPivotStatus = false;
@@ -123,9 +123,16 @@ public class CoralManipulator extends SubsystemBase {
         updateDS();
     }
 
+    public double getCurrent(){
+        double current = coralMotor.getOutputCurrent();
+        SmartDashboard.putNumber("Coral Manipulator Current", current);
+        return current;
+    }
+
     private void updateDS() {
         SmartDashboard.putBoolean("Coral Manipulator Running", isRunning);
-        SmartDashboard.putBoolean("Coral Pivot On", coralPivotStatus);
-        SmartDashboard.putBoolean("Has Coral", hasCoral());
+
+        // SmartDashboard.putBoolean("Coral Pivot On", coralPivotStatus);
+        // SmartDashboard.putBoolean("Has Coral", hasCoral());
     }
 }

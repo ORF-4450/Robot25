@@ -14,25 +14,20 @@ public class RemoveAlgae extends Command {
     private State state = State.RETURN;
 
     double startTime;
-
     public RemoveAlgae(AlgaeManipulator algaeManipulator){
         this.algaeManipulator = algaeManipulator;
 
         addRequirements(algaeManipulator);
-
-        SmartDashboard.putString("Algae Manipulator Status", state.name());
     }
 
     public void initialize(){
         state = State.REMOVE;
         SmartDashboard.putString("Algae Manipulator Status", state.name());
-
         startTime = Util.timeStamp();
     }
 
     public void execute(){
         switch(state){
-
             case REMOVE:
                 algaeManipulator.startIntaking();
                 if(Util.timeStamp() - startTime > 2.0)
@@ -41,6 +36,7 @@ public class RemoveAlgae extends Command {
 
             case RETURN:
                 algaeManipulator.retractIn();
+                algaeManipulator.pivotUp();
                 if(algaeManipulator.algaeExtendStatus == false)
                     state = State.STOP;
                 break;

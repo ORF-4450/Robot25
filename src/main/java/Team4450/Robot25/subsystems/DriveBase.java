@@ -27,13 +27,7 @@ import Team4450.Robot25.AdvantageScope;
 import Team4450.Robot25.Constants;
 import Team4450.Robot25.RobotContainer;
 import Team4450.Lib.Util;
-import Team4450.Lib.FXEncoder;
-import Team4450.Lib.Talon_FX;
-
-import edu.wpi.first.hal.SimDouble;
-import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -44,9 +38,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.util.WPIUtilJNI;
-import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -313,7 +305,11 @@ public class DriveBase extends SubsystemBase {
    * @return targetPose
    */
   public Pose2d getTargetPose() {
-    return this.targetPose;
+    if (this.targetPose == null) {
+      return new Pose2d(0, 0, new Rotation2d(0));
+    } else {
+      return this.targetPose;
+    }
   }
 
   /**

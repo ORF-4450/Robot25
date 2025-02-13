@@ -74,6 +74,9 @@ public final class Constants
         new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
+    public static double robotCoralLongitudinalScoringDistance = 0.3; // 0.3 meters distance from the tag for scoring coral.
+    public static double robotCoralLateralScoringOffset = 0.2; // Added to the target position if scoring left and subtracted if scoring right.
+
     public static double xCameraOffset = 0;
     public static double yCameraOffset = 0;
 
@@ -113,7 +116,7 @@ public final class Constants
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
         
         //TrackingMode Speed:
-        public static final double kTrackingModeFactor = 0.40;
+        public static final double kTrackingModeFactor = 0.01;
         public static final double kRotTrackingModeFactor = 0.20;
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.
