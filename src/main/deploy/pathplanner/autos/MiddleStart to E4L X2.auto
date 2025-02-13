@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MiddleStart to E4L Coral"
+            "pathName": "MiddleStart to E"
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "E4L to CoralPickup"
+            "pathName": "E to TopCoralPickup"
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CoralPickup to E4L"
+            "pathName": "TopCoralPickup to E"
           }
         },
         {

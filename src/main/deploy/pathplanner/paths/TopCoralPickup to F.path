@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.5328345070422522,
+        "y": 7.199647887323944
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.373033124671439,
+        "y": 4.54071969898307
+      },
+      "isLocked": false,
+      "linkedName": "Coral Pickup"
+    },
+    {
+      "anchor": {
+        "x": 3.7862676056338023,
+        "y": 5.258010563380281
+      },
+      "prevControl": {
+        "x": 1.5049702457326024,
+        "y": 7.16208072132921
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "F"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -61.0735741647464
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "useDefaultConstraints": true
+}
