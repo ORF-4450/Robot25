@@ -11,21 +11,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "Raise to L4"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Outtake Coral"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise to L4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Outtake Coral"
+                }
+              }
+            ]
           }
         },
         {
@@ -35,9 +42,40 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Receive First Coral"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "CoralPickup to E4L"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise to L4"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Outtake Coral"
+                }
+              }
+            ]
           }
         }
       ]

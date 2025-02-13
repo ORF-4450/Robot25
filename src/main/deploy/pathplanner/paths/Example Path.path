@@ -1,0 +1,192 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.584507042253521,
+        "y": 6.179225352112676
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.449242437857018,
+        "y": 6.131930136817706
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.387764084511924,
+        "y": 5.612323943658204
+      },
+      "prevControl": {
+        "x": 6.537982340606426,
+        "y": 5.231050603768724
+      },
+      "nextControl": {
+        "x": 4.668273402565141,
+        "y": 5.850820084605102
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7279537671232876,
+        "y": 7.157855308219178
+      },
+      "prevControl": {
+        "x": 3.4599293467758394,
+        "y": 5.0989707654483585
+      },
+      "nextControl": {
+        "x": 1.4375606746854008,
+        "y": 7.503059857504868
+      },
+      "isLocked": false,
+      "linkedName": "Receive Coral"
+    },
+    {
+      "anchor": {
+        "x": 3.4408818493150686,
+        "y": 5.490004280821918
+      },
+      "prevControl": {
+        "x": 3.623551271551423,
+        "y": 5.319323636987192
+      },
+      "nextControl": {
+        "x": 2.7771268360707717,
+        "y": 6.1101963831568025
+      },
+      "isLocked": false,
+      "linkedName": "Place Coral"
+    },
+    {
+      "anchor": {
+        "x": 1.7279537671232876,
+        "y": 7.157855308219178
+      },
+      "prevControl": {
+        "x": 1.570612673852297,
+        "y": 7.352132894080979
+      },
+      "nextControl": {
+        "x": 3.0342639625522363,
+        "y": 5.544883223949409
+      },
+      "isLocked": false,
+      "linkedName": "Receive Coral"
+    },
+    {
+      "anchor": {
+        "x": 3.4408818493150686,
+        "y": 5.490004280821918
+      },
+      "prevControl": {
+        "x": 2.6193162244260653,
+        "y": 6.677721677373832
+      },
+      "nextControl": {
+        "x": 3.7456608098190767,
+        "y": 5.049392767234643
+      },
+      "isLocked": false,
+      "linkedName": "Place Coral"
+    },
+    {
+      "anchor": {
+        "x": 1.7279537671232876,
+        "y": 7.157855308219178
+      },
+      "prevControl": {
+        "x": 2.3707027129426863,
+        "y": 6.837849582088314
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -119.99999999999999
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 126.0
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": -59.99999999999999
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": 126.0
+    },
+    {
+      "waypointRelativePos": 5,
+      "rotationDegrees": -59.99999999999999
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Receive First Coral",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Place First Coral",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Receive second coral",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Place Second Coral",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "End",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Preloaded Coral Placement",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 127.00000000000001
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
