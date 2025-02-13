@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.177249999997534,
-        "y": 5.224250000000959
+        "x": 1.5328345070422522,
+        "y": 7.199647887323944
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.41675,
-        "y": 5.84825
+        "x": 2.9368345070478767,
+        "y": 6.614647887321614
       },
       "isLocked": false,
-      "linkedName": "E4L"
+      "linkedName": "Coral Pickup"
     },
     {
       "anchor": {
-        "x": 1.2480000000000002,
-        "y": 6.99875
+        "x": 5.177249999997534,
+        "y": 5.224250000000959
       },
       "prevControl": {
-        "x": 0.9457500000022903,
-        "y": 7.1157500000065355
+        "x": 4.026750000005625,
+        "y": 6.10174999999767
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": "Coral Pickup"
+      "isLocked": true,
+      "linkedName": "E4L"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": -121.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": -121.0
+    "rotation": 125.00000000000001
   },
   "useDefaultConstraints": true
 }
