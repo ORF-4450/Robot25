@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.995510563380281,
-        "y": 5.073767605633802
+        "x": 1.647686688311688,
+        "y": 0.639407467532468
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.097509653300255,
-        "y": 4.621701720173381
+        "x": 2.054763261990999,
+        "y": 3.07779792186381
       },
       "isLocked": false,
-      "linkedName": "LowStart"
+      "linkedName": "BottomPickupL"
     },
     {
       "anchor": {
-        "x": 5.883802816901408,
-        "y": 4.039172535211267
+        "x": 3.792344300981833,
+        "y": 2.8295457268224835
       },
       "prevControl": {
-        "x": 7.005917645550162,
-        "y": 4.569609483251795
+        "x": 3.041682206369733,
+        "y": 1.8922197972999846
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "D"
+      "linkedName": "B"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 61.0
   },
   "reversed": false,
-  "folder": "Starts to Reefs",
+  "folder": "Pickups To Reefs",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": false
 }

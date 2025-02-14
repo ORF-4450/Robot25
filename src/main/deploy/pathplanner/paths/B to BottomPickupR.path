@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.995510563380281,
-        "y": 5.073767605633802
+        "x": 3.792344300981833,
+        "y": 2.8295457268224835
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.097509653300255,
-        "y": 4.621701720173381
+        "x": 2.3267045454545454,
+        "y": 2.719196428571428
       },
       "isLocked": false,
-      "linkedName": "LowStart"
+      "linkedName": "B"
     },
     {
       "anchor": {
-        "x": 5.883802816901408,
-        "y": 4.039172535211267
+        "x": 0.6220373376622357,
+        "y": 1.3516639610356298
       },
       "prevControl": {
-        "x": 7.005917645550162,
-        "y": 4.569609483251795
+        "x": 2.3456980519480517,
+        "y": 1.2424512987012974
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "D"
+      "linkedName": "BottomPickupR"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": "Starts to Reefs",
+  "folder": "Reefs to Pickups",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 61.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
