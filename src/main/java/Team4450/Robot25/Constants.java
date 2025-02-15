@@ -54,9 +54,9 @@ public final class Constants
     // math explanation:
     // ratio is (1.0 / (1014.0 / 55.0)) spool rots for every turn of shaft
     // * 2pi for radians traveled/angular displacement * spool radius in meters to get linear displacement
-    // 1.25 inch radius is 0.03175 meters (source: looked it up)
+    // 0.875 inch radius is 0.022225 meters (source: looked it up)
     // idk why it has to be negative, probably the gears swap rotation, not a big deal tho
-    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (1014.0 / 55.0)) * (2 * Math.PI) * 0.03175; //NEEDS TO BE CHANGED TO ACTUAL VALUE
+    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (1014.0 / 55.0)) * (2 * Math.PI) * 0.022225; //NEEDS TO BE CHANGED TO ACTUAL VALUE
 
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 0;
