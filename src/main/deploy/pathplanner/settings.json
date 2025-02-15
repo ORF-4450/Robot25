@@ -3,6 +3,7 @@
   "robotLength": 0.8128,
   "holonomicMode": true,
   "pathFolders": [
+    "Reef to Reef",
     "Pickups To Reefs",
     "Reefs to Pickups",
     "Starts to Reefs"
@@ -32,5 +33,8 @@
   "brModuleY": -0.343,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
-  "robotFeatures": []
+  "robotFeatures": [
+    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.0,\"y\":-0.3},\"size\":{\"width\":0.2,\"length\":0.5},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}",
+    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.0,\"y\":0.3},\"size\":{\"width\":0.2,\"length\":0.5},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":true}}"
+  ]
 }
