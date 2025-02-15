@@ -7,37 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LowStart to D"
+            "pathName": "HighLowStart to D"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "D to TopCoralPickup"
+            "pathName": "D to BottomPickupR"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopCoralPickup to F"
+            "pathName": "BottomPickupR to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "F to TopCoralPickup"
+            "pathName": "B to BottomPickupR"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopCoralPickup to F"
+            "pathName": "BottomPickupR to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "F to TopCoralPickup"
+            "pathName": "B to BottomPickupR"
           }
         }
       ]
