@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LowHighStart to C"
+                  "pathName": "HighMiddleStart to E"
                 }
               },
               {
@@ -45,13 +45,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C to BottomPickupL"
+            "pathName": "E to TopPickupR"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Intake Coral"
+            "name": "Receive First Coral"
           }
         },
         {
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BottomPickupL to B"
+                  "pathName": "TopPickupR to F"
                 }
               },
               {
@@ -95,13 +95,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "B to BottomPickupL"
+            "pathName": "F-Coral to F-Algae"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Intake Coral"
+            "name": "Remove Algae L3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F to TopPickupR"
           }
         },
         {
@@ -111,7 +117,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BottomPickupL to B"
+                  "pathName": "TopPickupR to F"
                 }
               },
               {
@@ -145,13 +151,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "B to BottomPickupL"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake Coral"
+            "pathName": "F to TopPickupR"
           }
         },
         {
@@ -161,7 +161,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BottomPickupL to C"
+                  "pathName": "TopPickupR to E"
                 }
               },
               {
