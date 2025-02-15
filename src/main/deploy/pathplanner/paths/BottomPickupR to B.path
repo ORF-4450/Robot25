@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.146266233766132,
+        "x": 2.1462662337661325,
         "y": 1.194967532464201
       },
       "isLocked": false,
@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 2.435917207792106,
-        "y": 2.5435064935031613
+        "y": 2.5435064935031617
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 61.0
+    "rotation": 151.0
   },
   "reversed": false,
   "folder": "Pickups To Reefs",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": -35.0
   },
   "useDefaultConstraints": false
 }

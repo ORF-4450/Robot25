@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.182783795835335,
-        "y": 2.830748057715318
+        "x": 5.203521126760563,
+        "y": 2.806161971830985
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1244318181818183,
-        "y": 1.7077922077922085
+        "x": 3.1451691491070464,
+        "y": 1.6832061219078753
       },
       "isLocked": false,
       "linkedName": "C"
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": -35.0
   },
   "reversed": false,
   "folder": "Reefs to Pickups",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": -150.0
   },
   "useDefaultConstraints": false
 }
