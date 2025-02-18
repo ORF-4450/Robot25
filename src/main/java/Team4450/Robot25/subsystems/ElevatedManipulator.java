@@ -23,6 +23,8 @@ public class ElevatedManipulator extends SubsystemBase {
     };
 
     public boolean scoreCoralInsteadOfAlgae = true;
+    
+    public boolean intakeCoralInsteadOfAlgae = true;
     private double endGoalElevatorHeight;
 
     private boolean endGoalCoralPivotStatus;

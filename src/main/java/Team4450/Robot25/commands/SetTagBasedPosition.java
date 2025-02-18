@@ -3,16 +3,17 @@ package Team4450.Robot25.commands;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import Team4450.Lib.Util;
+import Team4450.Robot25.utility.AprilTagMap;
+import Team4450.Robot25.Constants;
+import Team4450.Robot25.subsystems.DriveBase;
+import Team4450.Robot25.subsystems.PhotonVision;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Tracer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import Team4450.Robot25.utility.AprilTagMap;
-import Team4450.Robot25.Constants;
-import Team4450.Robot25.subsystems.DriveBase;
-import Team4450.Robot25.subsystems.PhotonVision;
+
 
 
 /**
@@ -34,7 +35,7 @@ public class SetTagBasedPosition extends Command {
     public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, boolean scoreLeft) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
-        this.scoreLeft = scoreLeft; // If true score on left side else score on right side
+        this.scoreLeft = scoreLeft; // If true score on left side, else score on right side
     }
 
     public void initialize () {
@@ -52,9 +53,10 @@ public class SetTagBasedPosition extends Command {
 
         if (target != null && photonVision.hasTargets()) {
             // Set status on smartdashboard instead? (upgrade)
-            Util.consoleLog("TARGET FOUND");
+            // Util.consoleLog("TARGET FOUND");
 
             Pose2d aprilTagPose = AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId());
+            // Util.consoleLog(String.valueOf(target.getFiducialId()));
             if (aprilTagPose != null) {
                 // Offset pose by robot dist
                 // Offset by left or right dist
@@ -65,26 +67,25 @@ public class SetTagBasedPosition extends Command {
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, -Constants.robotCoralLateralScoringOffset);
                 }
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
-                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(target.getYaw())));
-                Util.consoleLog("APRIL TAG POSE: " + String.valueOf(aprilTagPose));
-                Util.consoleLog("ROBOT OFFSET: " + String.valueOf(robotOffset));
-                Util.consoleLog("TARGET POSE: " + String.valueOf(robotTargetPose));
-                // Util.consoleLog("TARGET", String.valueOf(target));
+                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - 180))));
+                // robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(0)));
+                // Util.consoleLog("APRIL TAG POSE: " + String.valueOf(aprilTagPose));
+                // Util.consoleLog("ROBOT OFFSET: " + String.valueOf(robotOffset));
+                // Util.consoleLog("TARGET POSE: " + String.valueOf(robotTargetPose));
             } else {
                 // Set warning on smartdashboard instead? (Upgrade)
-                Util.consoleLog("Target not on reef");
+                // Util.consoleLog("Target not on reef");
                 return;
             }
-            Util.consoleLog(String.valueOf(AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId())));
         } else {
             // Set warning on smartdashboard instead? (Upgrade)
-            Util.consoleLog("NO TARGET FOUND");
+            // Util.consoleLog("NO TARGET FOUND");
             return;
         }
 
         if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
             // Smartdashboard warning on target assignment (Upgrade)
-            Util.consoleLog("NO TARGET ASSIGNED");
+            // Util.consoleLog("NO TARGET ASSIGNED");
             return;
         }
     }

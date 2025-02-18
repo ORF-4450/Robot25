@@ -48,15 +48,18 @@ public final class Constants
     public static final int     ELEVATOR_LEFT = 11;
     public static final int     ELEVATOR_RIGHT = 12;
 
-    //(NOTES) ELEVATOR_WINCH_FACTOR is a conversion factor from motor rotations to meters of height change.
-    //ELEVATOR_WINCH_FACTOR is multiplied by native rotations of motor shaft 
-    // to get height change in MAXSpline shaft since startup or last encoder reset.
-    // math explanation:
-    // ratio is (1.0 / (1014.0 / 55.0)) spool rots for every turn of shaft
-    // * 2pi for radians traveled/angular displacement * spool radius in meters to get linear displacement
-    // 0.875 inch radius is 0.022225 meters (source: looked it up)
-    // idk why it has to be negative, probably the gears swap rotation, not a big deal tho
-    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (1014.0 / 55.0)) * (2 * Math.PI) * 0.022225; //NEEDS TO BE CHANGED TO ACTUAL VALUE
+    // ELEVATOR_WINCH_FACTOR is a conversion factor from motor rotations to meters of height change.
+    // It is multiplied by the native rotations of the motor shaft to get the height change in the MAXSpline shaft since startup or the last encoder reset.
+    // MATH EXPLANATION (2025):
+    // Gear Reduction of Gearbox: 38:8 (38 rotations of the motor shaft rotate the spool 8 times).
+    // To solve for the winch factor, you need the ratio of winch rotations to motor rotations.
+    // So, 38 motor rotations / 8 winch rotations, and you need to take the reciprocal to get the winch factor.
+    // The ratio is (1.0 / (38.0 / 8.0)) spool rotations for every turn of the shaft.
+    // Multiply by 2π for radians traveled/angular displacement and by the spool radius in meters to get linear displacement.
+    // The spool radius is 0.875 inches, which is 0.022225 meters (source: looked it up).
+    // The factor is negative, likely because the gears swap rotation direction, but this is not a significant issue.
+    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (38.0 / 8.0)) * (2 * Math.PI) * 0.022225; //Changed to 2025 Value!
+
 
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
@@ -74,8 +77,8 @@ public final class Constants
         new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
-    public static double robotCoralLongitudinalScoringDistance = 0.3; // 0.3 meters distance from the tag for scoring coral.
-    public static double robotCoralLateralScoringOffset = 0.2; // Added to the target position if scoring left and subtracted if scoring right.
+    public static double robotCoralLongitudinalScoringDistance = 0.5; // 0.3 meters distance from the tag for scoring coral.
+    public static double robotCoralLateralScoringOffset = -0.4; // Added to the target position if scoring left and subtracted if scoring right.
 
     public static double xCameraOffset = 0;
     public static double yCameraOffset = 0;
@@ -116,7 +119,7 @@ public final class Constants
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
         
         //TrackingMode Speed:
-        public static final double kTrackingModeFactor = 0.01;
+        public static final double kTrackingModeFactor = 0.10;
         public static final double kRotTrackingModeFactor = 0.20;
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.

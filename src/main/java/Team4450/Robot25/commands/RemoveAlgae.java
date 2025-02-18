@@ -55,5 +55,6 @@ public class RemoveAlgae extends Command {
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
         elevatedManipulator.algaeManipulator.stop();    
+        elevatedManipulator.intakeCoralInsteadOfAlgae = true; // Change to true to intake coral instead of algae
     }
 }

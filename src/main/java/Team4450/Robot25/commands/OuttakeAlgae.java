@@ -1,39 +1,40 @@
 package Team4450.Robot25.commands;
 import Team4450.Lib.Util;
-import Team4450.Robot25.subsystems.AlgaeManipulator;
+// import Team4450.Robot25.subsystems.AlgaeManipulator;
+import Team4450.Robot25.subsystems.ElevatedManipulator;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-public class NetAlgae extends Command {
-    private final AlgaeManipulator algaeManipulator;
-    private static enum State{REMOVE, RETURN, STOP};
-    private State state = State.REMOVE;
+public class OuttakeAlgae extends Command {
+    private final ElevatedManipulator elevatedManipulator;
+    private static enum State{OUTTAKE, RETURN, STOP};
+    private State state = State.OUTTAKE;
     double startTime;
-    public NetAlgae(AlgaeManipulator algaeManipulator){
-        this.algaeManipulator = algaeManipulator;
-        addRequirements(algaeManipulator);
+    public OuttakeAlgae(ElevatedManipulator elevatedManipulator){
+       this.elevatedManipulator = elevatedManipulator;
+        addRequirements(elevatedManipulator);
         SmartDashboard.putString("Algae Manipulator Status", state.name());
     }
     public void initialize(){
-        state = State.REMOVE;
+        state = State.OUTTAKE;
         SmartDashboard.putString("Algae Manipulator Status", state.name());
         startTime = Util.timeStamp();
     }
     public void execute(){
         switch(state){
-            case REMOVE:
-                algaeManipulator.startOuttaking();
+            case OUTTAKE:
+                elevatedManipulator.algaeManipulator.startOuttaking();
                 if(Util.timeStamp() - startTime > 3.0)
-                    state = State.RETURN;
+                    state = State.STOP;
                 break;
             case RETURN:
-                algaeManipulator.retractIn();
-                algaeManipulator.pivotUp();
-                if(algaeManipulator.algaeExtendStatus && algaeManipulator.algaePivotStatus== false)
+                elevatedManipulator.algaeManipulator.retractIn();
+                elevatedManipulator.algaeManipulator.pivotUp();
+                if(elevatedManipulator.algaeManipulator.algaeExtendStatus && elevatedManipulator.algaeManipulator.algaePivotStatus== false)
                     state = State.STOP;
                 break;
             case STOP:
-                algaeManipulator.stop();
+                elevatedManipulator.algaeManipulator.stop();
                 break;
         }
     }
@@ -42,6 +43,7 @@ public class NetAlgae extends Command {
     }   
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
-        algaeManipulator.stop();    
+        elevatedManipulator.algaeManipulator.stop();   
+        elevatedManipulator.scoreCoralInsteadOfAlgae = true; // Change to true to score coral instead of algae.
     }
 }
