@@ -35,9 +35,10 @@ import Team4450.Lib.Util;
 import Team4450.Lib.CameraFeed;
 import Team4450.Lib.XboxController;
 import Team4450.Lib.MonitorCompressor;
-
+import Team4450.Lib.MonitorCompressorPH;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
@@ -101,19 +102,17 @@ public class RobotContainer
 	private XboxController			driverController =  new XboxController(DRIVER_PAD);
 	public static XboxController	utilityController = new XboxController(UTILITY_PAD);
 
-	private AnalogInput			pressureSensor = new AnalogInput(PRESSURE_SENSOR);
-	  
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
-	private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
+	private PowerDistribution		pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
-	// PneumaticHub class controls the REV Pneumatics Hub Module. New for 2025.
-	private PneumaticHub	pneumaticHub = new PneumaticHub(COMPRESSOR);
+	// Compressor class controls the REV Pneumatics Hub Module.
+	private Compressor				pneumaticHub = new Compressor(PneumaticsModuleType.REVPH);
 
 	// Navigation board.
 	public static NavX			navx;
 
 	private MonitorPDP     		monitorPDPThread;
-	private MonitorCompressor	monitorCompressorThread;
+	private MonitorCompressorPH	monitorCompressorThread;
     private CameraFeed			cameraFeed;
     
 	// Trajectories we load manually.
@@ -252,7 +251,7 @@ public class RobotContainer
 
 		//Start the compressor, PDP and camera feed monitoring Tasks.
 
-   		monitorCompressorThread = MonitorCompressor.getInstance(pressureSensor);
+   		monitorCompressorThread = MonitorCompressorPH.getInstance(pneumaticHub);
    		monitorCompressorThread.setDelay(1.0);
    		monitorCompressorThread.SetLowPressureAlarm(50);
    		monitorCompressorThread.start();
@@ -562,9 +561,9 @@ public class RobotContainer
 		// This code turns on/off the automatic compressor management if requested by DS. Putting this
 		// here is a convenience since this function is called at each mode change.
 		if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
-			pneumaticHub.enableCompressorDigital();
+			pneumaticHub.enableDigital();
 		else
-			pneumaticHub.disableCompressor();
+			pneumaticHub.disable();
 		
 		pdp.clearStickyFaults();
 		//pcm.clearAllStickyFaults(); // Add back if we use a commpressor.

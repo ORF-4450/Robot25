@@ -35,8 +35,10 @@ public class CoralManipulator extends SubsystemBase {
 
         // coralSensor = coralMotor.getForwardLimitSwitch();
 
+        coralPivot.setName("coralPivot");
+
         Util.consoleLog("Coral Manipulator Initialized");
-        }
+    }
     
     public void intialize(){
         pivotDown();

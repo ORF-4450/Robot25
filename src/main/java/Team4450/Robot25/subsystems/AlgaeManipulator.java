@@ -33,8 +33,11 @@ public class AlgaeManipulator extends SubsystemBase {
 
         algaeMotor.configure(algaeConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
+        algaePivot.setName("algaePivot");
+        algaeExtend.setName("algaeExtend");
+        
         Util.consoleLog("Algae Manipulator Initialized");
-        }
+    }
         
     public void intialize(){
         pivotDown();
@@ -45,7 +48,6 @@ public class AlgaeManipulator extends SubsystemBase {
 
         updateDS();
     }
-    
 
     public void start(double speedfactor){
         isRunning = Math.abs(speedfactor) > 0.02;
