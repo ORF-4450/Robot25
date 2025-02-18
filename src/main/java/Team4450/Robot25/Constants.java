@@ -59,10 +59,10 @@ public final class Constants
     public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (1014.0 / 55.0)) * (2 * Math.PI) * 0.022225; //NEEDS TO BE CHANGED TO ACTUAL VALUE
 
     // Pneumatic valve controller port assignments.
-	public static final int		COMPRESSOR = 0;
-	public static final int		CORAL_PIVOT = 0;		
-	public static final int		ALGAE_EXTEND = 2;		
-	public static final int		ALGAE_PIVOT = 4;    
+	public static final int		COMPRESSOR = 1;
+	public static final int		CORAL_PIVOT = 2;		
+	public static final int		ALGAE_EXTEND = 4;		
+	public static final int		ALGAE_PIVOT = 6;    
 
 
     public static final double INTAKE_SPEED = 0.90;

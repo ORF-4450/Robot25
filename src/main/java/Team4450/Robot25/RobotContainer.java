@@ -53,6 +53,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -195,11 +196,8 @@ public class RobotContainer
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
 		pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
-		elevator = new Elevator();
-		coralManipulator = new CoralManipulator();
 		elevatedManipulator = new ElevatedManipulator();
-		algaeManipulator = new AlgaeManipulator();
-
+		
 		// if (RobotBase.isReal()) 
 		// {
 		// 	candle = new Candle(CTRE_CANDLE, 8+26);
@@ -254,9 +252,9 @@ public class RobotContainer
 									driverController.getRightXDS(),
 									driverController));
 		
-		elevator.setDefaultCommand(new RunCommand(
-			()->{elevator.move(-MathUtil.applyDeadband(utilityController.getRightY() * 0.1, DRIVE_DEADBAND));
-			}));
+		elevatedManipulator.setDefaultCommand(new RunCommand(
+			()->{elevatedManipulator.moveRelative(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.1, DRIVE_DEADBAND));
+			}, elevatedManipulator));
 
 		//Start the compressor, PDP and camera feed monitoring Tasks.
 
@@ -511,8 +509,9 @@ public class RobotContainer
 		
 		// Register commands called from PathPlanner Autos.
 
-		NamedCommands.registerCommand("Intake Coral", new IntakeCoral(coralManipulator, elevatedManipulator));
-		NamedCommands.registerCommand("Outtake Coral", new OuttakeCoral(coralManipulator));
+		NamedCommands.registerCommand("Intake Coral", new IntakeCoral(elevatedManipulator));
+		NamedCommands.registerCommand("Outtake Coral", new OuttakeCoral(elevatedManipulator));
+		NamedCommands.registerCommand("Remove Algae", new RemoveAlgae(elevatedManipulator));
 		NamedCommands.registerCommand("Raise to L1", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1));
 		NamedCommands.registerCommand("Raise to L2", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
 		NamedCommands.registerCommand("Raise to L3", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));

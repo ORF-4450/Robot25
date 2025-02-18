@@ -37,7 +37,7 @@ public class ElevatedManipulator extends SubsystemBase {
         coralManipulator = new CoralManipulator();
         algaeManipulator = new AlgaeManipulator();
         elevator = new Elevator();
-        SmartDashboard.putString("Elevator Position Phase", "_");
+        SmartDashboard.putString("Elevator Position Phase", "Initalized");
     }
 
     public boolean executeSetPosition(PresetPosition position){
@@ -163,6 +163,10 @@ public class ElevatedManipulator extends SubsystemBase {
 
     public void unlockPosition(){
         elevator.unlockPosition();
+    }
+
+    public void moveRelative(double elevatorHeightChange) {
+        elevator.move(elevatorHeightChange * 0.9);
     }
 
     public boolean hasCoral(){

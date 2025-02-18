@@ -16,12 +16,16 @@ Port	Device			Description
 6       SparkMax        RL steer motor.
 7       SparkFlex       RR drive motor.
 8       SparkMax        RR steer motor.
+9       SparkFlex       Coral Motor.
+10      SparkFlex       Algae Motor.
+11      SparkFlex       Left Elevator Motor.
+12      SparkFlex       Right Elevator Motor.
 
 
 SparkMax CAN Limit Switches (Plugged into the controllers)
 Port    Type            Description
 -----------------------------------------------------------------------------------
-13      Forward         QMRN Beam Break note sensor for shooter.
+13               
 
 
 PWM Ports

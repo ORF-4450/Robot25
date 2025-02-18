@@ -48,7 +48,7 @@ public class CoralManipulator extends SubsystemBase {
     
     public boolean hasCoral(){
 
-        return coralSensor.isPressed();
+        return this.getCurrent() > 80.0;
 
     }
 
