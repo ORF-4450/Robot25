@@ -54,7 +54,7 @@ public class PhotonVision extends SubsystemBase
     private Field2d                 field = new Field2d();
 
     // change the field layout for other years!
-    private final AprilTagFields    fields = AprilTagFields.k2025Reefscape; 
+    private final AprilTagFields    fields = AprilTagFields.k2025ReefscapeWelded; 
     private AprilTagFieldLayout     fieldLayout;
     private PhotonPoseEstimator     poseEstimator;
 
