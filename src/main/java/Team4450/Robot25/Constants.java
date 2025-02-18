@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF25-01.24.25";
+	public static String		PROGRAM_NAME = "ORF25-02.18.25";
 
 	public static Robot			robot;
 
@@ -60,7 +60,7 @@ public final class Constants
     public static final double  DRIVE_DEADBAND = 0.1, ROTATION_DEADBAND = .1;
 
 	// Pneumatic valve controller port assignments.
-	//public static final int		COMPRESSOR = 0;
+	public static final int		COMPRESSOR = 1; // 0 for CTRE, 1 for REV.
 	  
 	// Analog Input port assignments.
 	

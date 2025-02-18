@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Lib.CameraFeed;
+import Team4450.Lib.MonitorCompressorPH;
 import Team4450.Lib.XboxController;
 import Team4450.Robot25.commands.DriveCommand;
 import Team4450.Robot25.commands.PointToYaw;
@@ -21,12 +22,16 @@ import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -85,14 +90,14 @@ public class RobotContainer
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
 	private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
-	// PneumaticsControlModule class controls the PCM. New for 2022.
-	//private PneumaticsControlModule	pcm = new PneumaticsControlModule(COMPRESSOR);
+	// Compressor class controls the CTRE/REV pnuematics controllers. New for 2022.
+	private Compressor				pcm = new Compressor(PneumaticsModuleType.REVPH);
 
 	// Navigation board.
 	public static NavX			navx;
 
 	private MonitorPDP     		monitorPDPThread;
-	//private MonitorCompressor	monitorCompressorThread;
+	private MonitorCompressorPH	monitorCompressorThread;
     private CameraFeed			cameraFeed;
     
 	// Trajectories we load manually.
@@ -225,10 +230,10 @@ public class RobotContainer
 
 		// Start the compressor, PDP and camera feed monitoring Tasks.
 
-   		// monitorCompressorThread = MonitorCompressor.getInstance(pressureSensor);
-   		// monitorCompressorThread.setDelay(1.0);
-   		// monitorCompressorThread.SetLowPressureAlarm(50);
-   		// monitorCompressorThread.start();
+   		monitorCompressorThread = MonitorCompressorPH.getInstance(pcm);
+   		monitorCompressorThread.setDelay(1.0);
+   		monitorCompressorThread.SetLowPressureAlarm(50);
+   		monitorCompressorThread.start();
 		
    		monitorPDPThread = MonitorPDP.getInstance(pdp);
    		monitorPDPThread.start();
@@ -439,13 +444,12 @@ public class RobotContainer
 	{
 		// This code turns on/off the automatic compressor management if requested by DS. Putting this
 		// here is a convenience since this function is called at each mode change.
-		// if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
-		// 	pcm.enableCompressorDigital();
-		// else
-		// 	pcm.disableCompressor();
+		if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
+			pcm.enableDigital();
+		else
+			pcm.disable();;
 		
 		pdp.clearStickyFaults();
-		//pcm.clearAllStickyFaults(); // Add back if we use a commpressor.
 		
 		if (monitorPDPThread != null) monitorPDPThread.reset();
     }
