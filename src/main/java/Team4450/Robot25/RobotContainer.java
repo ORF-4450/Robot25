@@ -88,7 +88,7 @@ public class RobotContainer
 	//private AnalogInput			pressureSensor = new AnalogInput(PRESSURE_SENSOR);
 	  
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
-	private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
+	private PowerDistribution		pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
 	// Compressor class controls the CTRE/REV pnuematics controllers. New for 2022.
 	private Compressor				pcm = new Compressor(PneumaticsModuleType.REVPH);
@@ -437,7 +437,7 @@ public class RobotContainer
 	}
 		
 	/**
-	 * Reset sticky faults in PDP and PCM and turn compressor on/off as
+	 * Reset sticky faults in PDP and turn compressor on/off as
 	 * set by switch on DS.
 	 */
 	public void resetFaults()
@@ -450,7 +450,8 @@ public class RobotContainer
 			pcm.disable();;
 		
 		pdp.clearStickyFaults();
-		
+		//pcm.clearAllStickyFaults(); // Add back if we use a CTRE pcm.
+
 		if (monitorPDPThread != null) monitorPDPThread.reset();
     }
 
