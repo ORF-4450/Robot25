@@ -105,8 +105,8 @@ public class RobotContainer
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
 	private PowerDistribution		pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
-	// Compressor class controls the REV Pneumatics Hub Module.
-	private Compressor				pneumaticHub = new Compressor(PneumaticsModuleType.REVPH);
+	// Compressor class controls the CTRE/REV Pneumatics control Module.
+	private Compressor				pcm = new Compressor(PneumaticsModuleType.REVPH);
 
 	// Navigation board.
 	public static NavX			navx;
@@ -251,7 +251,7 @@ public class RobotContainer
 
 		//Start the compressor, PDP and camera feed monitoring Tasks.
 
-   		monitorCompressorThread = MonitorCompressorPH.getInstance(pneumaticHub);
+   		monitorCompressorThread = MonitorCompressorPH.getInstance(pcm);
    		monitorCompressorThread.setDelay(1.0);
    		monitorCompressorThread.SetLowPressureAlarm(50);
    		monitorCompressorThread.start();
@@ -381,7 +381,6 @@ public class RobotContainer
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new InstantCommand(driveBase::toggleBrakeMode));
 
-
 // 		//Drive to the AprilTag
 // 		new Trigger(() -> driverController.getBButton())
 // 			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.5, 0));
@@ -391,8 +390,6 @@ public class RobotContainer
 
 		// new Trigger(() -> driverController.getXButton())
 		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
-		
-
 		
     	//Drive to the AprilTag using Pose information
 		new Trigger(()-> driverController.getXButton())
@@ -561,12 +558,12 @@ public class RobotContainer
 		// This code turns on/off the automatic compressor management if requested by DS. Putting this
 		// here is a convenience since this function is called at each mode change.
 		if (SmartDashboard.getBoolean("CompressorEnabled", true)) 
-			pneumaticHub.enableDigital();
+			pcm.enableDigital();
 		else
-			pneumaticHub.disable();
+			pcm.disable();
 		
 		pdp.clearStickyFaults();
-		//pcm.clearAllStickyFaults(); // Add back if we use a commpressor.
+		//pcm.clearAllStickyFaults(); // Add back if we use a CTRE pcm.
 		
 		if (monitorPDPThread != null) monitorPDPThread.reset();
     }

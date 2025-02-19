@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF25-01.30.25VR";
+	public static String		PROGRAM_NAME = "RAC25V-02.19.25";
 
 	public static Robot			robot;
 
@@ -62,9 +62,9 @@ public final class Constants
 
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
-	public static final int		CORAL_PIVOT = 2;		
-	public static final int		ALGAE_EXTEND = 4;		
-	public static final int		ALGAE_PIVOT = 6;    
+	public static final int		CORAL_PIVOT = 0;		
+	public static final int		ALGAE_EXTEND = 2;		
+	public static final int		ALGAE_PIVOT = 4;    
 
     public static final double INTAKE_SPEED = 0.90;
     

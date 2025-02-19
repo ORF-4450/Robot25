@@ -49,13 +49,10 @@ public class CoralManipulator extends SubsystemBase {
     }
     
     public boolean hasCoral(){
-
         return this.getCurrent() > 80.0;
-
     }
 
     public void start(double speedfactor){
-
         isRunning = Math.abs(speedfactor) > 0.02;
         
         updateDS();
@@ -64,7 +61,6 @@ public class CoralManipulator extends SubsystemBase {
     }
 
     public void startIntaking(){
-
         coralMotor.set(-0.5);
         isRunning = true;
         updateDS();
@@ -75,6 +71,7 @@ public class CoralManipulator extends SubsystemBase {
         isRunning = true;
         updateDS();
     }
+    
     public void start(){
        start(1);
 
