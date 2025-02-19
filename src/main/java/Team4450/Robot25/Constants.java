@@ -63,9 +63,9 @@ public final class Constants
 
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
-	public static final int		CORAL_PIVOT = 2;		
-	public static final int		ALGAE_EXTEND = 4;		
-	public static final int		ALGAE_PIVOT = 6;    
+	public static final int		CORAL_PIVOT = 0;		
+	public static final int		ALGAE_EXTEND = 2;		
+	public static final int		ALGAE_PIVOT = 4;    
 
 
     public static final double INTAKE_SPEED = 0.90;
@@ -96,6 +96,7 @@ public final class Constants
 	  
 	// Analog Input port assignments.
 	public static final int PRESSURE_SENSOR = 1;
+    
 	// LCD display line number constants showing class where the line is set.
 	public static final int		LCD_1 = 1;	    // Robot, Auto Commands.
 	public static final int		LCD_2 = 2;	    // Swerve Drive command.

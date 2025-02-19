@@ -95,7 +95,7 @@ Y
 Utility GamePad - Left Joystick
 Button Name				Function
 -----------------------------------------------------------------------------------
-
+Y Axis                  Move Elevator Up/Down
 
 Utility GamePad - Right Joystick
 Button Name				Function
@@ -109,15 +109,15 @@ A                       Set L2 Coral Scoring Position
 B                       Set L3 Coral Scoring Position
 X                       Set L1 Coral Scoring Position
 Y                       Set L4 Coral Scoring Position
-LEFT_TRIGGER            
-RIGHT_TRIGGER           Outtake Coral
+LEFT_TRIGGER            Intake Coral/Algae
+RIGHT_TRIGGER           Outtake Coral/Algae
 LEFT_BUMPER             
 RIGHT_BUMPER            
-BACK                    
-POV_0                    
-POV_90                  
-POV_180                 
-POV_270                 
+BACK                    Set Elevator and all Manipulators to RESET Position
+POV_0                   Set L3 Algae Removing Position
+POV_90                  Set Net Algae Scoring Position
+POV_180                 Set L2 Algae Removing Position
+POV_270                 Set Processor Algae Scoring Position
 
 
 Dashboard Indicators/Controls

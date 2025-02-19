@@ -27,15 +27,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class SetTagBasedPosition extends Command {
     DriveBase robotDrive;
     PhotonVision photonVision;
-    private boolean scoreLeft;
+    private int side;
     /**
      * @param robotDrive the drive subsystem
      */
 
-    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, boolean scoreLeft) {
+    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, int side) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
-        this.scoreLeft = scoreLeft; // If true score on left side, else score on right side
+        this.side = side; // If -1 score on left side, If 0 align with middle, If 1 score on right side
     }
 
     public void initialize () {
@@ -61,10 +61,13 @@ public class SetTagBasedPosition extends Command {
                 // Offset pose by robot dist
                 // Offset by left or right dist
                 Translation2d robotOffset = new Translation2d(0, 0);
-                if (scoreLeft) { // Score Left
+                if (side == -1) { // Score Left
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, Constants.robotCoralLateralScoringOffset);
-                } else { // Score Right
+                } else if(side == 1) { // Score Right
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, -Constants.robotCoralLateralScoringOffset);
+                }
+                else if(side == 0){ //Align with middle
+                    robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, 0);
                 }
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
                 robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - 180))));
