@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopPickupR to E"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "E to TopPickupR"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopPickupR to E"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "E-Coral to E-Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "E to Net"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Net to TopPickupR"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopPickupR to F"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F to TopPickupR"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopPickupR to F"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F-Coral to F-Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F to Net"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
