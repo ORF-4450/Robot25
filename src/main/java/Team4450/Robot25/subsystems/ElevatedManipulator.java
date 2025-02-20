@@ -7,6 +7,7 @@ public class ElevatedManipulator extends SubsystemBase {
 
     public final CoralManipulator coralManipulator;
     public final AlgaeManipulator algaeManipulator;
+    public final AlgaeGroundIntake algaeGroundIntake;
     public final Elevator elevator;
     
     public static enum PresetPosition{
@@ -20,6 +21,7 @@ public class ElevatedManipulator extends SubsystemBase {
         /*Algae Removing Position L3 */ ALGAE_REMOVE_L3,
         /* Alage Net Scoring Position */ ALGAE_NET_SCORING,
         /* Algae Processor Scoring Position */ ALGAE_PROCESSOR_SCORING,
+        /*Algae Ground Intake Position */ ALGAE_GROUND_INTAKE,
         /* No Position */ NONE,
     };
 
@@ -35,11 +37,14 @@ public class ElevatedManipulator extends SubsystemBase {
 
     private boolean endGoalAlgaePivotStatus;
 
+    private boolean endGoalAlgaeGroundPistonStatus;
+
     private PresetPosition position = PresetPosition.NONE;
 
     public ElevatedManipulator(){
         coralManipulator = new CoralManipulator();
         algaeManipulator = new AlgaeManipulator();
+        algaeGroundIntake = new AlgaeGroundIntake();
         elevator = new Elevator();
         SmartDashboard.putString("Elevator Position Phase", "Initalized");
     }
@@ -53,18 +58,21 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
 
             case CORAL_STATION_INTAKE:
                 endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = true;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
             case CORAL_SCORING_L1:
                 endGoalElevatorHeight = 0.44;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
 
             case CORAL_SCORING_L2:
@@ -72,6 +80,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
             
             case CORAL_SCORING_L3:
@@ -79,6 +88,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
 
             case CORAL_SCORING_L4:
@@ -86,6 +96,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
 
             case ALGAE_REMOVE_L2:
@@ -93,6 +104,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
             
             case ALGAE_REMOVE_L3:
@@ -100,6 +112,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
             
             case ALGAE_NET_SCORING:
@@ -107,6 +120,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = true;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
             
             case ALGAE_PROCESSOR_SCORING:
@@ -114,6 +128,15 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
+                break;
+
+            case ALGAE_GROUND_INTAKE:
+                endGoalElevatorHeight = 0.0;
+                endGoalCoralPivotStatus = false;
+                endGoalAlgaeExtendStatus = true;
+                endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = true;
                 break;
             
             case NONE:
@@ -123,12 +146,13 @@ public class ElevatedManipulator extends SubsystemBase {
         return execute();
     }
 
-    public boolean executeSetPosition(double elevatorPosition, boolean coralPivotStatus, boolean algaeExtendStatus, boolean algaePivotStatus){
+    public boolean executeSetPosition(double elevatorPosition, boolean coralPivotStatus, boolean algaeExtendStatus, boolean algaePivotStatus, boolean algaeGroundPistonStatus){
         this.position = PresetPosition.NONE;
         this.endGoalCoralPivotStatus = coralPivotStatus;
         this.endGoalAlgaeExtendStatus = algaeExtendStatus;
         this.endGoalAlgaePivotStatus = algaePivotStatus;
         this.endGoalElevatorHeight = elevatorPosition;
+        this.endGoalAlgaeGroundPistonStatus = algaeGroundPistonStatus;
 
         return execute();
     }
@@ -143,16 +167,20 @@ public class ElevatedManipulator extends SubsystemBase {
             atTarget = false;
         }
 
-        // Determine if we are extending or retracting
+        //Determine if we are extending or retracting
         //endGoalAlgaeExtendStatus is equal to true when we are extending & algaeExtendStatus is equal to false when we aren't extended
         //endGoalAlgaeExtendStatus is equal to false when we are retracting & algaeExtendStatus is equal to true when we are extended
         boolean isExtending = endGoalAlgaeExtendStatus && !algaeManipulator.algaeExtendStatus;
         boolean isRetracting = !endGoalAlgaeExtendStatus && algaeManipulator.algaeExtendStatus;
 
-        // Handle Algae Extend and Pivot based on direction
-        // If we are extending, we need to extend before pivoting
+        // Handle Algae Extend, Pivot, and Ground Piston based on direction
         if (isExtending) {
-            if (algaeManipulator.algaeExtendStatus != endGoalAlgaeExtendStatus) {
+            // Extend ground intake piston first
+            if (algaeGroundIntake.algaeGroundPistonStatus != endGoalAlgaeGroundPistonStatus) {
+                algaeGroundIntake.setAlgaeGroundExtend(endGoalAlgaeGroundPistonStatus);
+                SmartDashboard.putString("Elevator Position Phase", "Setting Algae Ground Piston Extend");
+                atTarget = false;
+            } else if (algaeManipulator.algaeExtendStatus != endGoalAlgaeExtendStatus) {
                 algaeManipulator.setAlgaeExtend(endGoalAlgaeExtendStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Extend");
                 atTarget = false;
@@ -161,9 +189,8 @@ public class ElevatedManipulator extends SubsystemBase {
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Pivot Up");
                 atTarget = false;
             }
-                    
-        // If we are retracting, we need to pivot before retracting
         } else if (isRetracting) {
+            // Retract pivot first
             if (algaeManipulator.algaePivotStatus != endGoalAlgaePivotStatus) {
                 algaeManipulator.setAlgaePivot(endGoalAlgaePivotStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Pivot Down");
@@ -171,6 +198,10 @@ public class ElevatedManipulator extends SubsystemBase {
             } else if (algaeManipulator.algaeExtendStatus != endGoalAlgaeExtendStatus) {
                 algaeManipulator.setAlgaeExtend(endGoalAlgaeExtendStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Retract");
+                atTarget = false;
+            } else if (algaeGroundIntake.algaeGroundPistonStatus != endGoalAlgaeGroundPistonStatus) {
+                algaeGroundIntake.setAlgaeGroundExtend(endGoalAlgaeGroundPistonStatus);
+                SmartDashboard.putString("Elevator Position Phase", "Setting Algae Ground Piston Retract");
                 atTarget = false;
             }
         }

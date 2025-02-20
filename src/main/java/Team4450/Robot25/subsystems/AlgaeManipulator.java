@@ -142,10 +142,10 @@ public class AlgaeManipulator extends SubsystemBase {
         Util.consoleLog();
 
         if (status == true){
-            algaeExtend.SetA();
+            extendOut();
             algaeExtendStatus = true;
         } else if (status == false){
-            algaeExtend.SetB();
+            retractIn();
             algaeExtendStatus = false;
         }
         updateDS();

@@ -20,6 +20,7 @@ Port	Device			Description
 10      SparkFlex       Algae Motor.
 11      SparkFlex       Left Elevator Motor.
 12      SparkFlex       Right Elevator Motor.
+13      SparkFlex       Algae Ground Intake Motor.
 
 
 SparkMax CAN Limit Switches (Plugged into the controllers)
@@ -27,6 +28,20 @@ Port    Type            Description
 -----------------------------------------------------------------------------------
 13               
 
+REV PneumaticsHub 
+Port    Type            Description
+-----------------------------------------------------------------------------------
+0       ValveDA         CORAL_PIVOT_A
+1       ValveDA         CORAL_PIVOT_B
+2       ValveDA         ALGAE_EXTEND_A
+3       ValveDA         ALGAE_EXTEND_B
+4       ValveDA         ALGAE_PIVOT_A
+5       ValveDA         ALGAE_PIVOT_B
+6       ValveDA         ALGAE_GROUND_A
+7       ValveDA         ALGAE_GROUND_B
+8       
+9
+10
 
 PWM Ports
 Port	Device			Description
@@ -111,7 +126,7 @@ X                       Set L1 Coral Scoring Position
 Y                       Set L4 Coral Scoring Position
 LEFT_TRIGGER            Intake Coral/Algae
 RIGHT_TRIGGER           Outtake Coral/Algae
-LEFT_BUMPER             
+LEFT_BUMPER             Intake Algae (Ground)
 RIGHT_BUMPER            
 BACK                    Set Elevator and all Manipulators to RESET Position
 POV_0                   Set L3 Algae Removing Position
