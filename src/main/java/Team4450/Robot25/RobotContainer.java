@@ -21,14 +21,16 @@ import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RotateToPose;
 import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
-
+import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.Candle;
+import Team4450.Robot25.subsystems.CoralManipulator;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
 import Team4450.Robot25.subsystems.ShuffleBoard;
 import Team4450.Robot25.subsystems.ElevatedManipulator.PresetPosition;
 import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
+import Team4450.Robot25.subsystems.Elevator;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
@@ -71,11 +73,14 @@ public class RobotContainer
 {
 	// Subsystems.
 
-	public static ShuffleBoard	shuffleBoard;
-	public static DriveBase 	driveBase;
-	public static PhotonVision	pvTagCamera;
-	private Candle        		candle = null;
-	private ElevatedManipulator elevatedManipulator;
+	public static ShuffleBoard			shuffleBoard;
+	public static DriveBase 			driveBase;
+	public static PhotonVision			pvTagCamera;
+	private Candle        				candle = null;
+	public static Elevator				elevator;
+	public static ElevatedManipulator	elevatedManipulator;
+	public static AlgaeManipulator 		algaeManipulator;
+	public static CoralManipulator		coralManipulator;
 
 	// Subsystem Default Commands.
 
@@ -189,7 +194,11 @@ public class RobotContainer
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
 		pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
-		elevatedManipulator = new ElevatedManipulator();
+		//algaeManipulator = new AlgaeManipulator();
+		coralManipulator = new CoralManipulator();
+		elevator = new Elevator();
+		elevatedManipulator = new ElevatedManipulator(coralManipulator, algaeManipulator,
+													  elevator);
 		
 		// if (RobotBase.isReal()) 
 		// {
@@ -204,7 +213,6 @@ public class RobotContainer
 		// This sets up the photonVision subsystem to constantly update the robotDrive odometry
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
-		// Not applicable anymore: Rich Below commented out since no cameras on test robot.
 		pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
@@ -246,8 +254,8 @@ public class RobotContainer
 									driverController));
 		
 		elevatedManipulator.setDefaultCommand(new RunCommand(
-			()->{elevatedManipulator.moveRelative(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.1, DRIVE_DEADBAND));
-			}, elevatedManipulator));
+		 	()->{elevatedManipulator.moveRelative(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.1, DRIVE_DEADBAND));
+		 	}, elevatedManipulator));
 
 		//Start the compressor, PDP and camera feed monitoring Tasks.
 
@@ -373,7 +381,7 @@ public class RobotContainer
 		new Trigger(() -> driverController.getBackButton())
 			.onTrue(new InstantCommand(driveBase::toggleFieldRelative));
 
-		//Holding x button sets X pattern to stop movement.
+		// Holding x button sets X pattern to stop movement.
 		new Trigger(() -> driverController.getXButton())
 				.whileTrue(new RunCommand(() -> driveBase.setX(), driveBase));
 
@@ -381,7 +389,7 @@ public class RobotContainer
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new InstantCommand(driveBase::toggleBrakeMode));
 
-// 		//Drive to the AprilTag
+ 		//Drive to the AprilTag
 // 		new Trigger(() -> driverController.getBButton())
 // 			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.5, 0));
 
@@ -391,42 +399,41 @@ public class RobotContainer
 		// new Trigger(() -> driverController.getXButton())
 		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
 		
-    	//Drive to the AprilTag using Pose information
+    	// Drive to the AprilTag using Pose information
 		new Trigger(()-> driverController.getXButton())
 			.whileTrue(new RotateToPose(driveBase, true, true).andThen(new GoToPose(driveBase, true, true)));
 
-		//Drive to the Right Branch, offsetting from AprilTag (using Pose information)
+		// Drive to the Right Branch, offsetting from AprilTag (using Pose information)
 		new Trigger(()-> driverController.getRightTrigger())
 			.whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, false)
 			.andThen(new RotateToPose(driveBase, true, true))
 			.andThen(new GoToPose(driveBase, true, true)));
 			
-		//Drive to the Right Branch, offsetting from AprilTag (using Pose information)
+		// Drive to the Right Branch, offsetting from AprilTag (using Pose information)
 		new Trigger(()-> driverController.getLeftTrigger())
 			.whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, true)
 			.andThen(new RotateToPose(driveBase, true, true))
 			.andThen(new GoToPose(driveBase, true, true)));
 			
+		// -------- Utility pad buttons ----------
 		
-		// // -------- Utility pad buttons ----------
-		
-		// //Moves the coral manipulator/elevator to the L1 Branch scoring position
+		// Moves the coral manipulator/elevator to the L1 Branch scoring position
 		new Trigger(() -> utilityController.getXButton())
 			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1));
 
-		// //Moves the coral manipulator/elevator to the L2 Branch scoring position.
+		// Moves the coral manipulator/elevator to the L2 Branch scoring position.
 		new Trigger(() -> utilityController.getAButton())
 			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
 
-		// //Moves the coral manipulator/elevator to the L3 Branch scoring position.
+		// Moves the coral manipulator/elevator to the L3 Branch scoring position.
 		new Trigger(() -> utilityController.getBButton())
 			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));
 
-		// //Moves the coral manipulator/elevator to the L4 Branch scoring position.
+		// Moves the coral manipulator/elevator to the L4 Branch scoring position.
 		new Trigger(() -> utilityController.getYButton())
 			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
 		
-		// //Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
+		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
 		new Trigger(() -> utilityController.getLeftTrigger() && elevatedManipulator.intakeCoralInsteadOfAlgae)
 			.toggleOnTrue(new IntakeCoral(elevatedManipulator));
 
@@ -434,35 +441,34 @@ public class RobotContainer
 		new Trigger(()-> utilityController.getLeftTrigger() && !elevatedManipulator.intakeCoralInsteadOfAlgae)
 			.toggleOnTrue(new RemoveAlgae(elevatedManipulator));
 		
-		// //Moves the algae Manipulator/elevator to the removing position for Algae on L3
+		// Moves the algae Manipulator/elevator to the removing position for Algae on L3
 		new Trigger(()-> utilityController.getPOV() == 0)
 			.toggleOnTrue(new ParallelCommandGroup(
 				new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3),
 				new InstantCommand(()->elevatedManipulator.intakeCoralInsteadOfAlgae = false)
 				));
 
-		// //Moves the algae Manipulator/Elevator to the removing position for Algae on L2
+		// Moves the algae Manipulator/Elevator to the removing position for Algae on L2
 		new Trigger(()-> utilityController.getPOV() == 180)
 			.toggleOnTrue(new ParallelCommandGroup( new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2), 
 			new InstantCommand(()-> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
 
-		// // //Runs algae manipulator intake if the elevator and manipulator are in the set position.
+		// Runs algae manipulator intake if the elevator and manipulator are in the set position.
 		new Trigger(()-> utilityController.getPOV() == 90)
 			.toggleOnTrue(new ParallelCommandGroup( new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING), 
 			new InstantCommand(()-> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
 		
-		// //Runs coral outtake if the elevator and manipulator are in the correct position.
+		// Runs coral outtake if the elevator and manipulator are in the correct position.
 		new Trigger(() -> utilityController.getRightTrigger() && elevatedManipulator.scoreCoralInsteadOfAlgae)
 			.toggleOnTrue(new OuttakeCoral(elevatedManipulator));
 		
-		// //Runs algae outtake if the elevator and manipulator are in the correct position.
+		// Runs algae outtake if the elevator and manipulator are in the correct position.
 		new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
 			.toggleOnTrue(new OuttakeAlgae(elevatedManipulator));
 
-		// //Resets the manipulators and elevator to the default position.
+		// Resets the manipulators and elevator to the default position.
 		new Trigger(() -> utilityController.getBackButton())
 			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.RESET));
-		
 		
 	}
 	/**
@@ -524,7 +530,6 @@ public class RobotContainer
 		NamedCommands.registerCommand("Remove Algae L3", new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3));
 		NamedCommands.registerCommand("Algae Net Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING));
 	
-
 		// Create a chooser with the PathPlanner Autos located in the PP
 		// folders.
 

@@ -40,6 +40,8 @@ public class AlgaeManipulator extends SubsystemBase {
     }
         
     public void intialize(){
+        Util.consoleLog();
+        
         pivotDown();
         retractIn();
 

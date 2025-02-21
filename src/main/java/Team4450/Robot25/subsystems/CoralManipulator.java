@@ -33,7 +33,7 @@ public class CoralManipulator extends SubsystemBase {
 
         coralMotor.configure(coralConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        // coralSensor = coralMotor.getForwardLimitSwitch();
+        coralSensor = coralMotor.getForwardLimitSwitch();
 
         coralPivot.setName("coralPivot");
 
@@ -41,6 +41,8 @@ public class CoralManipulator extends SubsystemBase {
     }
     
     public void intialize(){
+        Util.consoleLog();
+
         pivotDown();
 
         coralPivotStatus = false;
