@@ -20,6 +20,7 @@ Port	Device			Description
 10      SparkFlex       Algae Motor.
 11      SparkFlex       Left Elevator Motor.
 12      SparkFlex       Right Elevator Motor.
+13      SparkFlex       Algae Ground Intake Motor.
 
 
 SparkMax CAN Limit Switches (Plugged into the controllers)
@@ -27,6 +28,20 @@ Port    Type            Description
 -----------------------------------------------------------------------------------
 13               
 
+REV PneumaticsHub 
+Port    Type            Description
+-----------------------------------------------------------------------------------
+0       ValveDA         CORAL_PIVOT_A
+1       ValveDA         CORAL_PIVOT_B
+2       ValveDA         ALGAE_EXTEND_A
+3       ValveDA         ALGAE_EXTEND_B
+4       ValveDA         ALGAE_PIVOT_A
+5       ValveDA         ALGAE_PIVOT_B
+6       ValveDA         ALGAE_GROUND_A
+7       ValveDA         ALGAE_GROUND_B
+8       
+9
+10
 
 PWM Ports
 Port	Device			Description
@@ -95,7 +110,7 @@ Y
 Utility GamePad - Left Joystick
 Button Name				Function
 -----------------------------------------------------------------------------------
-
+Y Axis                  Move Elevator Up/Down
 
 Utility GamePad - Right Joystick
 Button Name				Function
@@ -109,15 +124,15 @@ A                       Set L2 Coral Scoring Position
 B                       Set L3 Coral Scoring Position
 X                       Set L1 Coral Scoring Position
 Y                       Set L4 Coral Scoring Position
-LEFT_TRIGGER            
-RIGHT_TRIGGER           Outtake Coral
-LEFT_BUMPER             
+LEFT_TRIGGER            Intake Coral/Algae
+RIGHT_TRIGGER           Outtake Coral/Algae
+LEFT_BUMPER             Intake Algae (Ground)
 RIGHT_BUMPER            
-BACK                    
-POV_0                    
-POV_90                  
-POV_180                 
-POV_270                 
+BACK                    Set Elevator and all Manipulators to RESET Position
+POV_0                   Set L3 Algae Removing Position
+POV_90                  Set Net Algae Scoring Position
+POV_180                 Set L2 Algae Removing Position
+POV_270                 Set Processor Algae Scoring Position
 
 
 Dashboard Indicators/Controls

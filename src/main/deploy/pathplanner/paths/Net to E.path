@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.792344300981833,
-        "y": 2.8295457268224835
+        "x": 7.386091549290821,
+        "y": 5.224250000000959
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.691105118607638,
-        "y": 2.4566124720212086
+        "x": 6.116670797918248,
+        "y": 5.288536801424863
       },
       "isLocked": false,
-      "linkedName": "B"
+      "linkedName": "Netspot 1"
     },
     {
       "anchor": {
-        "x": 3.792344300981833,
-        "y": 2.8295457268224835
+        "x": 5.177249999997534,
+        "y": 5.224250000000959
       },
       "prevControl": {
-        "x": 3.3970093538274932,
-        "y": 2.9657460002965133
+        "x": 6.2109336388368375,
+        "y": 5.170376923663231
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "E4L"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.5,
-    "rotation": -29.000000000000004
+    "velocity": 1.0,
+    "rotation": -31.0
   },
   "reversed": false,
-  "folder": "Reef to Reef",
+  "folder": "Net to Reef",
   "idealStartingState": {
-    "velocity": 0.5,
-    "rotation": 151.0
+    "velocity": 1.0,
+    "rotation": -90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -11,8 +11,8 @@ public class RemoveAlgae extends Command {
     // private final AlgaeManipulator algaeManipulator;
     private final ElevatedManipulator elevatedManipulator;
 
-    private static enum State{REMOVE, RETURN, STOP};
-    private State state = State.RETURN;
+    private static enum State{REMOVE, STOP};
+    private State state = State.REMOVE;
 
     double startTime;
     public RemoveAlgae(ElevatedManipulator elevatedManipulator){
@@ -32,15 +32,13 @@ public class RemoveAlgae extends Command {
             case REMOVE:
                 elevatedManipulator.algaeManipulator.startIntaking();
                 if(Util.timeStamp() - startTime > 2.0)
-                    state = State.RETURN;
-                break;
-
-            case RETURN:
-                elevatedManipulator.algaeManipulator.retractIn();
-                elevatedManipulator.algaeManipulator.pivotUp();
-                if(elevatedManipulator.algaeManipulator.algaeExtendStatus == false)
                     state = State.STOP;
                 break;
+
+            // case RETURN:
+            //     if(elevatedManipulator.algaeManipulator.algaeExtendStatus == false)
+            //         state = State.STOP;
+            //     break;
 
             case STOP:
                 elevatedManipulator.algaeManipulator.stop();

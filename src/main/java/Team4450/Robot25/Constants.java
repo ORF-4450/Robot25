@@ -43,6 +43,7 @@ public final class Constants
 	// Non-drive base motor controller port assignments
     public static final int     CORAL_MANIPULATOR = 9;
     public static final int     ALGAE_MANIPULATOR = 10;
+    public static final int     ALGAE_GROUND_INTAKE = 13;
 
     //ELEVATOR:
     public static final int     ELEVATOR_LEFT = 11;
@@ -63,8 +64,10 @@ public final class Constants
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
 	public static final int		CORAL_PIVOT = 0;		
-	public static final int		ALGAE_EXTEND = 2;		
-	public static final int		ALGAE_PIVOT = 4;    
+	public static final int		ALGAE_EXTEND = 2;	
+	public static final int		ALGAE_PIVOT = 4;
+  public static final int		ALGAE_GROUND = 6;   
+
 
     public static final double INTAKE_SPEED = 0.90;
     
