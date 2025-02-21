@@ -1,7 +1,6 @@
 package Team4450.Robot25.commands;
 
 import Team4450.Lib.Util;
-import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import Team4450.Robot25.subsystems.ElevatedManipulator.PresetPosition;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -31,7 +30,7 @@ public class IntakeAlgaeGround extends Command {
         switch(state){
 
             case MOVING:
-                if(elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_GROUND_INTAKE)) { //Checks if the manipulator and elevator are in the intake position
+                if(elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_GROUND_INTAKE)) { //Checks if the manipulator and elevator are in the ground intake position
                     state = State.INTAKE_ALGAE; //Then move to the intake state
                 SmartDashboard.putString("Algae Ground Intake Status", state.name());
                 }
@@ -39,15 +38,10 @@ public class IntakeAlgaeGround extends Command {
 
             case INTAKE_ALGAE:
                 elevatedManipulator.algaeManipulator.startIntaking();
-                elevatedManipulator.algaeGroundIntake.startIntaking();
+                elevatedManipulator.algaeGroundIntake.startRollers();
                 if(Util.timeStamp() - startTime > 3.0)
                     state = State.STOP;
                 break;
-
-            // case RETURN:
-            //     if(elevatedManipulator.algaeManipulator.algaeExtendStatus == false)
-            //         state = State.STOP;
-            //     break;
 
             case STOP:
                 elevatedManipulator.algaeManipulator.stop();

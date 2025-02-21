@@ -31,7 +31,7 @@ public class AlgaeGroundIntake extends SubsystemBase {
         algaeGroundConfig.idleMode(IdleMode.kBrake);
 
         algaeGroundMotor.configure(algaeGroundConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-
+        
         Util.consoleLog("Algae Ground Intake Initialized");
         }
     
@@ -51,7 +51,7 @@ public class AlgaeGroundIntake extends SubsystemBase {
         algaeGroundMotor.set(Util.clampValue(speedfactor, 1));
     }
 
-    public void startIntaking(){
+    public void startRollers(){
         isRunning = true;
         algaeGroundMotor.set(-0.5);
         updateDS();
