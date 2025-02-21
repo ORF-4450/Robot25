@@ -23,6 +23,7 @@ import Team4450.Robot25.commands.RotateToPose;
 import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
 import Team4450.Robot25.subsystems.AlgaeManipulator;
+import Team4450.Robot25.subsystems.AlgaeGroundIntake;
 import Team4450.Robot25.subsystems.Candle;
 import Team4450.Robot25.subsystems.CoralManipulator;
 import Team4450.Robot25.subsystems.DriveBase;
@@ -81,6 +82,7 @@ public class RobotContainer
 	public static Elevator				elevator;
 	public static ElevatedManipulator	elevatedManipulator;
 	public static AlgaeManipulator 		algaeManipulator;
+	public static AlgaeGroundIntake		algaeGroundIntake;
 	public static CoralManipulator		coralManipulator;
 
 	// Subsystem Default Commands.
@@ -195,11 +197,11 @@ public class RobotContainer
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
 		pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
-		//algaeManipulator = new AlgaeManipulator();
+		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
 		elevator = new Elevator();
-		elevatedManipulator = new ElevatedManipulator(coralManipulator, algaeManipulator,
-													  elevator);
+		algaeGroundIntake = new AlgaeGroundIntake();
+		elevatedManipulator = new ElevatedManipulator(coralManipulator, algaeManipulator, algaeGroundIntake, elevator);
 		
 		// if (RobotBase.isReal()) 
 		// {

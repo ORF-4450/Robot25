@@ -43,12 +43,14 @@ public class ElevatedManipulator extends SubsystemBase {
     private PresetPosition position = PresetPosition.NONE;
 
     public ElevatedManipulator(CoralManipulator coralManipulator, 
-                               AlgaeManipulator algaeManipulator,
+                               AlgaeManipulator algaeManipulator, 
+                               AlgaeGroundIntake algaeGroundIntake,
                                Elevator elevator){
         Util.consoleLog();
 
         this.coralManipulator = coralManipulator;
         this.algaeManipulator = algaeManipulator;
+        this.algaeGroundIntake = algaeGroundIntake;
         this.elevator = elevator;
         
         SmartDashboard.putString("Elevator Position Phase", "Initalized");
