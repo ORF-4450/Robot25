@@ -16,12 +16,12 @@ import Team4450.Robot25.commands.SetTargetPose;
 import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
 import Team4450.Robot25.commands.GoToPose;
+import Team4450.Robot25.commands.IntakeAlgaeGround;
 import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RotateToPose;
 import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
-
 import Team4450.Robot25.subsystems.Candle;
 import Team4450.Robot25.subsystems.DriveBase;
 import Team4450.Robot25.subsystems.PhotonVision;
@@ -470,9 +470,14 @@ public class RobotContainer
 		new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
 			.toggleOnTrue(new OuttakeAlgae(elevatedManipulator));
 
+		//Moves the elvator and manipulator to the reset position and extends out ground intake, and algae manipulator, and starts intaking.
+		new Trigger(() -> utilityController.getLeftBumperButton())
+			.toggleOnTrue(new IntakeAlgaeGround(elevatedManipulator));
+
 		 //Resets the manipulators and elevator to the default position.
 		new Trigger(() -> utilityController.getBackButton())
 			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.RESET));
+			
 		
 		
 	}
