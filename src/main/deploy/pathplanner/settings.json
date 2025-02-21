@@ -2,7 +2,18 @@
   "robotWidth": 0.813,
   "robotLength": 0.8128,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "Misc.",
+    "Net to Pickup",
+    "Net to Reef",
+    "Reef to Procesor",
+    "Pickups To Reefs",
+    "Reef to Reef",
+    "Reef to processor",
+    "Reefs to Net",
+    "Reefs to Pickups",
+    "Starts to Reefs"
+  ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
@@ -28,5 +39,8 @@
   "brModuleY": -0.343,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
-  "robotFeatures": []
+  "robotFeatures": [
+    "{\"name\":\"Coral\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.0,\"y\":-0.3},\"size\":{\"width\":0.2,\"length\":0.5},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}",
+    "{\"name\":\"Algae\",\"type\":\"circle\",\"data\":{\"center\":{\"x\":0.0,\"y\":0.3},\"radius\":0.15,\"strokeWidth\":0.0,\"filled\":true}}"
+  ]
 }

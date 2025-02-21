@@ -8,17 +8,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class IntakeCoral extends Command {
-    private final CoralManipulator coralManipulator;
     private final ElevatedManipulator elevatedManipulator;
 
     private static enum State{MOVING, INTAKE, STOP};
     private State state = State.MOVING;
 
-    public IntakeCoral(CoralManipulator coralManipulator, ElevatedManipulator elevatedManipulator){
-        this.coralManipulator = coralManipulator;
+    public IntakeCoral(ElevatedManipulator elevatedManipulator){
         this.elevatedManipulator = elevatedManipulator;
 
-        addRequirements(coralManipulator, elevatedManipulator);
+        addRequirements(elevatedManipulator);
 
         SmartDashboard.putString("Intake Coral Status", state.name());
     }
@@ -39,15 +37,15 @@ public class IntakeCoral extends Command {
                 break;
                 
             case INTAKE:
-                coralManipulator.startIntaking(); //Start intaking the coral
+                elevatedManipulator.coralManipulator.startIntaking(); //Start intaking the coral
 
-                if(coralManipulator.hasCoral()) //If the beam break sensor on the coral manipulator returns false, then stop intaking
+                if(elevatedManipulator.coralManipulator.hasCoral()) //If the getCurrent() method in the CoralManipulator class returns greater than 80 amps, set to true.
                     state = State.STOP; //Switch the state of the switch case to STOP
                 SmartDashboard.putString("Intake Coral Status", state.name());
                 break;
 
             case STOP:
-                coralManipulator.stop(); //Stop the coral manipulator
+                elevatedManipulator.coralManipulator.stop(); //Stop the coral manipulator
                 break;
         }
     }
@@ -58,7 +56,7 @@ public class IntakeCoral extends Command {
 
     public void end(boolean interrupted){  //If isFinished() returns true, then this method is called
         Util.consoleLog("interrupted=%b", interrupted);
-        coralManipulator.stop();
+        elevatedManipulator.coralManipulator.stop();
         SmartDashboard.putString("Intake Coral Status", state.name());
     }
 }

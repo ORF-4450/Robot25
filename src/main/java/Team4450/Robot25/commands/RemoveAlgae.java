@@ -8,16 +8,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class RemoveAlgae extends Command {
-    private final AlgaeManipulator algaeManipulator;
+    // private final AlgaeManipulator algaeManipulator;
+    private final ElevatedManipulator elevatedManipulator;
 
-    private static enum State{REMOVE, RETURN, STOP};
-    private State state = State.RETURN;
+    private static enum State{REMOVE, STOP};
+    private State state = State.REMOVE;
 
     double startTime;
-    public RemoveAlgae(AlgaeManipulator algaeManipulator){
-        this.algaeManipulator = algaeManipulator;
-
-        addRequirements(algaeManipulator);
+    public RemoveAlgae(ElevatedManipulator elevatedManipulator){
+        // this.algaeManipulator = algaeManipulator;
+        this.elevatedManipulator = elevatedManipulator;
+        addRequirements(elevatedManipulator);
     }
 
     public void initialize(){
@@ -29,20 +30,18 @@ public class RemoveAlgae extends Command {
     public void execute(){
         switch(state){
             case REMOVE:
-                algaeManipulator.startIntaking();
+                elevatedManipulator.algaeManipulator.startIntaking();
                 if(Util.timeStamp() - startTime > 2.0)
-                    state = State.RETURN;
-                break;
-
-            case RETURN:
-                algaeManipulator.retractIn();
-                algaeManipulator.pivotUp();
-                if(algaeManipulator.algaeExtendStatus == false)
                     state = State.STOP;
                 break;
 
+            // case RETURN:
+            //     if(elevatedManipulator.algaeManipulator.algaeExtendStatus == false)
+            //         state = State.STOP;
+            //     break;
+
             case STOP:
-                algaeManipulator.stop();
+                elevatedManipulator.algaeManipulator.stop();
                 break;
         }
     }
@@ -53,6 +52,7 @@ public class RemoveAlgae extends Command {
 
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
-        algaeManipulator.stop();    
+        elevatedManipulator.algaeManipulator.stop();    
+        elevatedManipulator.intakeCoralInsteadOfAlgae = true; // Change to true to intake coral instead of algae
     }
 }
