@@ -30,10 +30,15 @@ public class CoralManipulator extends SubsystemBase {
 
         coralMotor.configure(coralConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
+        coralPivot.setName("coralPivot");
+
+
         Util.consoleLog("Coral Manipulator Initialized");
-        }
+    }
     
     public void intialize(){
+        Util.consoleLog();
+
         pivotDown();
 
         coralPivotStatus = false;
@@ -42,13 +47,10 @@ public class CoralManipulator extends SubsystemBase {
     }
     
     public boolean hasCoral(){
-
         return this.getCurrent() > 80.0;
-
     }
 
     public void start(double speedfactor){
-
         isRunning = Math.abs(speedfactor) > 0.02;
         
         updateDS();
@@ -57,7 +59,6 @@ public class CoralManipulator extends SubsystemBase {
     }
 
     public void startIntaking(){
-
         coralMotor.set(-0.5);
         isRunning = true;
         updateDS();
@@ -68,6 +69,7 @@ public class CoralManipulator extends SubsystemBase {
         isRunning = true;
         updateDS();
     }
+    
     public void start(){
        start(1);
 

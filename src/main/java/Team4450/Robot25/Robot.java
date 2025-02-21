@@ -265,6 +265,9 @@ public class Robot extends TimedRobot
     robotContainer.resetFaults();
     robotContainer.fixPathPlannerGyro();
 
+    RobotContainer.algaeManipulator.intialize();
+    RobotContainer.coralManipulator.intialize();
+
     // Driving handled by DriveCommand which is default command for the DriveBase.
     // Other commands scheduled by joystick buttons.
 

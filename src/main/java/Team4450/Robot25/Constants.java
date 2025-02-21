@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF25-01.30.25VR";
+	public static String		PROGRAM_NAME = "RAC25V-02.20.25";
 
 	public static Robot			robot;
 
@@ -61,13 +61,12 @@ public final class Constants
     // The factor is negative, likely because the gears swap rotation direction, but this is not a significant issue.
     public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (38.0 / 8.0)) * (2 * Math.PI) * 0.022225; //Changed to 2025 Value!
 
-
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
 	public static final int		CORAL_PIVOT = 0;		
-	public static final int		ALGAE_EXTEND = 2;		
+	public static final int		ALGAE_EXTEND = 2;	
 	public static final int		ALGAE_PIVOT = 4;
-    public static final int		ALGAE_GROUND = 6;   
+  public static final int		ALGAE_GROUND = 6;   
 
 
     public static final double INTAKE_SPEED = 0.90;
@@ -95,10 +94,6 @@ public final class Constants
 	public static final int		DRIVER_PAD = 0, UTILITY_PAD = 1;
     public static final double  DRIVE_DEADBAND = 0.1, ROTATION_DEADBAND = .1;
 
-	  
-	// Analog Input port assignments.
-	public static final int PRESSURE_SENSOR = 1;
-    
 	// LCD display line number constants showing class where the line is set.
 	public static final int		LCD_1 = 1;	    // Robot, Auto Commands.
 	public static final int		LCD_2 = 2;	    // Swerve Drive command.

@@ -1,5 +1,6 @@
 package Team4450.Robot25.subsystems;
 
+import Team4450.Lib.Util;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -41,11 +42,15 @@ public class ElevatedManipulator extends SubsystemBase {
 
     private PresetPosition position = PresetPosition.NONE;
 
-    public ElevatedManipulator(){
-        coralManipulator = new CoralManipulator();
-        algaeManipulator = new AlgaeManipulator();
-        algaeGroundIntake = new AlgaeGroundIntake();
-        elevator = new Elevator();
+    public ElevatedManipulator(CoralManipulator coralManipulator, 
+                               AlgaeManipulator algaeManipulator,
+                               Elevator elevator){
+        Util.consoleLog();
+
+        this.coralManipulator = coralManipulator;
+        this.algaeManipulator = algaeManipulator;
+        this.elevator = elevator;
+        
         SmartDashboard.putString("Elevator Position Phase", "Initalized");
     }
 
