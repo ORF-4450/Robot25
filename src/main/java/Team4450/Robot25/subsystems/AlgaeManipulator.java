@@ -33,10 +33,15 @@ public class AlgaeManipulator extends SubsystemBase {
 
         algaeMotor.configure(algaeConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
+        algaePivot.setName("algaePivot");
+        algaeExtend.setName("algaeExtend");
+
         Util.consoleLog("Algae Manipulator Initialized");
-        }
+    }
         
     public void intialize(){
+        Util.consoleLog();
+        
         pivotDown();
         retractIn();
 
@@ -45,7 +50,6 @@ public class AlgaeManipulator extends SubsystemBase {
 
         updateDS();
     }
-    
 
     public void start(double speedfactor){
         isRunning = Math.abs(speedfactor) > 0.02;
@@ -66,6 +70,7 @@ public class AlgaeManipulator extends SubsystemBase {
         algaeMotor.set(0.5);
         updateDS();
     }
+
     public void start(){
        start(1);
        isRunning = true;
@@ -91,7 +96,6 @@ public class AlgaeManipulator extends SubsystemBase {
         algaePivotStatus = true;
 
         updateDS();
-
     }
     
     public void pivotDown(){
@@ -142,14 +146,16 @@ public class AlgaeManipulator extends SubsystemBase {
         Util.consoleLog();
 
         if (status == true){
-            algaeExtend.SetA();
+            extendOut();
             algaeExtendStatus = true;
         } else if (status == false){
-            algaeExtend.SetB();
+            retractIn();
             algaeExtendStatus = false;
         }
+
         updateDS();
     }   
+    
     private void updateDS() {
         SmartDashboard.putBoolean("Algae Manipulator Running", isRunning);
         SmartDashboard.putBoolean("Algae Pivot On", algaePivotStatus);

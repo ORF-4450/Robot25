@@ -35,8 +35,7 @@ public class SetTargetPose extends Command {
     @Override
     public void execute() {
         if (!finished) {
-        robotDrive.setTargetPose(this.targetPose);
-        Util.consoleLog(this.targetPose.toString());
+        robotDrive.setTargetPose(targetPose);
         finished = true;
         }
         return;
