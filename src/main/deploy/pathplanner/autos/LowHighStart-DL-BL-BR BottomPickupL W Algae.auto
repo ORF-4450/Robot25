@@ -43,15 +43,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "C to BottomPickupL"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake Coral"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C to BottomPickupL"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
@@ -107,20 +114,33 @@
                 "data": {
                   "name": "Remove Algae L3"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Remove Algae"
+                }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "B to BottomPickupL"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake Coral"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "B to BottomPickupL"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
@@ -162,15 +182,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "B to BottomPickupL"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake Coral"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "B to BottomPickupL"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         }
       ]

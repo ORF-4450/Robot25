@@ -7,67 +7,67 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to E"
+            "pathName": "BottomPickupL to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "E to TopPickupR"
+            "pathName": "B to BottomPickupL"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to E"
+            "pathName": "BottomPickupL to B"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "E-Coral to E-Algae"
+            "pathName": "B to BottomPickupL"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "E to Net"
+            "pathName": "BottomPickupL to C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Net to TopPickupR"
+            "pathName": "C to BottomPickupL"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to F"
+            "pathName": "BottomPickupL to C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "F to TopPickupR"
+            "pathName": "C-Coral to C-Algae"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to F"
+            "pathName": "C to Processor"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "F-Coral to F-Algae"
+            "pathName": "Processor to B (Algae)"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "F to Net"
+            "pathName": "B to Processor"
           }
         }
       ]

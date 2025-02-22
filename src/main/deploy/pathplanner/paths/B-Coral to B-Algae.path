@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.5,
+    "velocity": 1.0,
     "rotation": -29.000000000000004
   },
   "reversed": false,
   "folder": "Reef to Reef",
   "idealStartingState": {
-    "velocity": 0.5,
+    "velocity": 1.0,
     "rotation": 151.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
