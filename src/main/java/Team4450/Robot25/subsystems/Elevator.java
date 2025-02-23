@@ -73,10 +73,10 @@ public class Elevator extends SubsystemBase {
         if (Double.isNaN(targetPosition)) return;
 
         //SOFT LIMITS (NEEDS TO BE CHANGED TO ACTUAL VALUES)
-        if (targetPosition < -59) 
-            targetPosition = -59;
-        if (targetPosition > -5) 
-            targetPosition = -5; 
+        if (targetPosition < -52) 
+            targetPosition = -52;
+        if (targetPosition > -2) 
+            targetPosition = -2; 
 
         //Main PID/Profile Loop which is used to control the elevator, and uses targetPosition 
         //which has units of rotations.  

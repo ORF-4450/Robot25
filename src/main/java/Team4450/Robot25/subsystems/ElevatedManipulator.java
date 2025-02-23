@@ -61,31 +61,42 @@ public class ElevatedManipulator extends SubsystemBase {
         
         switch(position){
             case RESET:
-                endGoalElevatorHeight = 0.0;
+                endGoalElevatorHeight = 0.05;
                 endGoalCoralPivotStatus = false;
-                endGoalAlgaeExtendStatus = false;
+                if(algaeManipulator.hasAlgae())
+                    endGoalAlgaeExtendStatus = true;
+                else
+                    endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = false;
 
             case CORAL_STATION_INTAKE:
                 endGoalElevatorHeight = 0.0;
                 endGoalCoralPivotStatus = true;
-                endGoalAlgaeExtendStatus = false;
+                if(algaeManipulator.hasAlgae())
+                    endGoalAlgaeExtendStatus = true;
+                else
+                    endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = false;
                 break;
             case CORAL_SCORING_L1:
                 endGoalElevatorHeight = 0.44;
                 endGoalCoralPivotStatus = false;
-                endGoalAlgaeExtendStatus = false;
-                endGoalAlgaePivotStatus = false;
+                if(algaeManipulator.hasAlgae())
+                    endGoalAlgaeExtendStatus = true;
+                else
+                    endGoalAlgaeExtendStatus = false;          
                 endGoalAlgaeGroundPistonStatus = false;
                 break;
 
             case CORAL_SCORING_L2:
                 endGoalElevatorHeight = 0.62;
                 endGoalCoralPivotStatus = false;
-                endGoalAlgaeExtendStatus = false;
+                if(algaeManipulator.hasAlgae())
+                    endGoalAlgaeExtendStatus = true;
+                else
+                    endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = false;
                 break;
@@ -93,7 +104,10 @@ public class ElevatedManipulator extends SubsystemBase {
             case CORAL_SCORING_L3:
                 endGoalElevatorHeight = 1.03;
                 endGoalCoralPivotStatus = false;
-                endGoalAlgaeExtendStatus = false;
+                if(algaeManipulator.hasAlgae())
+                    endGoalAlgaeExtendStatus = true;
+                else
+                    endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = false;
                 break;
@@ -101,7 +115,10 @@ public class ElevatedManipulator extends SubsystemBase {
             case CORAL_SCORING_L4:
                 endGoalElevatorHeight = 1.67;
                 endGoalCoralPivotStatus = false;
-                endGoalAlgaeExtendStatus = false;
+                if(algaeManipulator.hasAlgae())
+                    endGoalAlgaeExtendStatus = true;
+                else
+                    endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = false;
                 break;
@@ -131,7 +148,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
             
             case ALGAE_PROCESSOR_SCORING:
-                endGoalElevatorHeight = 0.0;
+                endGoalElevatorHeight = 0.05;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
@@ -139,7 +156,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
 
             case ALGAE_GROUND_INTAKE:
-                endGoalElevatorHeight = 0.0;
+                endGoalElevatorHeight = 0.05;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
