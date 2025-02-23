@@ -43,15 +43,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "E to TopPickupR"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Receive First Coral"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "E to TopPickupR"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
@@ -105,9 +112,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "F to TopPickupR"
+            "name": "Remove Algae"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "F to TopPickupR"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
@@ -149,9 +175,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "F to TopPickupR"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "F to TopPickupR"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
