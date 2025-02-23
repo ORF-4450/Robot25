@@ -6,15 +6,17 @@
     "Misc.",
     "Net to Pickup",
     "Net to Reef",
-    "Reef to Procesor",
+    "Processor to reef",
     "Pickups To Reefs",
+    "Reef to Processor",
     "Reef to Reef",
-    "Reef to processor",
     "Reefs to Net",
     "Reefs to Pickups",
     "Starts to Reefs"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Noah Time Analysis"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

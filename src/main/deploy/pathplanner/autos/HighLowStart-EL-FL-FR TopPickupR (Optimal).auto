@@ -5,21 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "HighMiddleStart to E"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "HighMiddleStart to E"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise to L4"
+                }
+              }
+            ]
           }
         },
         {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
-                }
-              },
               {
                 "type": "wait",
                 "data": {
@@ -36,33 +43,47 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "E to TopPickupR"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "E to TopPickupR"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Receive First Coral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TopPickupR to F"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TopPickupR to F"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise to L4"
+                }
+              }
+            ]
           }
         },
         {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
-                }
-              },
               {
                 "type": "wait",
                 "data": {
@@ -79,27 +100,47 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "F to TopPickupR"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "F to TopPickupR"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "TopPickupR to F"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TopPickupR to F"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise to L4"
+                }
+              }
+            ]
           }
         },
         {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
-                }
-              },
               {
                 "type": "wait",
                 "data": {
@@ -116,27 +157,47 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "F to TopPickupR"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "F to TopPickupR"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake Coral"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "TopPickupR to E"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TopPickupR to E"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise to L4"
+                }
+              }
+            ]
           }
         },
         {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
-                }
-              },
               {
                 "type": "wait",
                 "data": {
