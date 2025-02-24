@@ -38,7 +38,7 @@ public class Elevator extends SubsystemBase {
     private final double START_COUNTS = 0.08 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
 
     private double targetPosition = Double.NaN; //in units of Rotations
-
+    private boolean isManualControl = false;
     public Elevator(){
         Util.consoleLog();
 
@@ -72,7 +72,7 @@ public class Elevator extends SubsystemBase {
 
         if (Double.isNaN(targetPosition)) return;
 
-        //SOFT LIMITS (NEEDS TO BE CHANGED TO ACTUAL VALUES)
+        //SOFT LIMITS
         if (targetPosition < -52) 
             targetPosition = -52;
         if (targetPosition > -2) 
@@ -82,7 +82,22 @@ public class Elevator extends SubsystemBase {
         //which has units of rotations.  
         mainPID.setGoal(targetPosition);
         double nonclamped = mainPID.calculate(mainEncoder.getPosition());
-        double motorOutput = Util.clampValue(nonclamped, 0.25);
+        
+        // Calculate the distance to the target
+        double distanceToTarget = Math.abs(targetPosition - mainEncoder.getPosition());
+        double slowDownThreshold = 0.1 * targetPosition; // 10% of the target position
+
+        // Adjust motor output based on distance to target
+        double motorOutput;
+        
+        if (distanceToTarget <= slowDownThreshold && isManualControl == false) {
+            double slowDownFactor = 0.1; // Adjust this factor as needed
+            motorOutput = Util.clampValue(nonclamped * slowDownFactor, 0.15);
+            SmartDashboard.putString("Elevator Position Phase", "Slowing Down Elevator");
+        } else {
+            motorOutput = Util.clampValue(nonclamped, 0.20);
+        }
+
         SmartDashboard.putNumber("Elevator Speed", motorOutput);
         motorMain.set(motorOutput);
     }
@@ -93,6 +108,7 @@ public class Elevator extends SubsystemBase {
      */
     public void unlockPosition(){
         targetPosition = Double.NaN;
+        isManualControl = true;
     }
 
     /**
