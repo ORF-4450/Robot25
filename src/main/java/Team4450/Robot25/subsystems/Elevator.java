@@ -34,8 +34,8 @@ public class Elevator extends SubsystemBase {
     private RelativeEncoder mainEncoder;
     private RelativeEncoder followerEncoder;
 
-    private final double TOLERANCE_COUNTS = 1.5;
-    private final double START_COUNTS = 0.08 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
+    private final double TOLERANCE_ROTATIONS = 1.5;
+    private final double START_ROTATIONS = 0.08 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
 
     private double targetPosition = Double.NaN; //in units of Rotations
     private boolean isManualControl = false;
@@ -61,7 +61,7 @@ public class Elevator extends SubsystemBase {
         ));
         
         SmartDashboard.putData("winch_pid", mainPID);
-        mainPID.setTolerance(TOLERANCE_COUNTS);
+        mainPID.setTolerance(TOLERANCE_ROTATIONS);
     }
 
     public void periodic(){
@@ -85,7 +85,7 @@ public class Elevator extends SubsystemBase {
         
         // Calculate the distance to the target
         double distanceToTarget = Math.abs(targetPosition - mainEncoder.getPosition());
-        double slowDownThreshold = 0.1 * targetPosition; // 10% of the target position
+        double slowDownThreshold = 0.2 * targetPosition; // 20% of the target position
 
         // Adjust motor output based on distance to target
         double motorOutput;
@@ -108,7 +108,6 @@ public class Elevator extends SubsystemBase {
      */
     public void unlockPosition(){
         targetPosition = Double.NaN;
-        isManualControl = true;
     }
 
     /**
@@ -117,6 +116,7 @@ public class Elevator extends SubsystemBase {
      */
     
     public void move(double change){
+        isManualControl = true;
         targetPosition -= change;
     }
 
@@ -140,7 +140,7 @@ public class Elevator extends SubsystemBase {
     //Checks if the elevator is at the target height by converting given height to rotations: returns rotations
     public boolean isElevatorAtTarget(double height){
         double setpoint = height/ELEVATOR_WINCH_FACTOR;
-        return Math.abs(setpoint - mainEncoder.getPosition()) < TOLERANCE_COUNTS;
+        return Math.abs(setpoint - mainEncoder.getPosition()) < TOLERANCE_ROTATIONS;
     }
 
     //Gets the height of the elevator in meters by converting rotations to meters: returns meters
@@ -151,9 +151,9 @@ public class Elevator extends SubsystemBase {
 
     //Resets the encoders to the current position, whihc sets it to the "zero/starting" position
     public void resetEncoders(){
-        mainEncoder.setPosition(START_COUNTS);
-        followerEncoder.setPosition(START_COUNTS);
-        targetPosition = START_COUNTS;
+        mainEncoder.setPosition(START_ROTATIONS);
+        followerEncoder.setPosition(START_ROTATIONS);
+        targetPosition = START_ROTATIONS;
     }
 
     //Sets the setpoint to current position which locks the Elevator in place.

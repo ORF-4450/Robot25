@@ -256,10 +256,13 @@ public class RobotContainer
 									driverController.getRightXDS(),
 									driverController));
 		
-		elevatedManipulator.setDefaultCommand(new RunCommand(
-		 	()->{elevatedManipulator.moveRelative(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.1, DRIVE_DEADBAND));
-		 	}, elevatedManipulator));
-
+		// elevatedManipulator.setDefaultCommand(new RunCommand(
+		//  	()->{elevatedManipulator.moveRelative(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.1, DRIVE_DEADBAND));
+		//  	}, elevatedManipulator));
+		
+		elevator.setDefaultCommand(new RunCommand(
+		 	()->{elevator.moveUnsafe(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.1, DRIVE_DEADBAND));
+		 	}, elevator));
 		//Start the compressor, PDP and camera feed monitoring Tasks.
 
    		monitorCompressorThread = MonitorCompressorPH.getInstance(pcm);
