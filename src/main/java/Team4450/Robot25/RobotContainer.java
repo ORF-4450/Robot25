@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.DriveCommand;
+import Team4450.Robot25.commands.ExtendClimber;
 import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
@@ -19,6 +20,7 @@ import Team4450.Robot25.commands.GoToPose;
 import Team4450.Robot25.commands.IntakeAlgaeGround;
 import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
+import Team4450.Robot25.commands.RetractClimber;
 import Team4450.Robot25.commands.RotateToPose;
 import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
@@ -33,6 +35,7 @@ import Team4450.Robot25.subsystems.ElevatedManipulator.PresetPosition;
 import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import Team4450.Robot25.subsystems.Elevator;
+import Team4450.Robot25.subsystems.Climber;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
@@ -84,6 +87,7 @@ public class RobotContainer
 	public static AlgaeManipulator 		algaeManipulator;
 	public static AlgaeGroundIntake		algaeGroundIntake;
 	public static CoralManipulator		coralManipulator;
+	public static Climber 				climber;
 
 	// Subsystem Default Commands.
 
@@ -200,6 +204,7 @@ public class RobotContainer
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
 		elevator = new Elevator();
+		climber = new Climber();
 		algaeGroundIntake = new AlgaeGroundIntake();
 		elevatedManipulator = new ElevatedManipulator(coralManipulator, algaeManipulator, algaeGroundIntake, elevator);
 		
@@ -261,7 +266,7 @@ public class RobotContainer
 		//  	}, elevatedManipulator));
 		
 		elevator.setDefaultCommand(new RunCommand(
-		 	()->{elevator.moveUnsafe(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.1, DRIVE_DEADBAND));
+		 	()->{elevator.moveUnsafe(-MathUtil.applyDeadband(utilityController.getLeftY(), DRIVE_DEADBAND));
 		 	}, elevator));
 		//Start the compressor, PDP and camera feed monitoring Tasks.
 
@@ -392,8 +397,7 @@ public class RobotContainer
 				.whileTrue(new RunCommand(() -> driveBase.setX(), driveBase));
 
 		// toggle brake mode
-		new Trigger(() -> driverController.getAButton())
-    		.onTrue(new InstantCommand(driveBase::toggleBrakeMode));
+		
 
  		//Drive to the AprilTag
 // 		new Trigger(() -> driverController.getBButton())
@@ -422,6 +426,13 @@ public class RobotContainer
 			.whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, -1)
 			.andThen(new RotateToPose(driveBase, true, true))
 			.andThen(new GoToPose(driveBase, true, true)));
+		
+		new Trigger(() -> driverController.getBButton())
+			.toggleOnTrue(new ExtendClimber(climber));
+
+		new Trigger(() -> driverController.getAButton())
+    		.toggleOnTrue(new RetractClimber(climber));
+		
 			
 		// -------- Utility pad buttons ----------
 		
@@ -483,9 +494,15 @@ public class RobotContainer
 			.toggleOnTrue(new OuttakeAlgae(elevatedManipulator));
 
 		//Moves the elvator and manipulator to the reset position and extends out ground intake, and algae manipulator, and starts intaking.
-		new Trigger(() -> utilityController.getLeftBumperButton())
-			.toggleOnTrue(new IntakeAlgaeGround(elevatedManipulator));
+		// new Trigger(() -> utilityController.getLeftBumperButton())
+		// 	.toggleOnTrue(new IntakeAlgaeGround(elevatedManipulator));
 
+		new Trigger(() -> utilityController.getLeftBumperButton())
+			.toggleOnTrue(new RemoveAlgae(elevatedManipulator));
+
+		new Trigger(() -> utilityController.getRightBumperButton())
+			.toggleOnTrue(new OuttakeAlgae(elevatedManipulator));
+		
 		 //Resets the manipulators and elevator to the default position.
 		new Trigger(() -> utilityController.getBackButton())
 			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.RESET));

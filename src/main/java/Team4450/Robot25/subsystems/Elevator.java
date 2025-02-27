@@ -130,6 +130,7 @@ public class Elevator extends SubsystemBase {
     public void moveUnsafe(double speed){
         targetPosition = Double.NaN;
         motorMain.set(speed);  
+        SmartDashboard.putNumber("moveUnsafe Speed", speed);
     }
     
     //Sets the target position of the elevator in meters, which is converted to rotations
@@ -149,7 +150,7 @@ public class Elevator extends SubsystemBase {
         return elevatorHeight;
     }
 
-    //Resets the encoders to the current position, whihc sets it to the "zero/starting" position
+    //Resets the encoders to the current position, which sets it to the "zero/starting" position
     public void resetEncoders(){
         mainEncoder.setPosition(START_ROTATIONS);
         followerEncoder.setPosition(START_ROTATIONS);

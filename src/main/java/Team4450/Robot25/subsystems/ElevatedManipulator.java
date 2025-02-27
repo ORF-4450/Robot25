@@ -69,6 +69,7 @@ public class ElevatedManipulator extends SubsystemBase {
                     endGoalAlgaeExtendStatus = false;
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = false;
+                break;
 
             case CORAL_STATION_INTAKE:
                 endGoalElevatorHeight = 0.0;
@@ -80,6 +81,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = false;
                 break;
+
             case CORAL_SCORING_L1:
                 endGoalElevatorHeight = 0.44;
                 endGoalCoralPivotStatus = false;
@@ -228,7 +230,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Ground Piston Retract");
                 atTarget = false;
             }
-        }
+        } 
 
         // Handle Elevator
         if (atTarget) {

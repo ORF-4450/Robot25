@@ -31,7 +31,7 @@ public class RemoveAlgae extends Command {
         switch(state){
             case REMOVE:
                 elevatedManipulator.algaeManipulator.startIntaking();
-                if(Util.timeStamp() - startTime > 2.0)
+                if(Util.timeStamp() - startTime > 3.0)
                     state = State.STOP;
                 break;
 
@@ -41,7 +41,8 @@ public class RemoveAlgae extends Command {
             //     break;
 
             case STOP:
-                elevatedManipulator.algaeManipulator.stop();
+                elevatedManipulator.algaeManipulator.holdAlgae();
+                SmartDashboard.putBoolean("Has Algae", elevatedManipulator.algaeManipulator.hasAlgae());
                 break;
         }
     }
@@ -52,7 +53,7 @@ public class RemoveAlgae extends Command {
 
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
-        elevatedManipulator.algaeManipulator.stop();    
+        // elevatedManipulator.algaeManipulator.stop();    
         elevatedManipulator.intakeCoralInsteadOfAlgae = true; // Change to true to intake coral instead of algae
     }
 }

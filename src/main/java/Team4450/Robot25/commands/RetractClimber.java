@@ -3,10 +3,11 @@ package Team4450.Robot25.commands;
 import Team4450.Lib.Util;
 import Team4450.Robot25.subsystems.Climber;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class RetractClimber extends CommandBase {
+public class RetractClimber extends Command {
     private final Climber climber;
+    private boolean isFinished = false;
 
     public RetractClimber(Climber climber) {
         this.climber = climber;
@@ -22,21 +23,22 @@ public class RetractClimber extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void execute(){
+        
         climber.retractPiston();
-        climber.retractPiston2();
-    }
+
+        if(climber.pistonStatus() == false)
+            isFinished = true;
+        }
 
     @Override
     public boolean isFinished() {
-        return false; // This command runs until interrupted
+        return isFinished; // This command runs until interrupted
     }
 
     @Override
     public void end(boolean interrupted) {
         Util.consoleLog("interrupted=%b", interrupted);
-        climber.retractPiston();
-        climber.retractPiston2();
         SmartDashboard.putString("Climber Status", "STOPPED");
     }
 }

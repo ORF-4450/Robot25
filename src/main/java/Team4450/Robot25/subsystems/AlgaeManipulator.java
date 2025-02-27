@@ -66,6 +66,11 @@ public class AlgaeManipulator extends SubsystemBase {
         updateDS();
     }
 
+    public void holdAlgae(){
+        isRunning = true;
+        algaeMotor.set(-0.15);
+        updateDS();
+    }
     public void startOuttaking(){
         isRunning = true;
         algaeMotor.set(0.5);
