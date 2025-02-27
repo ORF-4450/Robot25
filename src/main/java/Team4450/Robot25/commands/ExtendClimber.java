@@ -30,8 +30,9 @@ public class ExtendClimber extends Command {
         switch (state) {
             case EXTENDING:
                 climber.extendPiston();
-                climber.extendPiston2();
-                state = State.STOP;
+                
+                if(climber.pistonStatus() == true)
+                    state = State.STOP;
                 SmartDashboard.putString("Climber Status", state.name());
                 break;
 
@@ -49,8 +50,6 @@ public class ExtendClimber extends Command {
     @Override
     public void end(boolean interrupted) {
         Util.consoleLog("interrupted=%b", interrupted);
-        climber.retractPiston();
-        climber.retractPiston2();
         SmartDashboard.putString("Climber Status", state.name());
     }
 }
