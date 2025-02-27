@@ -4,7 +4,7 @@ FRC Team 4450 2025 Robot Control program used in competition.
 
 This is the 2025 competition robot control program created by the Olympia Robotics Federation (FRC Team 4450). 
 
-Operates the robot **LEVIATHAN** for FRC game **REEFSCAPE**.
+Operates the robot **USS LEVIATHAN** for FRC game **REEFSCAPE**.
 
 ----------------------------------------------------------------------------
 ## Instructions to setup development environment for VS Code
