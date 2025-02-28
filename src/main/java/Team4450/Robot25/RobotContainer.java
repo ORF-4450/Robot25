@@ -265,7 +265,7 @@ public class RobotContainer
 		//  	}, elevatedManipulator));
 		
 		elevator.setDefaultCommand(new RunCommand(
-		 	()->{elevator.moveUnsafe(-MathUtil.applyDeadband(utilityController.getLeftY(), DRIVE_DEADBAND));
+		 	()->{elevator.move(-MathUtil.applyDeadband(utilityController.getLeftY() * 0.5, DRIVE_DEADBAND));
 		 	}, elevator));
 		//Start the compressor, PDP and camera feed monitoring Tasks.
 
@@ -276,6 +276,8 @@ public class RobotContainer
 		
    		monitorPDPThread = MonitorPDP.getInstance(pdp);
    		monitorPDPThread.start();
+
+		pdp.setSwitchableChannel(true);
 		
 		// Start camera server thread using our class for usb cameras.
     
@@ -445,7 +447,10 @@ public class RobotContainer
 
 		// Moves the coral manipulator/elevator to the L3 Branch scoring position.
 		new Trigger(() -> utilityController.getBButton())
-			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));
+			.toggleOnTrue(new InstantCommand(() -> elevator.setElevatorHeight(1.03), elevator)
+			.andThen(new InstantCommand(() -> coralManipulator.setCoralPivot(false)))
+			.andThen(new InstantCommand(() -> algaeManipulator.setAlgaeExtend(false)))
+			.andThen(new InstantCommand(() -> algaeManipulator.setAlgaeExtend(false))));
 
 		// Moves the coral manipulator/elevator to the L4 Branch scoring position.
 		new Trigger(() -> utilityController.getYButton())
@@ -463,7 +468,12 @@ public class RobotContainer
 		//Moves the algae Manipulator/elevator to the removing position for Algae on L3
 		new Trigger(()-> utilityController.getPOV() == 0)
 			.toggleOnTrue(new ParallelCommandGroup(
-				new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3),
+				new InstantCommand(() -> elevator.setElevatorHeight(1.07), elevator)
+				.andThen(new InstantCommand(() -> coralManipulator.setCoralPivot(false)))
+				.andThen(new InstantCommand(() -> algaeManipulator.setAlgaeExtend(true)))
+				.andThen(new InstantCommand(() -> algaeManipulator.setAlgaePivot(false)))
+				.andThen(new InstantCommand(() -> coralManipulator.stop()))
+				.andThen(new InstantCommand(() -> algaeManipulator.stop())),
 				new InstantCommand(()->elevatedManipulator.intakeCoralInsteadOfAlgae = false)
 				));
 
@@ -504,7 +514,15 @@ public class RobotContainer
 		
 		 //Resets the manipulators and elevator to the default position.
 		new Trigger(() -> utilityController.getBackButton())
-			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.RESET));
+			.toggleOnTrue(new InstantCommand(() -> elevator.setElevatorHeight(0.05), elevator)
+				.andThen(new InstantCommand(() -> coralManipulator.setCoralPivot(false)))
+				.andThen(new InstantCommand(() -> algaeManipulator.setAlgaePivot(false)))
+				.andThen(new InstantCommand(() -> algaeManipulator.setAlgaeExtend(false)))
+				.andThen(new InstantCommand(() -> coralManipulator.stop()))
+				.andThen(new InstantCommand(() -> algaeManipulator.stop())));
+		
+		new Trigger(() -> utilityController.getStartButton())
+			.toggleOnTrue(new InstantCommand(elevator::resetEncoders));
 			
 		
 	}
@@ -559,7 +577,7 @@ public class RobotContainer
 		NamedCommands.registerCommand("Outtake Coral", new OuttakeCoral(elevatedManipulator));
 		NamedCommands.registerCommand("Remove Algae", new RemoveAlgae(elevatedManipulator));
 		NamedCommands.registerCommand("Outtake Algae", new OuttakeAlgae(elevatedManipulator));
-		NamedCommands.registerCommand("Raise to L1", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1));
+		NamedCommands.registerCommand("Raise to L1", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1_NEW));
 		NamedCommands.registerCommand("Raise to L2", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
 		NamedCommands.registerCommand("Raise to L3", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));
 		NamedCommands.registerCommand("Raise to L4", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
@@ -568,6 +586,16 @@ public class RobotContainer
 		NamedCommands.registerCommand("Algae Net Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING));
 		NamedCommands.registerCommand("Algae Processor Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING));
 		NamedCommands.registerCommand("Intake Algae Ground", new IntakeAlgaeGround(elevatedManipulator));
+		NamedCommands.registerCommand("Reset", new Preset(elevatedManipulator, PresetPosition.RESET));
+		NamedCommands.registerCommand("Align Left", new SetTagBasedPosition(driveBase, pvTagCamera, -1)
+														.andThen(new RotateToPose(driveBase, true, true)
+														.andThen(new GoToPose(driveBase, true, true))));
+		NamedCommands.registerCommand("Align Right", new SetTagBasedPosition(driveBase, pvTagCamera, 1)
+														.andThen(new RotateToPose(driveBase, true, true))
+														.andThen(new GoToPose(driveBase, true, true)));
+		NamedCommands.registerCommand("Align Center", new SetTagBasedPosition(driveBase, pvTagCamera, 0)
+														.andThen(new RotateToPose(driveBase, true, true))
+														.andThen(new GoToPose(driveBase, true, true)));
 	
 		// Create a chooser with the PathPlanner Autos located in the PP
 		// folders.

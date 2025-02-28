@@ -11,7 +11,7 @@ public class RemoveAlgae extends Command {
     // private final AlgaeManipulator algaeManipulator;
     private final ElevatedManipulator elevatedManipulator;
 
-    private static enum State{REMOVE, STOP};
+    private static enum State{REMOVE, HOLD};
     private State state = State.REMOVE;
 
     double startTime;
@@ -32,7 +32,7 @@ public class RemoveAlgae extends Command {
             case REMOVE:
                 elevatedManipulator.algaeManipulator.startIntaking();
                 if(Util.timeStamp() - startTime > 3.0)
-                    state = State.STOP;
+                    state = State.HOLD;
                 break;
 
             // case RETURN:
@@ -40,7 +40,7 @@ public class RemoveAlgae extends Command {
             //         state = State.STOP;
             //     break;
 
-            case STOP:
+            case HOLD:
                 elevatedManipulator.algaeManipulator.holdAlgae();
                 SmartDashboard.putBoolean("Has Algae", elevatedManipulator.algaeManipulator.hasAlgae());
                 break;
@@ -48,7 +48,7 @@ public class RemoveAlgae extends Command {
     }
 
     public boolean isFinished(){
-        return state == State.STOP;
+        return state == State.HOLD;
     }   
 
     public void end(boolean interrupted){

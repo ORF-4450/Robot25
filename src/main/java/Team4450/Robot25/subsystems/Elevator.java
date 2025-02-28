@@ -35,7 +35,7 @@ public class Elevator extends SubsystemBase {
     private RelativeEncoder followerEncoder;
 
     private final double TOLERANCE_ROTATIONS = 1.5;
-    private final double START_ROTATIONS = 0.08 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
+    private final double START_ROTATIONS = 0.00 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
 
     private double targetPosition = Double.NaN; //in units of Rotations
     private boolean isManualControl = false;
@@ -73,10 +73,10 @@ public class Elevator extends SubsystemBase {
         if (Double.isNaN(targetPosition)) return;
 
         //SOFT LIMITS
-        if (targetPosition < -52) 
-            targetPosition = -52;
-        if (targetPosition > -2) 
-            targetPosition = -2; 
+        if (targetPosition < -59) 
+            targetPosition = -59;
+        if (targetPosition > 0) 
+            targetPosition = 0; 
 
         //Main PID/Profile Loop which is used to control the elevator, and uses targetPosition 
         //which has units of rotations.  

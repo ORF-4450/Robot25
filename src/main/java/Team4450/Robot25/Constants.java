@@ -68,9 +68,6 @@ public final class Constants
 	public static final int		ALGAE_PIVOT = 4;
     public static final int		ALGAE_GROUND = 6;   
     public static final int		CLIMBER_PISTON = 8;
-
-
-    public static final double INTAKE_SPEED = 0.90;
     
     // CAMERAS 
 
