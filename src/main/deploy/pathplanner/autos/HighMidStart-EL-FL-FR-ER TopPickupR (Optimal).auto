@@ -24,15 +24,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Align Left"
+          }
+        },
+        {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.2
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -81,15 +81,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Align Left"
+          }
+        },
+        {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.2
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -138,15 +138,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Align Right"
+          }
+        },
+        {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.2
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -195,15 +195,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Align Right"
+          }
+        },
+        {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.2
-                }
-              },
               {
                 "type": "named",
                 "data": {
