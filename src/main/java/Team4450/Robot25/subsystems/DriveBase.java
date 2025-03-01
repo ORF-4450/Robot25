@@ -874,6 +874,29 @@ public class DriveBase extends SubsystemBase {
     updateDS();
   }
 
+  public void enableElevatorSlowDrive()
+  {
+    speedLimiter = DriveConstants.kElevatorModeFactor;
+    rotSpeedLimiter = DriveConstants.kRotElevatorModeFactor;
+
+    Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+
+    updateDS();
+  }
+
+  /**
+   * Disables Slow Mode, setting multipliers back to 1
+   */
+  public void disableElevatorSlowDrive()
+  {
+    Util.consoleLog();
+
+    speedLimiter = 1;
+    rotSpeedLimiter = 1;
+
+    updateDS();
+  }
+
 public void enableTrackingSlowMode(){
 
   speedLimiter = DriveConstants.kTrackingModeFactor;
