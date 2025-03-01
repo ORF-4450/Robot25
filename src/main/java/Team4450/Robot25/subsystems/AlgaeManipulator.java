@@ -68,12 +68,12 @@ public class AlgaeManipulator extends SubsystemBase {
 
     public void holdAlgae(){
         isRunning = true;
-        algaeMotor.set(-0.05);
+        algaeMotor.set(-0.1);
         updateDS();
     }
     public void startOuttaking(){
         isRunning = true;
-        algaeMotor.set(0.5);
+        algaeMotor.set(1);
         updateDS();
     }
 
@@ -163,13 +163,13 @@ public class AlgaeManipulator extends SubsystemBase {
     }   
 
     public boolean hasAlgae(){
-        return algaeMotor.getOutputCurrent() > 80.0;
+        return this.getCurrent() > 80.0;
     }
 
     public double getCurrent(){
-        double current = algaeMotor.getOutputCurrent();
-        SmartDashboard.putNumber("Algae Manipulator Current", current);
-        return current;
+        double algCurrent = algaeMotor.getOutputCurrent();
+        SmartDashboard.putNumber("Algae Manipulator Current", algCurrent);
+        return algCurrent;
     }
     
     private void updateDS() {

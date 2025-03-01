@@ -439,28 +439,19 @@ public class RobotContainer
 		
 		// Moves the coral manipulator/elevator to the L1 Branch scoring position
 		new Trigger(() -> utilityController.getXButton())
-			//.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1));
-			.toggleOnTrue(new ParallelCommandGroup( new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1), 
-			new InstantCommand(()-> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
+			.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L1_NEW), elevatedManipulator));
 
 		// Moves the coral manipulator/elevator to the L2 Branch scoring position.
 		new Trigger(() -> utilityController.getAButton())
-			//.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
-			.toggleOnTrue(new ParallelCommandGroup( new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2), 
-			new InstantCommand(()-> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
+		.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L2), elevatedManipulator));
 
 		// Moves the coral manipulator/elevator to the L3 Branch scoring position.
 		new Trigger(() -> utilityController.getBButton())
-			.toggleOnTrue(new InstantCommand(() -> elevator.setElevatorHeight(1.03), elevator)
-			.andThen(new InstantCommand(() -> coralManipulator.setCoralPivot(false)))
-			.andThen(new InstantCommand(() -> algaeManipulator.setAlgaeExtend(false)))
-			.andThen(new InstantCommand(() -> algaeManipulator.setAlgaeExtend(false))));
+		.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L3), elevatedManipulator));
 
 		// Moves the coral manipulator/elevator to the L4 Branch scoring position.
 		new Trigger(() -> utilityController.getYButton())
-			//.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
-			.toggleOnTrue(new ParallelCommandGroup( new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4), 
-			new InstantCommand(()-> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
+		.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L4), elevatedManipulator));
 		
 		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
 		new Trigger(() -> utilityController.getLeftTrigger() && elevatedManipulator.intakeCoralInsteadOfAlgae)
@@ -492,7 +483,8 @@ public class RobotContainer
 		//Moves the elevator and algae manipulator to the scoring position for the algae net.
 		new Trigger(()-> utilityController.getPOV() == 90)
 			.toggleOnTrue(new ParallelCommandGroup( new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING), 
-			new InstantCommand(()-> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
+			new InstantCommand(()-> elevatedManipulator.scoreCoralInsteadOfAlgae = false),
+			new InstantCommand(() -> elevatedManipulator.algaeManipulator.setAlgaePivot(true))));
 		
 		//Moves the elevator and algae manipulator to the scoring position for the algae processor.
 		new Trigger(()-> utilityController.getPOV() == 270)
