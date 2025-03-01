@@ -202,7 +202,7 @@ public class RobotContainer
 		pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
-		elevator = new Elevator();
+		elevator = new Elevator(driveBase);
 		climber = new Climber();
 		algaeGroundIntake = new AlgaeGroundIntake();
 		elevatedManipulator = new ElevatedManipulator(coralManipulator, algaeManipulator, algaeGroundIntake, elevator);
@@ -479,7 +479,6 @@ public class RobotContainer
 		new Trigger(()-> utilityController.getPOV() == 180)
 			.toggleOnTrue(new ParallelCommandGroup( new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2), 
 			new InstantCommand(()-> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
-
 
 		//Moves the elevator and algae manipulator to the scoring position for the algae net.
 		new Trigger(()-> utilityController.getPOV() == 90)

@@ -12,6 +12,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import Team4450.Lib.Util;
+import Team4450.Robot25.subsystems.DriveBase;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -22,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //Elevator Subsystem that shouldn't be used on it's own, but rather as a part of the ElevatedManipulator Subsystem
 public class Elevator extends SubsystemBase {
-    
     private SparkFlex motorMain = new SparkFlex(ELEVATOR_LEFT, MotorType.kBrushless);
     private SparkFlex motorFollower = new SparkFlex(ELEVATOR_RIGHT, MotorType.kBrushless);
     private SparkFlexConfig mainConfig = new SparkFlexConfig();
@@ -39,8 +39,13 @@ public class Elevator extends SubsystemBase {
 
     private double targetPosition = Double.NaN; //in units of Rotations
     private boolean isManualControl = false;
-    public Elevator(){
+
+    private DriveBase driveBase;
+
+    public Elevator(DriveBase driveBase) {
         Util.consoleLog();
+
+        this.driveBase = driveBase;
 
         //Invert the follower motor: true
         followerConfig.follow(motorMain, true); // follow the main motor
@@ -135,6 +140,7 @@ public class Elevator extends SubsystemBase {
     
     //Sets the target position of the elevator in meters, which is converted to rotations
     public void setElevatorHeight(double height){
+        driveBase.setElevatorHightSpeed(height);
         targetPosition = height/ELEVATOR_WINCH_FACTOR; //meters to rotations
     }
 
