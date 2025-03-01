@@ -70,7 +70,7 @@ public class SetTagBasedPosition extends Command {
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, 0);
                 }
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
-                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - 180))));
+                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - 180)))); 
                 // robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(0)));
                 // Util.consoleLog("APRIL TAG POSE: " + String.valueOf(aprilTagPose));
                 // Util.consoleLog("ROBOT OFFSET: " + String.valueOf(robotOffset));

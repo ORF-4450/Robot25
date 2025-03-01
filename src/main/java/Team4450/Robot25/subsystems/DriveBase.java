@@ -380,7 +380,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void fixPathPlannerGyro() {
     if (ppGyroReversed) {
-      startingGyroRotation -= 180;
+      //startingGyroRotation -= 180;
       // we don't just set it to 0 because it might nit have started/ended in downfield state
       ppGyroReversed = false; // set the flag so if re-eneabled twice in teleop it doesn't cycle back and forth
     }
