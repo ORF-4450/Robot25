@@ -281,7 +281,7 @@ public class ElevatedManipulator extends SubsystemBase {
     public boolean hasAlgae(){
         return algaeManipulator.hasAlgae();
     }
-    private boolean isElevatorAtTarget(double height){
+    public boolean isElevatorAtTarget(double height){
         return elevator.isElevatorAtTarget(height);
     }
 

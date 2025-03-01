@@ -64,6 +64,12 @@ public class CoralManipulator extends SubsystemBase {
         updateDS();
     }
 
+    public void startL1Outtaking(){
+        coralMotor.set(0.6);
+        isRunning = true;
+        updateDS();
+    }
+
     public void startOuttaking(){
         coralMotor.set(0.70);
         isRunning = true;
