@@ -688,6 +688,15 @@ public class DriveBase extends SubsystemBase {
       updateDS();
   }
 
+  public void setFieldRelative(boolean fieldRelativeSet)
+  {
+      Util.consoleLog("%b", fieldRelativeSet);
+
+      fieldRelative = fieldRelativeSet;
+
+      updateDS();
+  }
+
   /**
    * Return the drive mode status.
    * @return True if field oriented, false if robot relative.
@@ -877,7 +886,7 @@ public class DriveBase extends SubsystemBase {
   /**
    * Set max drivebase speed based on the height of the elevator. Height 0 will set speed to 1.
    */
-  public void setElevatorHightSpeed(double height)
+  public void setElevatorHeightSpeed(double height)
   {
     speedLimiter = Math.pow(2, -(6 * height));
     rotSpeedLimiter = Math.pow(2, -(6 * height)) + 0.2;
