@@ -123,6 +123,8 @@ public class DriveBase extends SubsystemBase {
   private SlewRateLimiter rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
   private double prevTime = WPIUtilJNI.now() * 1e-6;
 
+  private boolean slowModeEnabled = false;
+
   // Odometry class for tracking robot pose
   // SwerveDriveOdometry odometry = new SwerveDriveOdometry(
   //     DriveConstants.kDriveKinematics,
@@ -378,7 +380,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void fixPathPlannerGyro() {
     if (ppGyroReversed) {
-      startingGyroRotation -= 180;
+      //startingGyroRotation -= 180;
       // we don't just set it to 0 because it might nit have started/ended in downfield state
       ppGyroReversed = false; // set the flag so if re-eneabled twice in teleop it doesn't cycle back and forth
     }
@@ -862,6 +864,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void enableSlowMode()
   {
+    slowModeEnabled = true;
     speedLimiter = DriveConstants.kSlowModeFactor;
     rotSpeedLimiter = DriveConstants.kRotSlowModeFactor;
 
@@ -875,6 +878,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void disableSlowMode()
   {
+    slowModeEnabled = false;
     Util.consoleLog();
 
     speedLimiter = 1;
@@ -888,12 +892,12 @@ public class DriveBase extends SubsystemBase {
    */
   public void setElevatorHeightSpeed(double height)
   {
-    speedLimiter = Math.pow(2, -(1.2 * height));
-    rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
-
-    Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
-
-    updateDS();
+    if (!slowModeEnabled) {
+        speedLimiter = Math.pow(2, -(1.2 * height));
+        rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
+        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+        updateDS();
+    }
   }
 
 public void enableTrackingSlowMode(){

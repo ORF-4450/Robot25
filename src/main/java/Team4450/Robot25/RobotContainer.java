@@ -432,7 +432,8 @@ public class RobotContainer
 		// 	.andThen(new GoToPose(driveBase, true, true)));
 		
 		new Trigger(() -> driverController.getBButton())
-			.toggleOnTrue(new ExtendClimber(climber));
+			.toggleOnTrue(new ParallelCommandGroup(new ExtendClimber(climber),
+				new InstantCommand(() -> algaeManipulator.extendOut())));
 
 		new Trigger(() -> driverController.getAButton())
     		.toggleOnTrue(new RetractClimber(climber));
@@ -591,14 +592,18 @@ public class RobotContainer
 		NamedCommands.registerCommand("Outtake Coral", new OuttakeCoral(elevatedManipulator));
 		NamedCommands.registerCommand("Remove Algae", new RemoveAlgae(elevatedManipulator));
 		NamedCommands.registerCommand("Outtake Algae", new OuttakeAlgae(elevatedManipulator));
-		NamedCommands.registerCommand("Raise to L1", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1_NEW));
-		NamedCommands.registerCommand("Raise to L2", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
-		NamedCommands.registerCommand("Raise to L3", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));
-		NamedCommands.registerCommand("Raise to L4", new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
-		NamedCommands.registerCommand("Remove Algae L2", new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2));
-		NamedCommands.registerCommand("Remove Algae L3", new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3));
-		NamedCommands.registerCommand("Algae Net Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING));
-		NamedCommands.registerCommand("Algae Processor Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING));
+		NamedCommands.registerCommand("Raise to L1", new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L1_NEW), elevatedManipulator),
+				new InstantCommand(() -> coralManipulator.pivotUp())));
+		NamedCommands.registerCommand("Raise to L2", new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L2), elevatedManipulator),
+				new InstantCommand(() -> coralManipulator.pivotDown())));
+		NamedCommands.registerCommand("Raise to L3", new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L3), elevatedManipulator),
+				new InstantCommand(() -> coralManipulator.pivotDown())));
+		NamedCommands.registerCommand("Raise to L4", new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L4), elevatedManipulator),
+				new InstantCommand(() -> coralManipulator.pivotDown())));
+		NamedCommands.registerCommand("Remove Algae L2", new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2)); // TODO FIX FIX FIX
+		NamedCommands.registerCommand("Remove Algae L3", new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3)); // TODO FIX FIX FIX
+		NamedCommands.registerCommand("Algae Net Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING)); // TODO FIX FIX FIX
+		NamedCommands.registerCommand("Algae Processor Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING)); // TODO FIX FIX FIX
 		NamedCommands.registerCommand("Intake Algae Ground", new IntakeAlgaeGround(elevatedManipulator));
 		NamedCommands.registerCommand("Reset", new Preset(elevatedManipulator, PresetPosition.RESET));
 		//NamedCommands.registerCommand("Align Left", new SetTagBasedPosition(driveBase, pvTagCamera, -1)
