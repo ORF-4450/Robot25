@@ -422,7 +422,7 @@ public class RobotContainer
 			// .whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 1)
 			// .andThen(new RotateToPose(driveBase, true, true))
 			// .andThen(new GoToPose(driveBase, true, true)));
-			.whileTrue(new InstantCommand(() -> driveBase.setFieldRelative(true)));
+			.whileTrue(new InstantCommand(() -> driveBase.setFieldRelative(false)));
 		// Drive to the Right Branch, offsetting from AprilTag (using Pose information)
 		// new Trigger(()-> driverController.getLeftTrigger())
 		// 	.whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, -1)
@@ -472,10 +472,10 @@ public class RobotContainer
 			.toggleOnTrue(new ParallelCommandGroup(
 				new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_REMOVE_L3), elevatedManipulator)
 				.andThen(new InstantCommand(() -> coralManipulator.pivotDown()))
-				.andThen(new InstantCommand(() -> algaeManipulator.extendOut()))
-				.andThen(new InstantCommand(() -> algaeManipulator.pivotDown()))
-				.andThen(new InstantCommand(() -> coralManipulator.stop()))
-				.andThen(new InstantCommand(() -> algaeManipulator.stop()))));
+				.andThen(new InstantCommand(() -> algaeManipulator.extendOut(), algaeManipulator))
+				.andThen(new InstantCommand(() -> algaeManipulator.pivotDown(), algaeManipulator))
+				.andThen(new InstantCommand(() -> coralManipulator.stop(), coralManipulator))
+				.andThen(new InstantCommand(() -> algaeManipulator.stop(), algaeManipulator))));
 				// new InstantCommand(()->elevatedManipulator.intakeCoralInsteadOfAlgae = false)
 				// ));
 
@@ -484,11 +484,11 @@ public class RobotContainer
 		new Trigger(()-> utilityController.getPOV() == 180)
 			.toggleOnTrue(new ParallelCommandGroup(
 				new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_REMOVE_L2), elevatedManipulator)
-				.andThen(new InstantCommand(() -> coralManipulator.pivotDown()))
-				.andThen(new InstantCommand(() -> algaeManipulator.extendOut()))
-				.andThen(new InstantCommand(() -> algaeManipulator.pivotDown()))
-				.andThen(new InstantCommand(() -> coralManipulator.stop()))
-				.andThen(new InstantCommand(() -> algaeManipulator.stop()))));
+				.andThen(new InstantCommand(() -> coralManipulator.pivotDown(), coralManipulator))
+				.andThen(new InstantCommand(() -> algaeManipulator.extendOut(), algaeManipulator))
+				.andThen(new InstantCommand(() -> algaeManipulator.pivotDown(), algaeManipulator))
+				.andThen(new InstantCommand(() -> coralManipulator.stop(), coralManipulator))
+				.andThen(new InstantCommand(() -> algaeManipulator.stop(), algaeManipulator))));
 
 
 		//Moves the elevator and algae manipulator to the scoring position for the algae net.

@@ -888,8 +888,8 @@ public class DriveBase extends SubsystemBase {
    */
   public void setElevatorHeightSpeed(double height)
   {
-    speedLimiter = Math.pow(2, -(6 * height));
-    rotSpeedLimiter = Math.pow(2, -(6 * height)) + 0.2;
+    speedLimiter = Math.pow(2, -(4 * height));
+    rotSpeedLimiter = Math.pow(2, -(4 * height)) + 0.2;
 
     Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
 

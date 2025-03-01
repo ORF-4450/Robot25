@@ -117,7 +117,7 @@ public class AlgaeManipulator extends SubsystemBase {
     public void extendOut(){
         Util.consoleLog();
 
-        algaeExtend.SetA();
+        algaeExtend.SetB();
 
         algaeExtendStatus = true;
 
@@ -127,7 +127,7 @@ public class AlgaeManipulator extends SubsystemBase {
     public void retractIn(){
         Util.consoleLog();
 
-        algaeExtend.SetB();
+        algaeExtend.SetA();
 
         algaeExtendStatus = false;
 
