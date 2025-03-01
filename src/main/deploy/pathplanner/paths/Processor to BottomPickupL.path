@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.07436445614633,
-        "y": 1.1113811013691433
+        "x": 4.0293036563174836,
+        "y": 0.8475732870074328
       },
       "isLocked": false,
       "linkedName": "Processor"
@@ -20,8 +20,8 @@
         "y": 0.639407467532468
       },
       "prevControl": {
-        "x": 3.365386003496001,
-        "y": 0.5830187321451675
+        "x": 3.336745660912368,
+        "y": 0.6921801947211027
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": -35.0
   },
   "reversed": false,

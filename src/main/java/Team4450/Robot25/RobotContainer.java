@@ -422,7 +422,9 @@ public class RobotContainer
 			// .whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 1)
 			// .andThen(new RotateToPose(driveBase, true, true))
 			// .andThen(new GoToPose(driveBase, true, true)));
-			.whileTrue(new InstantCommand(() -> driveBase.setFieldRelative(false)));
+			.whileTrue(new InstantCommand(() -> driveBase.setFieldRelative(false)))
+            .toggleOnFalse(new InstantCommand(() -> driveBase.setFieldRelative(true)));
+
 		// Drive to the Right Branch, offsetting from AprilTag (using Pose information)
 		// new Trigger(()-> driverController.getLeftTrigger())
 		// 	.whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, -1)
