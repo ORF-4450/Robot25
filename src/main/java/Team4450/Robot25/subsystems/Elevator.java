@@ -140,11 +140,7 @@ public class Elevator extends SubsystemBase {
     
     //Sets the target position of the elevator in meters, which is converted to rotations
     public void setElevatorHeight(double height){
-        if (height > 0.6) {
-            driveBase.enableElevatorSlowDrive();
-        } else {
-            driveBase.disableElevatorSlowDrive();
-        }
+        driveBase.setElevatorHightSpeed(height);
         targetPosition = height/ELEVATOR_WINCH_FACTOR; //meters to rotations
     }
 

@@ -874,25 +874,15 @@ public class DriveBase extends SubsystemBase {
     updateDS();
   }
 
-  public void enableElevatorSlowDrive()
+  /**
+   * Set max drivebase speed based on the height of the elevator. Height 0 will set speed to 1.
+   */
+  public void setElevatorHightSpeed(double height)
   {
-    speedLimiter = DriveConstants.kElevatorModeFactor;
-    rotSpeedLimiter = DriveConstants.kRotElevatorModeFactor;
+    speedLimiter = Math.pow(2, -(4 * height));
+    rotSpeedLimiter = Math.pow(2, -(4 * height)) + 0.2;
 
     Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
-
-    updateDS();
-  }
-
-  /**
-   * Disables Slow Mode, setting multipliers back to 1
-   */
-  public void disableElevatorSlowDrive()
-  {
-    Util.consoleLog();
-
-    speedLimiter = 1;
-    rotSpeedLimiter = 1;
 
     updateDS();
   }
