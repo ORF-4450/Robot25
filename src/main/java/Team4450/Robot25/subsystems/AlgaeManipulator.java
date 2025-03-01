@@ -166,15 +166,15 @@ public class AlgaeManipulator extends SubsystemBase {
         return algaeMotor.getOutputCurrent() > 80.0;
     }
 
-    public double getAlgaeCurrent(){
-        algaeCurrent = algaeMotor.getOutputCurrent();
-        return algaeCurrent;
+    public double getCurrent(){
+        double current = algaeMotor.getOutputCurrent();
+        SmartDashboard.putNumber("Algae Manipulator Current", current);
+        return current;
     }
     
     private void updateDS() {
         SmartDashboard.putBoolean("Algae Manipulator Running", isRunning);
         SmartDashboard.putBoolean("Algae Pivot On", algaePivotStatus);
         SmartDashboard.putBoolean("Algae Extended Out", algaeExtendStatus);
-        SmartDashboard.putNumber("Algae Current", algaeCurrent);
-    }
+   }
 }

@@ -56,6 +56,6 @@ public class OuttakeCoral extends Command {
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
         elevatedManipulator.coralManipulator.stop();
-        elevatedManipulator.executeSetPosition(PresetPosition.RESET);
+        elevatedManipulator.executeSetPosition(PresetPosition.NONE);
     }
 }
