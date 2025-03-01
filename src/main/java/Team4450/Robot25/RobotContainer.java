@@ -80,7 +80,7 @@ public class RobotContainer
 
 	public static ShuffleBoard			shuffleBoard;
 	public static DriveBase 			driveBase;
-	public static PhotonVision			pvTagCamera;
+	//public static PhotonVision			pvTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
 	public static ElevatedManipulator	elevatedManipulator;
@@ -200,7 +200,7 @@ public class RobotContainer
 
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
-		pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
+		//pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
 		elevator = new Elevator(driveBase);
@@ -221,7 +221,7 @@ public class RobotContainer
 		// This sets up the photonVision subsystem to constantly update the robotDrive odometry
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
-		pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
+		//pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
@@ -601,15 +601,15 @@ public class RobotContainer
 		NamedCommands.registerCommand("Algae Processor Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING));
 		NamedCommands.registerCommand("Intake Algae Ground", new IntakeAlgaeGround(elevatedManipulator));
 		NamedCommands.registerCommand("Reset", new Preset(elevatedManipulator, PresetPosition.RESET));
-		NamedCommands.registerCommand("Align Left", new SetTagBasedPosition(driveBase, pvTagCamera, -1)
-														.andThen(new RotateToPose(driveBase, true, true)
-														.andThen(new GoToPose(driveBase, true, true))));
-		NamedCommands.registerCommand("Align Right", new SetTagBasedPosition(driveBase, pvTagCamera, 1)
-														.andThen(new RotateToPose(driveBase, true, true))
-														.andThen(new GoToPose(driveBase, true, true)));
-		NamedCommands.registerCommand("Align Center", new SetTagBasedPosition(driveBase, pvTagCamera, 0)
-														.andThen(new RotateToPose(driveBase, true, true))
-														.andThen(new GoToPose(driveBase, true, true)));
+		//NamedCommands.registerCommand("Align Left", new SetTagBasedPosition(driveBase, pvTagCamera, -1)
+		//												.andThen(new RotateToPose(driveBase, true, true)
+		//												.andThen(new GoToPose(driveBase, true, true))));
+		//NamedCommands.registerCommand("Align Right", new SetTagBasedPosition(driveBase, pvTagCamera, 1)
+		//												.andThen(new RotateToPose(driveBase, true, true))
+		//												.andThen(new GoToPose(driveBase, true, true)));
+		//NamedCommands.registerCommand("Align Center", new SetTagBasedPosition(driveBase, pvTagCamera, 0)
+		//												.andThen(new RotateToPose(driveBase, true, true))
+		//												.andThen(new GoToPose(driveBase, true, true)));
 	
 		// Create a chooser with the PathPlanner Autos located in the PP
 		// folders.
