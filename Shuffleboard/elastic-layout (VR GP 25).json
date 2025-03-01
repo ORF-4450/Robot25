@@ -119,27 +119,6 @@
             }
           },
           {
-            "title": "AirPressure",
-            "x": 1024.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/SmartDashboard/AirPressure",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -130.0,
-              "end_angle": 130.0,
-              "min_value": 0.0,
-              "max_value": 130.0,
-              "number_of_labels": 13,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
             "title": "Autonomous Active",
             "x": 640.0,
             "y": 0.0,
@@ -154,34 +133,6 @@
               "false_color": 4294198070,
               "true_icon": "None",
               "false_icon": "None"
-            }
-          },
-          {
-            "title": "Intake Coral Status",
-            "x": 256.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Intake Coral Status",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Outtake Coral Status",
-            "x": 256.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Outtake Coral Status",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
             }
           },
           {
@@ -236,23 +187,9 @@
             }
           },
           {
-            "title": "targets",
-            "x": 0.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Visualization/targets",
-              "period": 0.06,
-              "data_type": "double[]",
-              "show_submit_button": false
-            }
-          },
-          {
             "title": "HD_USB_Camera-raw",
-            "x": 768.0,
-            "y": 256.0,
+            "x": 1024.0,
+            "y": 0.0,
             "width": 256.0,
             "height": 256.0,
             "type": "Camera Stream",
@@ -317,6 +254,62 @@
               "topic": "/SmartDashboard/CompressorEnabled",
               "period": 0.06,
               "data_type": "boolean"
+            }
+          },
+          {
+            "title": "winch_measured",
+            "x": 256.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/winch_measured",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "winch_setpoint",
+            "x": 256.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/winch_setpoint",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "winch_1_m",
+            "x": 128.0,
+            "y": 256.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/winch_1_m",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Algae Manipulator Current",
+            "x": 768.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Algae Manipulator Current",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
             }
           }
         ]
