@@ -432,7 +432,8 @@ public class RobotContainer
 		// 	.andThen(new GoToPose(driveBase, true, true)));
 		
 		new Trigger(() -> driverController.getBButton())
-			.toggleOnTrue(new ParallelCommandGroup(new ExtendClimber(climber),
+			.toggleOnTrue(new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CLIMB), elevatedManipulator),
+                new ExtendClimber(climber),
 				new InstantCommand(() -> algaeManipulator.extendOut())));
 
 		new Trigger(() -> driverController.getAButton())
