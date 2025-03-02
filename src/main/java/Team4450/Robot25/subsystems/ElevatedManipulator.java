@@ -24,6 +24,7 @@ public class ElevatedManipulator extends SubsystemBase {
         /* Alage Net Scoring Position */ ALGAE_NET_SCORING,
         /* Algae Processor Scoring Position */ ALGAE_PROCESSOR_SCORING,
         /*Algae Ground Intake Position */ ALGAE_GROUND_INTAKE,
+        /*Climb Position */ CLIMB,
         /* No Position */ NONE,
     };
 
@@ -75,7 +76,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
 
             case CORAL_STATION_INTAKE:
-                endGoalElevatorHeight = 0.39;
+                endGoalElevatorHeight = 0.3655;
                 endGoalCoralPivotStatus = true;
                 if(algaeManipulator.hasAlgae())
                     endGoalAlgaeExtendStatus = true;
@@ -176,6 +177,14 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;
                 endGoalAlgaeGroundPistonStatus = true;
+                break;
+
+            case CLIMB:
+                endGoalElevatorHeight = 0;
+                endGoalCoralPivotStatus = false;
+                endGoalAlgaeExtendStatus = true;
+                endGoalAlgaePivotStatus = false;
+                endGoalAlgaeGroundPistonStatus = false;
                 break;
             
             case NONE:

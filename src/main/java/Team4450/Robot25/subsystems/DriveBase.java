@@ -379,8 +379,9 @@ public class DriveBase extends SubsystemBase {
    * resets it by subtracting 180 from current gyro value.
    */
   public void fixPathPlannerGyro() {
-    if (ppGyroReversed) {
-      //startingGyroRotation -= 180;
+      Util.consoleLog("alliance %s", alliance);
+    if (alliance == Alliance.Red) {
+      startingGyroRotation -= 180;
       // we don't just set it to 0 because it might nit have started/ended in downfield state
       ppGyroReversed = false; // set the flag so if re-eneabled twice in teleop it doesn't cycle back and forth
     }
