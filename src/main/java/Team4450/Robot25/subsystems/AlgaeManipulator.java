@@ -24,7 +24,7 @@ public class AlgaeManipulator extends SubsystemBase {
     private ValveDA algaePivot = new ValveDA(ALGAE_PIVOT, PneumaticsModuleType.REVPH);
     private ValveDA algaeExtend = new ValveDA(ALGAE_EXTEND, PneumaticsModuleType.REVPH);
 
-    private boolean isRunning = false;
+    public boolean isAlgaeMotorRunning = false;
     public boolean algaePivotStatus = false;
     public boolean algaeExtendStatus = false;
     public double algaeCurrent;
@@ -53,7 +53,7 @@ public class AlgaeManipulator extends SubsystemBase {
     }
 
     public void start(double speedfactor){
-        isRunning = Math.abs(speedfactor) > 0.02;
+        isAlgaeMotorRunning = Math.abs(speedfactor) > 0.02;
         
         updateDS();
 
@@ -61,25 +61,25 @@ public class AlgaeManipulator extends SubsystemBase {
     }
 
     public void startIntaking(){
-        isRunning = true;
+        isAlgaeMotorRunning = true;
         algaeMotor.set(-0.5);
         updateDS();
     }
 
     public void holdAlgae(){
-        isRunning = true;
-        algaeMotor.set(-0.2);
+        isAlgaeMotorRunning = true;
+        algaeMotor.set(-0.3);
         updateDS();
     }
     public void startOuttaking(){
-        isRunning = true;
+        isAlgaeMotorRunning = true;
         algaeMotor.set(1);
         updateDS();
     }
 
     public void start(){
        start(1);
-       isRunning = true;
+       isAlgaeMotorRunning = true;
        updateDS();
     }
 
@@ -89,7 +89,7 @@ public class AlgaeManipulator extends SubsystemBase {
         algaeMotor.stopMotor();
         pivotDown();
 
-        isRunning = false;
+        isAlgaeMotorRunning = false;
         algaePivotStatus = false;
         updateDS();
     }
@@ -173,7 +173,7 @@ public class AlgaeManipulator extends SubsystemBase {
     }
     
     private void updateDS() {
-        SmartDashboard.putBoolean("Algae Manipulator Running", isRunning);
+        SmartDashboard.putBoolean("Algae Manipulator Running", isAlgaeMotorRunning);
         SmartDashboard.putBoolean("Algae Pivot On", algaePivotStatus);
         SmartDashboard.putBoolean("Algae Extended Out", algaeExtendStatus);
    }

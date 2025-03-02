@@ -12,8 +12,6 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import Team4450.Lib.Util;
-import Team4450.Robot25.subsystems.DriveBase;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -100,7 +98,7 @@ public class Elevator extends SubsystemBase {
             motorOutput = Util.clampValue(nonclamped * slowDownFactor, 0.15);
             SmartDashboard.putString("Elevator Position Phase", "Slowing Down Elevator");
         } else {
-            motorOutput = Util.clampValue(nonclamped, 0.20);
+            motorOutput = Util.clampValue(nonclamped, 0.40);
         }
 
         SmartDashboard.putNumber("Elevator Speed", motorOutput);

@@ -283,6 +283,10 @@ public class ElevatedManipulator extends SubsystemBase {
         elevator.move(elevatorHeightChange * 0.9);
     }
 
+    public void setElevatorHeight(double height){
+        elevator.setElevatorHeight(height);
+    }
+
     public boolean hasCoral(){
         return coralManipulator.hasCoral();
     }

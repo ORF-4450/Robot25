@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "VR25-02.22.25";
+	public static String		PROGRAM_NAME = "VR25-03.02.25";
 
 	public static Robot			robot;
 
@@ -114,8 +114,8 @@ public final class Constants
         public static final double kSlowModeFactor = .30; // 50% of normal.
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
                                                              //
-        public static final double kElevatorModeFactor = .030; // 50% of normal.
-        public static final double kRotElevatorModeFactor = .020; // 20% of normal.
+        public static final double kElevatorModeFactor = .030; // 0.03% of normal.
+        public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.
         
         //TrackingMode Speed:
         public static final double kTrackingModeFactor = 0.10;

@@ -384,7 +384,8 @@ public class RobotContainer
 
 		// toggle slow-mode
 		new Trigger(() -> driverController.getLeftBumperButton())
-			.whileTrue(new StartEndCommand(driveBase::enableSlowMode, driveBase::disableSlowMode));
+			.whileTrue(new InstantCommand(driveBase::enableSlowMode))
+			.toggleOnFalse(new InstantCommand(driveBase::disableSlowMode));
 
 		// reset field orientation (direction).
 		new Trigger(() -> driverController.getStartButton())
