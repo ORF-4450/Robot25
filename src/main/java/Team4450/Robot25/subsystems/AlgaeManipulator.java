@@ -46,6 +46,9 @@ public class AlgaeManipulator extends SubsystemBase {
         pivotDown();
         retractIn();
 
+        // runDefault();
+
+        // isAlgaeMotorRunning = true;
         algaePivotStatus = false;
         algaeExtendStatus = false;
 
@@ -66,9 +69,15 @@ public class AlgaeManipulator extends SubsystemBase {
         updateDS();
     }
 
+    public void runDefault(){
+        isAlgaeMotorRunning = true;
+        algaeMotor.set(-0.1);
+        updateDS();
+    }
+
     public void holdAlgae(){
         isAlgaeMotorRunning = true;
-        algaeMotor.set(-0.3);
+        algaeMotor.set(-0.20);
         updateDS();
     }
     public void startOuttaking(){
@@ -78,7 +87,7 @@ public class AlgaeManipulator extends SubsystemBase {
     }
 
     public void start(){
-       start(1);
+       start(0.1);
        isAlgaeMotorRunning = true;
        updateDS();
     }

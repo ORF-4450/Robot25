@@ -60,7 +60,7 @@ public class Elevator extends SubsystemBase {
 
         // PID constants, but also the motion profiling constraints
         mainPID = new ProfiledPIDController(0.12, 0, 0, new Constraints(
-            (1 / -ELEVATOR_WINCH_FACTOR), 8 / -ELEVATOR_WINCH_FACTOR // velocity / acceleration
+            (3.25 / -ELEVATOR_WINCH_FACTOR), 8 / -ELEVATOR_WINCH_FACTOR // velocity / acceleration
         ));
         
         SmartDashboard.putData("winch_pid", mainPID);
@@ -98,11 +98,12 @@ public class Elevator extends SubsystemBase {
             motorOutput = Util.clampValue(nonclamped * slowDownFactor, 0.15);
             SmartDashboard.putString("Elevator Position Phase", "Slowing Down Elevator");
         } else {
-            motorOutput = Util.clampValue(nonclamped, 0.40);
+            motorOutput = Util.clampValue(nonclamped, 0.80);
         }
 
         SmartDashboard.putNumber("Elevator Speed", motorOutput);
         motorMain.set(motorOutput);
+        SmartDashboard.putNumber("Elevator Amperage", motorMain.getOutputCurrent());
     }
 
     /**
