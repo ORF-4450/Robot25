@@ -267,6 +267,7 @@ public class Robot extends TimedRobot
 
     RobotContainer.algaeManipulator.intialize();
     RobotContainer.coralManipulator.intialize();
+    RobotContainer.driveBase.setFieldRelative(true);
 
     // Driving handled by DriveCommand which is default command for the DriveBase.
     // Other commands scheduled by joystick buttons.

@@ -24,7 +24,7 @@ public class AlgaeManipulator extends SubsystemBase {
     private ValveDA algaePivot = new ValveDA(ALGAE_PIVOT, PneumaticsModuleType.REVPH);
     private ValveDA algaeExtend = new ValveDA(ALGAE_EXTEND, PneumaticsModuleType.REVPH);
 
-    private boolean isRunning = false;
+    public boolean isAlgaeMotorRunning = false;
     public boolean algaePivotStatus = false;
     public boolean algaeExtendStatus = false;
     public double algaeCurrent;
@@ -46,6 +46,9 @@ public class AlgaeManipulator extends SubsystemBase {
         pivotDown();
         retractIn();
 
+        // runDefault();
+
+        // isAlgaeMotorRunning = true;
         algaePivotStatus = false;
         algaeExtendStatus = false;
 
@@ -53,7 +56,7 @@ public class AlgaeManipulator extends SubsystemBase {
     }
 
     public void start(double speedfactor){
-        isRunning = Math.abs(speedfactor) > 0.02;
+        isAlgaeMotorRunning = Math.abs(speedfactor) > 0.02;
         
         updateDS();
 
@@ -61,20 +64,31 @@ public class AlgaeManipulator extends SubsystemBase {
     }
 
     public void startIntaking(){
-        isRunning = true;
+        isAlgaeMotorRunning = true;
         algaeMotor.set(-0.5);
         updateDS();
     }
 
+    public void runDefault(){
+        isAlgaeMotorRunning = true;
+        algaeMotor.set(-0.1);
+        updateDS();
+    }
+
+    public void holdAlgae(){
+        isAlgaeMotorRunning = true;
+        algaeMotor.set(-0.20);
+        updateDS();
+    }
     public void startOuttaking(){
-        isRunning = true;
-        algaeMotor.set(0.5);
+        isAlgaeMotorRunning = true;
+        algaeMotor.set(1);
         updateDS();
     }
 
     public void start(){
-       start(1);
-       isRunning = true;
+       start(0.1);
+       isAlgaeMotorRunning = true;
        updateDS();
     }
 
@@ -84,7 +98,7 @@ public class AlgaeManipulator extends SubsystemBase {
         algaeMotor.stopMotor();
         pivotDown();
 
-        isRunning = false;
+        isAlgaeMotorRunning = false;
         algaePivotStatus = false;
         updateDS();
     }
@@ -158,18 +172,18 @@ public class AlgaeManipulator extends SubsystemBase {
     }   
 
     public boolean hasAlgae(){
-        return algaeMotor.getOutputCurrent() > 80.0;
+        return this.getCurrent() > 80.0;
     }
 
-    public double getAlgaeCurrent(){
-        algaeCurrent = algaeMotor.getOutputCurrent();
-        return algaeCurrent;
+    public double getCurrent(){
+        double algCurrent = algaeMotor.getOutputCurrent();
+        SmartDashboard.putNumber("Algae Manipulator Current", algCurrent);
+        return algCurrent;
     }
     
     private void updateDS() {
-        SmartDashboard.putBoolean("Algae Manipulator Running", isRunning);
+        SmartDashboard.putBoolean("Algae Manipulator Running", isAlgaeMotorRunning);
         SmartDashboard.putBoolean("Algae Pivot On", algaePivotStatus);
         SmartDashboard.putBoolean("Algae Extended Out", algaeExtendStatus);
-        SmartDashboard.putNumber("Algae Current", algaeCurrent);
-    }
+   }
 }

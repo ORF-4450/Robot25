@@ -11,7 +11,7 @@ public class RemoveAlgae extends Command {
     // private final AlgaeManipulator algaeManipulator;
     private final ElevatedManipulator elevatedManipulator;
 
-    private static enum State{REMOVE, STOP};
+    private static enum State{REMOVE, HOLD};
     private State state = State.REMOVE;
 
     double startTime;
@@ -31,8 +31,9 @@ public class RemoveAlgae extends Command {
         switch(state){
             case REMOVE:
                 elevatedManipulator.algaeManipulator.startIntaking();
-                if(Util.timeStamp() - startTime > 2.0)
-                    state = State.STOP;
+
+                if(elevatedManipulator.algaeManipulator.hasAlgae())
+                    state = State.HOLD;
                 break;
 
             // case RETURN:
@@ -40,19 +41,20 @@ public class RemoveAlgae extends Command {
             //         state = State.STOP;
             //     break;
 
-            case STOP:
-                elevatedManipulator.algaeManipulator.stop();
+            case HOLD:
+                elevatedManipulator.algaeManipulator.holdAlgae();
+                SmartDashboard.putBoolean("Has Algae", elevatedManipulator.algaeManipulator.hasAlgae());
                 break;
         }
     }
 
     public boolean isFinished(){
-        return state == State.STOP;
+        return state == State.HOLD;
     }   
 
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
-        elevatedManipulator.algaeManipulator.stop();    
+        elevatedManipulator.algaeManipulator.holdAlgae();    
         elevatedManipulator.intakeCoralInsteadOfAlgae = true; // Change to true to intake coral instead of algae
     }
 }

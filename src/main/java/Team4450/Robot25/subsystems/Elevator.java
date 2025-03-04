@@ -12,7 +12,6 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import Team4450.Lib.Util;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -22,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //Elevator Subsystem that shouldn't be used on it's own, but rather as a part of the ElevatedManipulator Subsystem
 public class Elevator extends SubsystemBase {
-    
     private SparkFlex motorMain = new SparkFlex(ELEVATOR_LEFT, MotorType.kBrushless);
     private SparkFlex motorFollower = new SparkFlex(ELEVATOR_RIGHT, MotorType.kBrushless);
     private SparkFlexConfig mainConfig = new SparkFlexConfig();
@@ -35,12 +33,17 @@ public class Elevator extends SubsystemBase {
     private RelativeEncoder followerEncoder;
 
     private final double TOLERANCE_ROTATIONS = 1.5;
-    private final double START_ROTATIONS = 0.08 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
+    private final double START_ROTATIONS = 0.00 / ELEVATOR_WINCH_FACTOR; //NEEDS TO BE CHANGED TO ACTUAL VALUE
 
     private double targetPosition = Double.NaN; //in units of Rotations
     private boolean isManualControl = false;
-    public Elevator(){
+
+    private DriveBase driveBase;
+
+    public Elevator(DriveBase driveBase) {
         Util.consoleLog();
+
+        this.driveBase = driveBase;
 
         //Invert the follower motor: true
         followerConfig.follow(motorMain, true); // follow the main motor
@@ -57,7 +60,7 @@ public class Elevator extends SubsystemBase {
 
         // PID constants, but also the motion profiling constraints
         mainPID = new ProfiledPIDController(0.12, 0, 0, new Constraints(
-            (1 / -ELEVATOR_WINCH_FACTOR), 8 / -ELEVATOR_WINCH_FACTOR // velocity / acceleration
+            (3.25 / -ELEVATOR_WINCH_FACTOR), 8 / -ELEVATOR_WINCH_FACTOR // velocity / acceleration
         ));
         
         SmartDashboard.putData("winch_pid", mainPID);
@@ -73,10 +76,10 @@ public class Elevator extends SubsystemBase {
         if (Double.isNaN(targetPosition)) return;
 
         //SOFT LIMITS
-        if (targetPosition < -52) 
-            targetPosition = -52;
-        if (targetPosition > -2) 
-            targetPosition = -2; 
+        if (targetPosition < -59) 
+            targetPosition = -59;
+        if (targetPosition > 0) 
+            targetPosition = 0; 
 
         //Main PID/Profile Loop which is used to control the elevator, and uses targetPosition 
         //which has units of rotations.  
@@ -95,11 +98,12 @@ public class Elevator extends SubsystemBase {
             motorOutput = Util.clampValue(nonclamped * slowDownFactor, 0.15);
             SmartDashboard.putString("Elevator Position Phase", "Slowing Down Elevator");
         } else {
-            motorOutput = Util.clampValue(nonclamped, 0.20);
+            motorOutput = Util.clampValue(nonclamped, 0.80);
         }
 
         SmartDashboard.putNumber("Elevator Speed", motorOutput);
         motorMain.set(motorOutput);
+        SmartDashboard.putNumber("Elevator Amperage", motorMain.getOutputCurrent());
     }
 
     /**
@@ -130,10 +134,12 @@ public class Elevator extends SubsystemBase {
     public void moveUnsafe(double speed){
         targetPosition = Double.NaN;
         motorMain.set(speed);  
+        SmartDashboard.putNumber("moveUnsafe Speed", speed);
     }
     
     //Sets the target position of the elevator in meters, which is converted to rotations
     public void setElevatorHeight(double height){
+        driveBase.setElevatorHeightSpeed(height);
         targetPosition = height/ELEVATOR_WINCH_FACTOR; //meters to rotations
     }
 
@@ -149,7 +155,7 @@ public class Elevator extends SubsystemBase {
         return elevatorHeight;
     }
 
-    //Resets the encoders to the current position, whihc sets it to the "zero/starting" position
+    //Resets the encoders to the current position, which sets it to the "zero/starting" position
     public void resetEncoders(){
         mainEncoder.setPosition(START_ROTATIONS);
         followerEncoder.setPosition(START_ROTATIONS);

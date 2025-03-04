@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "VR25-02.22.25";
+	public static String		PROGRAM_NAME = "VR25-03.02.25";
 
 	public static Robot			robot;
 
@@ -66,10 +66,8 @@ public final class Constants
 	public static final int		CORAL_PIVOT = 0;		
 	public static final int		ALGAE_EXTEND = 2;	
 	public static final int		ALGAE_PIVOT = 4;
-  public static final int		ALGAE_GROUND = 6;   
-
-
-    public static final double INTAKE_SPEED = 0.90;
+    public static final int		ALGAE_GROUND = 6;   
+    public static final int		CLIMBER_PISTON = 8;
     
     // CAMERAS 
 
@@ -115,6 +113,9 @@ public final class Constants
         public static final double kMaxAngularSpeed = 1.5 * (2 * Math.PI); // radians per second (1.5 rots / sec)
         public static final double kSlowModeFactor = .30; // 50% of normal.
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
+                                                             //
+        public static final double kElevatorModeFactor = .030; // 0.03% of normal.
+        public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.
         
         //TrackingMode Speed:
         public static final double kTrackingModeFactor = 0.10;

@@ -35,10 +35,14 @@ public class OuttakeCoral extends Command {
     public void execute(){
         switch(state){          
             case OUTTAKE:
+            if(elevatedManipulator.isElevatorAtTarget(0.05))
+                elevatedManipulator.coralManipulator.startL1Outtaking();
+            else
                 elevatedManipulator.coralManipulator.startOuttaking();
-                if(startTime > 1.0)
+                
+                if(Util.getElaspedTime(startTime) > 5.0)
                     state = State.STOP;
-                    SmartDashboard.putString("Outtake Coral Status", state.name());
+                SmartDashboard.putString("Outtake Coral Status", state.name());
                 SmartDashboard.putString("Outtake Coral Status: ", state.name());
                 break;
                 
@@ -56,6 +60,6 @@ public class OuttakeCoral extends Command {
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
         elevatedManipulator.coralManipulator.stop();
-        elevatedManipulator.executeSetPosition(PresetPosition.RESET);
+        elevatedManipulator.executeSetPosition(PresetPosition.NONE);
     }
 }

@@ -123,6 +123,8 @@ public class DriveBase extends SubsystemBase {
   private SlewRateLimiter rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
   private double prevTime = WPIUtilJNI.now() * 1e-6;
 
+  private boolean slowModeEnabled = false;
+
   // Odometry class for tracking robot pose
   // SwerveDriveOdometry odometry = new SwerveDriveOdometry(
   //     DriveConstants.kDriveKinematics,
@@ -377,7 +379,8 @@ public class DriveBase extends SubsystemBase {
    * resets it by subtracting 180 from current gyro value.
    */
   public void fixPathPlannerGyro() {
-    if (ppGyroReversed) {
+      Util.consoleLog("alliance %s", alliance);
+    if (alliance == Alliance.Red) {
       startingGyroRotation -= 180;
       // we don't just set it to 0 because it might nit have started/ended in downfield state
       ppGyroReversed = false; // set the flag so if re-eneabled twice in teleop it doesn't cycle back and forth
@@ -688,6 +691,15 @@ public class DriveBase extends SubsystemBase {
       updateDS();
   }
 
+  public void setFieldRelative(boolean fieldRelativeSet)
+  {
+      Util.consoleLog("%b", fieldRelativeSet);
+
+      fieldRelative = fieldRelativeSet;
+
+      updateDS();
+  }
+
   /**
    * Return the drive mode status.
    * @return True if field oriented, false if robot relative.
@@ -853,6 +865,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void enableSlowMode()
   {
+    slowModeEnabled = true;
     speedLimiter = DriveConstants.kSlowModeFactor;
     rotSpeedLimiter = DriveConstants.kRotSlowModeFactor;
 
@@ -866,12 +879,26 @@ public class DriveBase extends SubsystemBase {
    */
   public void disableSlowMode()
   {
+    slowModeEnabled = false;
     Util.consoleLog();
 
     speedLimiter = 1;
     rotSpeedLimiter = 1;
 
     updateDS();
+  }
+
+  /**
+   * Set max drivebase speed based on the height of the elevator. Height 0 will set speed to 1.
+   */
+  public void setElevatorHeightSpeed(double height)
+  {
+    if (!slowModeEnabled && height >= 1.0) {
+        speedLimiter = Math.pow(2, -(1.2 * height));
+        rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
+        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+        updateDS();
+    }
   }
 
 public void enableTrackingSlowMode(){

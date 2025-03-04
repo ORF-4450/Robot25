@@ -28,20 +28,6 @@ Port    Type            Description
 -----------------------------------------------------------------------------------
 13               
 
-REV PneumaticsHub 
-Port    Type            Description
------------------------------------------------------------------------------------
-0       ValveDA         CORAL_PIVOT_A
-1       ValveDA         CORAL_PIVOT_B
-2       ValveDA         ALGAE_EXTEND_A
-3       ValveDA         ALGAE_EXTEND_B
-4       ValveDA         ALGAE_PIVOT_A
-5       ValveDA         ALGAE_PIVOT_B
-6       ValveDA         ALGAE_GROUND_A
-7       ValveDA         ALGAE_GROUND_B
-8       
-9
-10
 
 PWM Ports
 Port	Device			Description
@@ -60,9 +46,20 @@ Port	Device blk-pos	Description
 -----------------------------------------------------------------------------------
        
 
-PCM 1 Ports
+PCM 1 Ports (REV PH)
 Port	Device blk-pos	Description
 -----------------------------------------------------------------------------------
+0       ValveDA   0     CORAL_PIVOT_A
+1       ValveDA   0     CORAL_PIVOT_B
+2       ValveDA   1     ALGAE_EXTEND_A
+3       ValveDA   1     ALGAE_EXTEND_B
+4       ValveDA   2     ALGAE_PIVOT_A
+5       ValveDA   2     ALGAE_PIVOT_B
+6       ValveDA   3     ALGAE_GROUND_A
+7       ValveDA   3     ALGAE_GROUND_B
+8       
+9
+10
 
 
 Digital I/O Ports
@@ -112,6 +109,7 @@ Button Name				Function
 -----------------------------------------------------------------------------------
 Y Axis                  Move Elevator Up/Down
 
+
 Utility GamePad - Right Joystick
 Button Name				Function
 -----------------------------------------------------------------------------------
@@ -152,6 +150,9 @@ Auto Program            Chooser         List of autonomous programs.
 Autonomous active       boolean         True if any auto program is active.
 Field Oriented          boolean         True when swerve drive is in field orientation mode.
 Alternate Drive         boolean         True when alternate driving mode is enabled.
+CompressorEnabled       boolean         True when/to enable compresspr.
+LowPressure             boolean         Toggles true/false when pressure is low.
+AirPressure             numeric         Actual high side air pressure.
 
 Drive Base gearbox ratios: MaxSwerve 12 tooth pinion for approx 16.1 f/s or 4.9 m/s.
 
