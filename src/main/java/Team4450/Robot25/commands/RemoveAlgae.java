@@ -18,13 +18,12 @@ public class RemoveAlgae extends Command {
     public RemoveAlgae(ElevatedManipulator elevatedManipulator){
         // this.algaeManipulator = algaeManipulator;
         this.elevatedManipulator = elevatedManipulator;
-        addRequirements(elevatedManipulator);
     }
 
     public void initialize(){
         state = State.REMOVE;
         SmartDashboard.putString("Algae Manipulator Status", state.name());
-        startTime = Util.timeStamp();
+        // startTime = Util.timeStamp();
     }
 
     public void execute(){
@@ -34,7 +33,7 @@ public class RemoveAlgae extends Command {
 
                 if(elevatedManipulator.algaeManipulator.hasAlgae())
                     state = State.HOLD;
-                break;
+            break;
 
             // case RETURN:
             //     if(elevatedManipulator.algaeManipulator.algaeExtendStatus == false)

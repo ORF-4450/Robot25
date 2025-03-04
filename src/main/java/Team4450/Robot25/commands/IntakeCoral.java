@@ -16,8 +16,6 @@ public class IntakeCoral extends Command {
     public IntakeCoral(ElevatedManipulator elevatedManipulator){
         this.elevatedManipulator = elevatedManipulator;
 
-        addRequirements(elevatedManipulator);
-
         SmartDashboard.putString("Intake Coral Status", state.name());
     }
 

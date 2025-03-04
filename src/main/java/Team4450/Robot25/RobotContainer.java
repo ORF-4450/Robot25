@@ -397,7 +397,7 @@ public class RobotContainer
 
 		//Holding Right D-Pad button sets X pattern to stop movement.
 		new Trigger(() -> driverController.getPOV() == 90)
-				.whileTrue(new RunCommand(() -> driveBase.setX(), driveBase));
+				.toggleOnTrue(new RunCommand(() -> driveBase.setX(), driveBase));
 
 		// toggle brake mode
 		
@@ -423,7 +423,7 @@ public class RobotContainer
 			// .whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 1)
 			// .andThen(new RotateToPose(driveBase, true, true))
 			// .andThen(new GoToPose(driveBase, true, true)));
-			.whileTrue(new InstantCommand(() -> driveBase.setFieldRelative(false)))
+			.toggleOnTrue(new InstantCommand(() -> driveBase.setFieldRelative(false)))
             .toggleOnFalse(new InstantCommand(() -> driveBase.setFieldRelative(true)));
 
 		// Drive to the Right Branch, offsetting from AprilTag (using Pose information)
@@ -442,26 +442,24 @@ public class RobotContainer
 		
 			
 		// -------- Utility pad buttons ----------
-		
+
+		//Use Preset Command for the following:
+
 		// Moves the coral manipulator/elevator to the L1 Branch scoring position
 		new Trigger(() -> utilityController.getXButton())
-			.toggleOnTrue(new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L1_NEW), elevatedManipulator),
-				new InstantCommand(() -> coralManipulator.pivotUp())));
+		.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L1_NEW));
 
 		// Moves the coral manipulator/elevator to the L2 Branch scoring position.
 		new Trigger(() -> utilityController.getAButton())
-		.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L2), elevatedManipulator)
-					.andThen(new InstantCommand(()-> coralManipulator.pivotDown())));
+		.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L2));
 
 		// Moves the coral manipulator/elevator to the L3 Branch scoring position.
 		new Trigger(() -> utilityController.getBButton())
-		.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L3), elevatedManipulator)
-				.andThen(new InstantCommand(() -> coralManipulator.pivotDown())));
+		.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L3));
 
 		// Moves the coral manipulator/elevator to the L4 Branch scoring position.
 		new Trigger(() -> utilityController.getYButton())
-		.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CORAL_SCORING_L4), elevatedManipulator)
-			.andThen(new InstantCommand(() -> coralManipulator.pivotDown())));
+		.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
 		
 		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
 		new Trigger(() -> utilityController.getLeftTrigger())
@@ -474,39 +472,20 @@ public class RobotContainer
 
 		//Moves the algae Manipulator/elevator to the removing position for Algae on L3
 		new Trigger(()-> utilityController.getPOV() == 0)
-			.toggleOnTrue(new ParallelCommandGroup(
-				new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_REMOVE_L3), elevatedManipulator)
-				.andThen(new InstantCommand(() -> coralManipulator.pivotDown()))
-				.andThen(new InstantCommand(() -> algaeManipulator.extendOut(), algaeManipulator))
-				.andThen(new InstantCommand(() -> algaeManipulator.pivotDown(), algaeManipulator))
-				.andThen(new InstantCommand(() -> coralManipulator.stop(), coralManipulator))
-				.andThen(new InstantCommand(() -> algaeManipulator.stop(), algaeManipulator))));
-				// new InstantCommand(()->elevatedManipulator.intakeCoralInsteadOfAlgae = false)
-				// ));
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3));
 
 
 		//Moves the algae Manipulator/Elevator to the removing position for Algae on L2
 		new Trigger(()-> utilityController.getPOV() == 180)
-			.toggleOnTrue(new ParallelCommandGroup(
-				new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_REMOVE_L2), elevatedManipulator)
-				.andThen(new InstantCommand(() -> coralManipulator.pivotDown(), coralManipulator))
-				.andThen(new InstantCommand(() -> algaeManipulator.extendOut(), algaeManipulator))
-				.andThen(new InstantCommand(() -> algaeManipulator.pivotDown(), algaeManipulator))
-				.andThen(new InstantCommand(() -> coralManipulator.stop(), coralManipulator))
-				.andThen(new InstantCommand(() -> algaeManipulator.stop(), algaeManipulator))));
-
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2));
 
 		//Moves the elevator and algae manipulator to the scoring position for the algae net.
 		new Trigger(()-> utilityController.getPOV() == 90)
-			.toggleOnTrue(new SequentialCommandGroup( new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_NET_SCORING), elevatedManipulator),
-			new InstantCommand(() -> algaeManipulator.extendOut()),
-			new InstantCommand(() -> algaeManipulator.pivotUp())));
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING));
 		
 		//Moves the elevator and algae manipulator to the scoring position for the algae processor.
 		new Trigger(()-> utilityController.getPOV() == 270)
-			.toggleOnTrue(new ParallelCommandGroup( new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_PROCESSOR_SCORING), elevatedManipulator),
-			new InstantCommand(() -> algaeManipulator.extendOut())));
-			// new InstantCommand(()-> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING));
 		
 		//Runs coral outtake if the elevator and manipulator are in the correct position.
 		new Trigger(() -> utilityController.getRightTrigger())
@@ -528,16 +507,10 @@ public class RobotContainer
 		
 		 //Resets the manipulators and elevator to the default position.
 		new Trigger(() -> utilityController.getBackButton())
-			.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.RESET), elevatedManipulator)
-				.andThen(new InstantCommand(() -> coralManipulator.setCoralPivot(false)))
-				.andThen(new InstantCommand(() -> algaeManipulator.setAlgaePivot(false)))
-				.andThen(new InstantCommand(() -> algaeManipulator.retractIn()))
-				.andThen(new InstantCommand(() -> coralManipulator.stop()))
-				.andThen(new InstantCommand(() -> algaeManipulator.stop())));
+			.toggleOnTrue(new Preset(elevatedManipulator, PresetPosition.RESET));
 		
 		new Trigger(() -> utilityController.getStartButton())
 			.toggleOnTrue(new InstantCommand(elevator::resetEncoders));
-
 		
 		
 			

@@ -14,8 +14,8 @@ public class OuttakeAlgae extends Command {
 
     public OuttakeAlgae(ElevatedManipulator elevatedManipulator){
        this.elevatedManipulator = elevatedManipulator;
-        addRequirements(elevatedManipulator);
-        SmartDashboard.putString("Algae Manipulator Status", state.name());
+
+       SmartDashboard.putString("Algae Manipulator Status", state.name());
     }
     public void initialize(){
         state = State.OUTTAKE;
