@@ -6,8 +6,8 @@
     "Misc.",
     "Net to Pickup",
     "Net to Reef",
-    "Processor to reef",
     "Pickups To Reefs",
+    "Processor to reef",
     "Reef to Processor",
     "Reef to Reef",
     "Reefs to Net",
@@ -18,6 +18,7 @@
     "Glacier Peak",
     "Noah Time Analysis"
   ],
+
   "defaultMaxVel": 2.0,
   "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 540.0,
