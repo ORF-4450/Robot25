@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6362824675324675,
-        "y": 6.655600649350649
+        "x": 7.272711267605633,
+        "y": 2.877024647887323
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.113027597402598,
-        "y": 6.959496753246753
+        "x": 6.486442698813356,
+        "y": 3.527496511692515
       },
       "isLocked": false,
-      "linkedName": "TopCoralPickupL"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7862676056338023,
-        "y": 5.258010563380281
+        "x": 5.883802816901408,
+        "y": 4.039172535211267
       },
       "prevControl": {
-        "x": 2.094034090909091,
-        "y": 5.663189935064935
+        "x": 6.559913023508945,
+        "y": 3.472467834636256
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "F"
+      "linkedName": "D Algae"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 29.000000000000004
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": "Pickups To Reefs",
+  "folder": "Starts to Reefs",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -145.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

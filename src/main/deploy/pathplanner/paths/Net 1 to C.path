@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6362824675324675,
-        "y": 6.655600649350649
+        "x": 7.386091549290821,
+        "y": 5.224250000000959
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.113027597402598,
-        "y": 6.959496753246753
+        "x": 6.609394213386761,
+        "y": 4.523386185432134
       },
       "isLocked": false,
-      "linkedName": "TopCoralPickupL"
+      "linkedName": "Netspot 1"
     },
     {
       "anchor": {
-        "x": 3.7862676056338023,
-        "y": 5.258010563380281
+        "x": 5.203521126760563,
+        "y": 2.806161971830985
       },
       "prevControl": {
-        "x": 2.094034090909091,
-        "y": 5.663189935064935
+        "x": 6.776672535211268,
+        "y": 3.42975352112676
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "F"
+      "linkedName": "C Algae"
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 29.000000000000004
+    "velocity": 0.0,
+    "rotation": 29.999999999999996
   },
   "reversed": false,
-  "folder": "Pickups To Reefs",
+  "folder": "Net to Reef",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -145.0
+    "velocity": 1.0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
