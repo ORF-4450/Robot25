@@ -28,14 +28,16 @@ public class SetTagBasedPosition extends Command {
     DriveBase robotDrive;
     PhotonVision photonVision;
     private int side;
+    private boolean algaeRemove;
     /**
      * @param robotDrive the drive subsystem
      */
 
-    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, int side) {
+    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, int side, boolean algaeRemove) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.side = side; // If -1 score on left side, If 0 align with middle, If 1 score on right side
+        this.algaeRemove = algaeRemove;
     }
 
     public void initialize () {
@@ -70,7 +72,12 @@ public class SetTagBasedPosition extends Command {
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, 0);
                 }
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
-                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - 180)))); 
+
+                if (algaeRemove) {
+                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 180)))); 
+                } else {
+                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()))))); 
+                }
                 // robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(0)));
                 // Util.consoleLog("APRIL TAG POSE: " + String.valueOf(aprilTagPose));
                 // Util.consoleLog("ROBOT OFFSET: " + String.valueOf(robotOffset));
