@@ -300,6 +300,7 @@ public class DriveBase extends SubsystemBase {
   }
 
   private Pose2d targetPose = new Pose2d(0, 0, new Rotation2d(0));
+  private boolean rotatedToTargetPose = false;
 
   /**
    * Set that target pose that the robot will try to get to while goToPose is being called.
@@ -308,6 +309,15 @@ public class DriveBase extends SubsystemBase {
    */
   public void setTargetPose(Pose2d targetPose) {
     this.targetPose = targetPose;
+    this.rotatedToTargetPose = false;
+  }
+
+  public boolean getRotatedToTargetPose() {
+      return this.rotatedToTargetPose;
+  }
+
+  public void setRotatedToTargetPose(boolean isRotatedToTargetPose) {
+      this.rotatedToTargetPose = true;
   }
 
   /**

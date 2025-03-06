@@ -374,13 +374,14 @@ public class RobotContainer
 
 		// holding top right bumper enables the alternate rotation mode in
 		// which the driver points stick to desired heading.
-		new Trigger(() -> driverController.getRightBumperButton())
-			.whileTrue(new PointToYaw(
-				()->PointToYaw.yawFromAxes(
-					-MathUtil.applyDeadband(driverController.getRightX(), Constants.DRIVE_DEADBAND),
-					-MathUtil.applyDeadband(driverController.getRightY(), Constants.DRIVE_DEADBAND)
-				), driveBase, false
-		));
+
+		//new Trigger(() -> driverController.getRightBumperButton())
+		//	.whileTrue(new PointToYaw(
+		//		()->PointToYaw.yawFromAxes(
+		//			-MathUtil.applyDeadband(driverController.getRightX(), Constants.DRIVE_DEADBAND),
+		//			-MathUtil.applyDeadband(driverController.getRightY(), Constants.DRIVE_DEADBAND)
+		//		), driveBase, false
+		//));
 
 		// toggle slow-mode
 		new Trigger(() -> driverController.getLeftBumperButton())
@@ -403,24 +404,18 @@ public class RobotContainer
 		
 
  		//Drive to the AprilTag
-// 		new Trigger(() -> driverController.getBButton())
-// 			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.5, 0));
-
-		// new Trigger(() -> driverController.getBButton())
-		// 	.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true, 11.5, 4.3, 0));
-
 		// new Trigger(() -> driverController.getXButton())
 		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
 		
     	// Drive to the AprilTag using Pose information
 		 new Trigger(()-> driverController.getLeftTrigger())
-		 	.onTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 0));
+		 	.whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 0, false));
 		 	//.andThen(new RotateToPose(driveBase, true, true))
 		 	//.andThen(new GoToPose(driveBase, true, true)));
 
-         new Trigger(()-> driverController.getLeftBumperButton())
-		 	.onTrue(new RotateToPose(driveBase, true, true))
-		 	.onTrue(new GoToPose(driveBase, true, true));
+         new Trigger(()-> driverController.getRightBumperButton())
+		 	.whileTrue(new RotateToPose(driveBase, true, true)
+		 	.andThen(new GoToPose(driveBase, true, true)));
 
 			
 		//Drive to the Right Branch, offsetting from AprilTag (using Pose information)

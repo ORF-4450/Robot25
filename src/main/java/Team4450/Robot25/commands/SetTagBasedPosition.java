@@ -76,7 +76,7 @@ public class SetTagBasedPosition extends Command {
                 if (algaeRemove) {
                     robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 180)))); 
                 } else {
-                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()))))); 
+                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 90)))); 
                 }
                 // robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(0)));
                 // Util.consoleLog("APRIL TAG POSE: " + String.valueOf(aprilTagPose));

@@ -28,7 +28,6 @@ public class SetTargetPose extends Command {
     }
 
     public void initialize() {
-
         SmartDashboard.putString("SetTargetPose", "Started");
     }
 
