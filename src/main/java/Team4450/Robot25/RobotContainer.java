@@ -24,6 +24,7 @@ import Team4450.Robot25.commands.RetractClimber;
 import Team4450.Robot25.commands.RotateToPose;
 import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
+import Team4450.Robot25.commands.DriveToCenter;
 import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.AlgaeGroundIntake;
 import Team4450.Robot25.subsystems.Candle;
@@ -413,10 +414,15 @@ public class RobotContainer
 		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
 		
     	// Drive to the AprilTag using Pose information
-		// new Trigger(()-> driverController.getXButton())
-		// 	.whileTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 0)
-		// 	.andThen(new RotateToPose(driveBase, true, true))
-		// 	.andThen(new GoToPose(driveBase, true, true)));
+		 new Trigger(()-> driverController.getLeftTrigger())
+		 	.onTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 0));
+		 	//.andThen(new RotateToPose(driveBase, true, true))
+		 	//.andThen(new GoToPose(driveBase, true, true)));
+
+         new Trigger(()-> driverController.getLeftBumperButton())
+		 	.onTrue(new RotateToPose(driveBase, true, true))
+		 	.onTrue(new GoToPose(driveBase, true, true));
+
 			
 		//Drive to the Right Branch, offsetting from AprilTag (using Pose information)
 		new Trigger(()-> driverController.getRightTrigger())
