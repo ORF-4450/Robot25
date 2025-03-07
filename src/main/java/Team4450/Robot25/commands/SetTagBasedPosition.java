@@ -89,6 +89,7 @@ public class SetTagBasedPosition extends Command {
         if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
             // Smartdashboard warning on target assignment (Upgrade)
             // Util.consoleLog("NO TARGET ASSIGNED");
+            isFinished = true;
             return;
         }
     }

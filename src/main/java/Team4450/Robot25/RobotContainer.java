@@ -412,6 +412,10 @@ public class RobotContainer
 		 //	.onTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 0, false));
 		 	//.andThen(new RotateToPose(driveBase, true, true))
 		 	//.andThen(new GoToPose(driveBase, true, true)));
+            
+		 //new Trigger(()-> driverController.getLeftTrigger())
+		 //          .onTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 0, false)
+		 //                  .andThen(new RotateToPose(driveBase, true, true)));
 
         //new Trigger(()-> driverController.getRightBumperButton())
 		 	//.whileTrue(new RotateToPose(driveBase, true, true)
