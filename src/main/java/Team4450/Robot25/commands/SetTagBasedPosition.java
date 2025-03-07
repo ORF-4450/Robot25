@@ -29,6 +29,7 @@ public class SetTagBasedPosition extends Command {
     PhotonVision photonVision;
     private int side;
     private boolean algaeRemove;
+    private boolean isFinished;
     /**
      * @param robotDrive the drive subsystem
      */
@@ -54,14 +55,9 @@ public class SetTagBasedPosition extends Command {
         PhotonTrackedTarget target = photonVision.getLatestResult().getBestTarget();
 
         if (target != null && photonVision.hasTargets()) {
-            // Set status on smartdashboard instead? (upgrade)
-            // Util.consoleLog("TARGET FOUND");
 
             Pose2d aprilTagPose = AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId());
-            // Util.consoleLog(String.valueOf(target.getFiducialId()));
             if (aprilTagPose != null) {
-                // Offset pose by robot dist
-                // Offset by left or right dist
                 Translation2d robotOffset = new Translation2d(0, 0);
                 if (side == -1) { // Score Left
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, Constants.robotCoralLateralScoringOffset);
@@ -78,13 +74,8 @@ public class SetTagBasedPosition extends Command {
                 } else {
                     robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 90)))); 
                 }
-                // robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(0)));
-                // Util.consoleLog("APRIL TAG POSE: " + String.valueOf(aprilTagPose));
-                // Util.consoleLog("ROBOT OFFSET: " + String.valueOf(robotOffset));
-                // Util.consoleLog("TARGET POSE: " + String.valueOf(robotTargetPose));
+                isFinished = true;
             } else {
-                // Set warning on smartdashboard instead? (Upgrade)
-                // Util.consoleLog("Target not on reef");
                 return;
             }
         } else {
@@ -100,10 +91,17 @@ public class SetTagBasedPosition extends Command {
         }
     }
 
+    public boolean isFinished() {
+        if (isFinished) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void end(boolean interrupted) {
         Util.consoleLog("interrupted=%b", interrupted);
-        Util.consoleLog();
+        Util.consoleLog("Correctly Set Tag Based Position");
 
         robotDrive.setTrackingRotation(Double.NaN);
         robotDrive.disableTracking();
@@ -111,6 +109,5 @@ public class SetTagBasedPosition extends Command {
         robotDrive.clearPPRotationOverride();
 
         SmartDashboard.putString("SetTagBasedPostion", "Tag Tracking Ended");
-
     }
 }

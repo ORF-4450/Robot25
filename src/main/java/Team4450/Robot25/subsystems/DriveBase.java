@@ -551,8 +551,8 @@ public class DriveBase extends SubsystemBase {
   }
 
   public void driveFieldRelative(double xSpeed, double ySpeed, double rotSpeed) {
-    // store the current state of field-relative toggle to restore later
-    boolean previousState = fieldRelative;
+    //// store the current state of field-relative toggle to restore later
+    //boolean previousState = fieldRelative;
     fieldRelative = true;
 
     updateDS();
@@ -560,8 +560,8 @@ public class DriveBase extends SubsystemBase {
     // drive using the robot relative speeds/joystick values
     drive(xSpeed, ySpeed, rotSpeed, false);
 
-    // restore previous state of field-relative.
-    fieldRelative = previousState;
+    //// restore previous state of field-relative.
+    //fieldRelative = previousState;
 
     updateDS();
   }

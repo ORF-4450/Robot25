@@ -67,14 +67,7 @@ public class GoToPose extends Command {
         translationControllerY.setSetpoint(robotDrive.getTargetPose().getY());
         translationControllerY.setTolerance(toleranceY);
 
-        if (isFinished()) {
-            end(false);
-            return;
-        }
-
         if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
-            // Smartdashboard warning on target assignment (Upgrade)
-            // Util.consoleLog("NO TARGET ASSIGNED");
             end(false);
             return;
         }
@@ -87,9 +80,6 @@ public class GoToPose extends Command {
 
         double movementX;
         double movementY;
-
-        // Util.consoleLog(robotDrive.getTargetPose().toString());
-        // Util.consoleLog(String.valueOf(robotDrive.getPose()));
 
         if (robotDrive.getPose().getX() < robotDrive.getTargetPose().getX() - toleranceX || robotDrive.getPose().getX() > robotDrive.getTargetPose().getX() + toleranceX) {
             movementX = translationControllerX.calculate(robotDrive.getPose().getX()) + 0.2;
@@ -108,8 +98,8 @@ public class GoToPose extends Command {
         }
 
         if (alsoDrive) {
-            //robotDrive.driveFieldRelative(movementX, movementY, 0);
-            robotDrive.driveFieldRelative(-movementY, movementX, 0);
+            robotDrive.driveFieldRelative(-movementX, movementY, 0);
+            //robotDrive.driveFieldRelative(-movementY, movementX, 0);
         } else {
             robotDrive.setTrackingRotation(0);
         }

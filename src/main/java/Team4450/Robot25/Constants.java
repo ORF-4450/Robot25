@@ -76,8 +76,8 @@ public final class Constants
         new Rotation3d(0, 0, Math.toRadians(90)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
-    public static double robotCoralLongitudinalScoringDistance = 0.5; // 0.3 meters distance from the tag for scoring coral.
-    public static double robotCoralLateralScoringOffset = -0.4; // Added to the target position if scoring left and subtracted if scoring right.
+    public static double robotCoralLongitudinalScoringDistance = 0.0; // 0.3 meters distance from the tag for scoring coral.
+    public static double robotCoralLateralScoringOffset = 0.0; // Added to the target position if scoring left and subtracted if scoring right.
 
     public static double xCameraOffset = 0;
     public static double yCameraOffset = 0;
