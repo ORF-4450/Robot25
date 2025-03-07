@@ -903,6 +903,13 @@ public class DriveBase extends SubsystemBase {
    */
   public void setElevatorHeightSpeed(double height)
   {
+    // Change to based on height
+    if (!slowModeEnabled && height == 0.99) {
+        speedLimiter = 0.45;
+        rotSpeedLimiter = 0.65;
+        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+        updateDS();
+    }
     if (!slowModeEnabled && height >= 1.0) {
         speedLimiter = Math.pow(2, -(1.2 * height));
         rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;

@@ -109,7 +109,7 @@ public class GoToPose extends Command {
 
         if (alsoDrive) {
             //robotDrive.driveFieldRelative(movementX, movementY, 0);
-            robotDrive.driveFieldRelative(movementY, movementX, 0);
+            robotDrive.driveFieldRelative(-movementY, movementX, 0);
         } else {
             robotDrive.setTrackingRotation(0);
         }
