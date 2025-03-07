@@ -30,7 +30,7 @@ public class AlgaeManipulator extends SubsystemBase {
     public double algaeCurrent;
 
     public AlgaeManipulator(){
-        algaeConfig.idleMode(IdleMode.kBrake);
+        //algaeConfig.idleMode(IdleMode.kBrake);
 
         algaeMotor.configure(algaeConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 

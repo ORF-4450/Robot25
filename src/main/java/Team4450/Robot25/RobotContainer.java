@@ -465,6 +465,9 @@ public class RobotContainer
 		// Moves the coral manipulator/elevator to the L4 Branch scoring position.
 		new Trigger(() -> utilityController.getYButton())
 		.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
+
+        new Trigger(() -> utilityController.getYButton())
+            .onTrue(new InstantCommand(() -> elevatedManipulator.coralManipulator.pivotDown()));
 		
 		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
 		new Trigger(() -> utilityController.getLeftTrigger())
