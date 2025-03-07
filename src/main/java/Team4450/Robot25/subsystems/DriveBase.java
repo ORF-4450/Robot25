@@ -787,7 +787,7 @@ public class DriveBase extends SubsystemBase {
    * Sets the gyroscope yaw angle to zero. This can be used to set the direction
    * the robot is currently facing to the 'forwards' direction.
    */
-  public void zeroGyro()
+  public void zeroGyro() // This is currently the elevator side! 3/6/25 - Cole Pearson
   {
     Util.consoleLog();
 

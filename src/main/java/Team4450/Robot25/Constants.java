@@ -111,10 +111,12 @@ public final class Constants
         public static final double kMaxSpeedMetersPerSecond = 4.92;  // 1.0; Speed limited for demos.
         //public static final double kMaxSpeedMetersPerSecond = ModuleConstants.kDriveWheelFreeSpeedRps; // max speed
         public static final double kMaxAngularSpeed = 1.5 * (2 * Math.PI); // radians per second (1.5 rots / sec)
-        //public static final double kSlowModeFactor = .30; // 50% of normal.
-        //public static final double kRotSlowModeFactor = .20; // 20% of normal.
-        public static final double kSlowModeFactor = .05; // 50% of normal.
-        public static final double kRotSlowModeFactor = .10; // 20% of normal.
+        public static final double kSlowModeFactor = .25; // 50% of normal.
+        public static final double kRotSlowModeFactor = .20; // 20% of normal.
+
+        // For vision testing only!!!
+        //public static final double kSlowModeFactor = .05; // 50% of normal.
+        //public static final double kRotSlowModeFactor = .10; // 20% of normal.
                                                              //
         public static final double kElevatorModeFactor = .030; // 0.03% of normal.
         public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.
