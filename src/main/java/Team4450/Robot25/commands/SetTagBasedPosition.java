@@ -54,27 +54,29 @@ public class SetTagBasedPosition extends Command {
     public void execute() {
         PhotonTrackedTarget target = photonVision.getLatestResult().getBestTarget();
 
-        if (target != null && photonVision.hasTargets()) {
+        if (target != null && photonVision.hasTargets()) { // Return early with no targets
 
-            Pose2d aprilTagPose = AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId());
-            if (aprilTagPose != null) {
+            Pose2d aprilTagPose = AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId()); // Get april tag number
+            if (aprilTagPose != null) { // Quick null check
+                // Deal with going left or right for coral scoring
                 Translation2d robotOffset = new Translation2d(0, 0);
                 if (side == -1) { // Score Left
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, Constants.robotCoralLateralScoringOffset);
                 } else if(side == 1) { // Score Right
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, -Constants.robotCoralLateralScoringOffset);
                 }
-                else if(side == 0){ //Align with middle
+                else if(side == 0){ // Align with middle
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, 0);
                 }
+                // Matrix multiplication to rotate based on where on the reef the target is.
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
 
-                if (algaeRemove) {
+                if (algaeRemove) { // If algae remove rotate 180
                     robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 180)))); 
                 } else {
                     robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 90)))); 
                 }
-                isFinished = true;
+                isFinished = true; // Position has been set, return.
             } else {
                 return;
             }
@@ -101,6 +103,8 @@ public class SetTagBasedPosition extends Command {
     @Override
     public void end(boolean interrupted) {
         Util.consoleLog("interrupted=%b", interrupted);
+
+        // Telemetry for correct exit.
         Util.consoleLog("Correctly Set Tag Based Position");
 
         robotDrive.setTrackingRotation(Double.NaN);
