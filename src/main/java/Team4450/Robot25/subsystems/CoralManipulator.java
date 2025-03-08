@@ -65,7 +65,7 @@ public class CoralManipulator extends SubsystemBase {
     }
 
     public void startL1Outtaking(){
-        coralMotor.set(0.6);
+        coralMotor.set(0.3);
         isRunning = true;
         updateDS();
     }
@@ -105,12 +105,12 @@ public class CoralManipulator extends SubsystemBase {
     }
 
     public void setCoralPivot(boolean status){
-        Util.consoleLog();
+        Util.consoleLog("Setting Coral Pivot to: " + status);
 
         if (status == true){
             pivotUp();
             coralPivotStatus = true;
-        } else{
+        } else if(status == false){
             pivotDown();
             coralPivotStatus = false;
         }

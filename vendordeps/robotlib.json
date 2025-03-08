@@ -9,11 +9,12 @@
     "jsonUrl": "https://raw.githubusercontent.com/ORF-4450/RobotLib/master/robotlib.json",
     "fileName": "robotlib.json",
     "javaDependencies": [
-      {
-        "groupId": "com.github.ORF-4450",
-        "artifactId": "RobotLib",
-        "version": "4.12.0"
-      }
+
+        {
+            "groupId": "com.github.ORF-4450",
+            "artifactId": "RobotLib",
+            "version": "4.12.0"
+        }
     ],
     "jniDependencies": [],
     "cppDependencies": []
