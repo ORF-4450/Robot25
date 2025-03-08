@@ -41,13 +41,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": -150.0
   },
   "reversed": false,
   "folder": "Pickups To Reefs",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -35.0
   },
   "useDefaultConstraints": true

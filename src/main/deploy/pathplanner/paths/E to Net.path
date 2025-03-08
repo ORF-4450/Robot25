@@ -47,7 +47,7 @@
   "reversed": false,
   "folder": "Reefs to Net",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -31.0
   },
   "useDefaultConstraints": false

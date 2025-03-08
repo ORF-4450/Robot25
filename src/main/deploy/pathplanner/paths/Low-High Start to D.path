@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.486442698813356,
-        "y": 3.527496511692515
+        "x": 6.643725655729186,
+        "y": 3.4111187948438175
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +20,12 @@
         "y": 4.039172535211267
       },
       "prevControl": {
-        "x": 6.559913023508945,
-        "y": 3.472467834636256
+        "x": 7.003799713842932,
+        "y": 3.115527906527128
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "D Algae"
+      "linkedName": "D"
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 90.0
+    "velocity": 1.0,
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Starts to Reefs",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 90.0
+    "velocity": 1.0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
