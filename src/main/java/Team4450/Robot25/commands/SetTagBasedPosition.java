@@ -28,14 +28,17 @@ public class SetTagBasedPosition extends Command {
     DriveBase robotDrive;
     PhotonVision photonVision;
     private int side;
+    private boolean algaeRemove;
+    private boolean isFinished;
     /**
      * @param robotDrive the drive subsystem
      */
 
-    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, int side) {
+    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, int side, boolean algaeRemove) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.side = side; // If -1 score on left side, If 0 align with middle, If 1 score on right side
+        this.algaeRemove = algaeRemove;
     }
 
     public void initialize () {
@@ -51,33 +54,30 @@ public class SetTagBasedPosition extends Command {
     public void execute() {
         PhotonTrackedTarget target = photonVision.getLatestResult().getBestTarget();
 
-        if (target != null && photonVision.hasTargets()) {
-            // Set status on smartdashboard instead? (upgrade)
-            // Util.consoleLog("TARGET FOUND");
+        if (target != null && photonVision.hasTargets()) { // Return early with no targets
 
-            Pose2d aprilTagPose = AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId());
-            // Util.consoleLog(String.valueOf(target.getFiducialId()));
-            if (aprilTagPose != null) {
-                // Offset pose by robot dist
-                // Offset by left or right dist
+            Pose2d aprilTagPose = AprilTagMap.aprilTagToPoseMap.get(target.getFiducialId()); // Get april tag number
+            if (aprilTagPose != null) { // Quick null check
+                // Deal with going left or right for coral scoring
                 Translation2d robotOffset = new Translation2d(0, 0);
                 if (side == -1) { // Score Left
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, Constants.robotCoralLateralScoringOffset);
                 } else if(side == 1) { // Score Right
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, -Constants.robotCoralLateralScoringOffset);
                 }
-                else if(side == 0){ //Align with middle
+                else if(side == 0){ // Align with middle
                     robotOffset = new Translation2d(Constants.robotCoralLongitudinalScoringDistance, 0);
                 }
+                // Matrix multiplication to rotate based on where on the reef the target is.
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
-                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - 180)))); 
-                // robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(0)));
-                // Util.consoleLog("APRIL TAG POSE: " + String.valueOf(aprilTagPose));
-                // Util.consoleLog("ROBOT OFFSET: " + String.valueOf(robotOffset));
-                // Util.consoleLog("TARGET POSE: " + String.valueOf(robotTargetPose));
+
+                if (algaeRemove) { // If algae remove rotate 180
+                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 180)))); 
+                } else {
+                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 90)))); 
+                }
+                isFinished = true; // Position has been set, return.
             } else {
-                // Set warning on smartdashboard instead? (Upgrade)
-                // Util.consoleLog("Target not on reef");
                 return;
             }
         } else {
@@ -89,14 +89,24 @@ public class SetTagBasedPosition extends Command {
         if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
             // Smartdashboard warning on target assignment (Upgrade)
             // Util.consoleLog("NO TARGET ASSIGNED");
+            isFinished = true;
             return;
         }
+    }
+
+    public boolean isFinished() {
+        if (isFinished) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         Util.consoleLog("interrupted=%b", interrupted);
-        Util.consoleLog();
+
+        // Telemetry for correct exit.
+        Util.consoleLog("Correctly Set Tag Based Position");
 
         robotDrive.setTrackingRotation(Double.NaN);
         robotDrive.disableTracking();
@@ -104,6 +114,5 @@ public class SetTagBasedPosition extends Command {
         robotDrive.clearPPRotationOverride();
 
         SmartDashboard.putString("SetTagBasedPostion", "Tag Tracking Ended");
-
     }
 }

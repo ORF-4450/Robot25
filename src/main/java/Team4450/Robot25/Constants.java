@@ -73,11 +73,11 @@ public final class Constants
 
     public static Transform3d   CAMERA_TAG_TRANSFORM = new Transform3d(
         new Translation3d(0, 0.32, 0.28), // change last value to height in METERS of lens
-        new Rotation3d(0, 0, Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
+        new Rotation3d(0, 0, Math.toRadians(90)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
-    public static double robotCoralLongitudinalScoringDistance = 0.5; // 0.3 meters distance from the tag for scoring coral.
-    public static double robotCoralLateralScoringOffset = -0.4; // Added to the target position if scoring left and subtracted if scoring right.
+    public static double robotCoralLongitudinalScoringDistance = 0.0; // 0.3 meters distance from the tag for scoring coral.
+    public static double robotCoralLateralScoringOffset = 0.0; // Added to the target position if scoring left and subtracted if scoring right.
 
     public static double xCameraOffset = 0;
     public static double yCameraOffset = 0;
@@ -111,8 +111,12 @@ public final class Constants
         public static final double kMaxSpeedMetersPerSecond = 4.92;  // 1.0; Speed limited for demos.
         //public static final double kMaxSpeedMetersPerSecond = ModuleConstants.kDriveWheelFreeSpeedRps; // max speed
         public static final double kMaxAngularSpeed = 1.5 * (2 * Math.PI); // radians per second (1.5 rots / sec)
-        public static final double kSlowModeFactor = .30; // 50% of normal.
+        public static final double kSlowModeFactor = .25; // 50% of normal.
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
+
+        // For vision testing only!!!
+        //public static final double kSlowModeFactor = .05; // 50% of normal.
+        //public static final double kRotSlowModeFactor = .10; // 20% of normal.
                                                              //
         public static final double kElevatorModeFactor = .030; // 0.03% of normal.
         public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.

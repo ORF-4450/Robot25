@@ -300,6 +300,7 @@ public class DriveBase extends SubsystemBase {
   }
 
   private Pose2d targetPose = new Pose2d(0, 0, new Rotation2d(0));
+  private boolean rotatedToTargetPose = false;
 
   /**
    * Set that target pose that the robot will try to get to while goToPose is being called.
@@ -308,6 +309,15 @@ public class DriveBase extends SubsystemBase {
    */
   public void setTargetPose(Pose2d targetPose) {
     this.targetPose = targetPose;
+    this.rotatedToTargetPose = false;
+  }
+
+  public boolean getRotatedToTargetPose() {
+      return this.rotatedToTargetPose;
+  }
+
+  public void setRotatedToTargetPose(boolean isRotatedToTargetPose) {
+      this.rotatedToTargetPose = true;
   }
 
   /**
@@ -541,8 +551,8 @@ public class DriveBase extends SubsystemBase {
   }
 
   public void driveFieldRelative(double xSpeed, double ySpeed, double rotSpeed) {
-    // store the current state of field-relative toggle to restore later
-    boolean previousState = fieldRelative;
+    //// store the current state of field-relative toggle to restore later
+    //boolean previousState = fieldRelative;
     fieldRelative = true;
 
     updateDS();
@@ -550,8 +560,8 @@ public class DriveBase extends SubsystemBase {
     // drive using the robot relative speeds/joystick values
     drive(xSpeed, ySpeed, rotSpeed, false);
 
-    // restore previous state of field-relative.
-    fieldRelative = previousState;
+    //// restore previous state of field-relative.
+    //fieldRelative = previousState;
 
     updateDS();
   }
@@ -777,7 +787,7 @@ public class DriveBase extends SubsystemBase {
    * Sets the gyroscope yaw angle to zero. This can be used to set the direction
    * the robot is currently facing to the 'forwards' direction.
    */
-  public void zeroGyro()
+  public void zeroGyro() // This is currently the elevator side! 3/6/25 - Cole Pearson
   {
     Util.consoleLog();
 
@@ -893,6 +903,13 @@ public class DriveBase extends SubsystemBase {
    */
   public void setElevatorHeightSpeed(double height)
   {
+    // Change to based on height
+    if (!slowModeEnabled && height == 0.99) {
+        speedLimiter = 0.45;
+        rotSpeedLimiter = 0.65;
+        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+        updateDS();
+    }
     if (!slowModeEnabled && height >= 1.0) {
         speedLimiter = Math.pow(2, -(1.2 * height));
         rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;

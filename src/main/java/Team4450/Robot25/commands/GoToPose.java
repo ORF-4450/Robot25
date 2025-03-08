@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.Command;
    */
 
 public class GoToPose extends Command {
-    // PIDController rotationController = new PIDController(0.0015, 0, 0); // for rotating drivebase
     PIDController translationControllerX = new PIDController(0.35, 0, 0); // for moving drivebase in X,Y plane
     PIDController translationControllerY = new PIDController(0.35, 0, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
@@ -40,7 +39,6 @@ public class GoToPose extends Command {
 
         SendableRegistry.addLW(translationControllerX, "GoToPose Translation PID");
         SendableRegistry.addLW(translationControllerY, "GoToPose Translation PID");
-        // SendableRegistry.addLW(rotationController, "GoToPose Rotation PID");
     }
 
     public void initialize () {
@@ -56,32 +54,20 @@ public class GoToPose extends Command {
         robotDrive.enableTracking();
         robotDrive.enableTrackingSlowMode();
         
-        // rotationController.setSetpoint(robotDrive.getTargetPose().getRotation().getRadians());
-        
         SmartDashboard.putString("GoToPose", "Tag Tracking Initialized");
     }
 
     @Override
     public void execute() {
-        // rotationController.setSetpoint(robotDrive.getTargetPose().getRotation().getDegrees());
-        // rotationController.setTolerance(toleranceRot);
+        //Util.consoleLog(robotDrive.getPose().toString());
 
-        // translationControllerX.setSetpoint(-15); // target should be at -15 pitch
         translationControllerX.setSetpoint(robotDrive.getTargetPose().getX());
-        // Util.consoleLog("Look here" + String.valueOf(robotDrive.getTargetPose().getX()));
         translationControllerX.setTolerance(toleranceX);
 
         translationControllerY.setSetpoint(robotDrive.getTargetPose().getY());
         translationControllerY.setTolerance(toleranceY);
 
-        if (isFinished()) {
-            end(false);
-            return;
-        }
-
         if (robotDrive.getTargetPose().getX() == 0 || robotDrive.getTargetPose().getY() == 0) {
-            // Smartdashboard warning on target assignment (Upgrade)
-            // Util.consoleLog("NO TARGET ASSIGNED");
             end(false);
             return;
         }
@@ -94,9 +80,6 @@ public class GoToPose extends Command {
 
         double movementX;
         double movementY;
-
-        // Util.consoleLog(robotDrive.getTargetPose().toString());
-        // Util.consoleLog(String.valueOf(robotDrive.getPose()));
 
         if (robotDrive.getPose().getX() < robotDrive.getTargetPose().getX() - toleranceX || robotDrive.getPose().getX() > robotDrive.getTargetPose().getX() + toleranceX) {
             movementX = translationControllerX.calculate(robotDrive.getPose().getX()) + 0.2;
@@ -115,7 +98,8 @@ public class GoToPose extends Command {
         }
 
         if (alsoDrive) {
-            robotDrive.driveFieldRelative(movementX, movementY, 0);
+            robotDrive.driveFieldRelative(-movementX, movementY, 0);
+            //robotDrive.driveFieldRelative(-movementY, movementX, 0);
         } else {
             robotDrive.setTrackingRotation(0);
         }

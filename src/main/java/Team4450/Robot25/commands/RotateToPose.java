@@ -70,6 +70,9 @@ public class RotateToPose extends Command {
 
     @Override
     public void execute() {
+        if (robotDrive.getRotatedToTargetPose()) {
+            end(true);
+        }
         if (isFinished()) {
             end(false);
             return;
@@ -86,7 +89,7 @@ public class RotateToPose extends Command {
             rotation = -0.50;
         } else {
             rotation = 0;
-            Util.consoleLog("Here");
+            robotDrive.setRotatedToTargetPose(true);
             isFinished = true;
         }
         rotation = rotation * sign;
