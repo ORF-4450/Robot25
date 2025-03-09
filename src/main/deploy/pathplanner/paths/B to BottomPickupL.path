@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 2.2021621439417465,
-        "y": 3.153165757552613
+        "y": 3.1531657575526126
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": -35.0
   },
   "reversed": false,
   "folder": "Reefs to Pickups",
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 1.0,
     "rotation": 151.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

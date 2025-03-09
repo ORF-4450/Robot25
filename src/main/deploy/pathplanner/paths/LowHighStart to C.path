@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.871102792245369,
-        "y": 2.977463469328703
+        "x": 7.272711267605633,
+        "y": 2.877024647887323
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.9267847876213855,
-        "y": 2.8718784076190227
+        "x": 6.328393262981649,
+        "y": 2.7714395861776424
       },
       "isLocked": false,
       "linkedName": "LowHighStart"
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": -150.0
   },
   "reversed": false,
