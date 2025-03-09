@@ -3,6 +3,8 @@ package Team4450.Robot25;
 
 import static Team4450.Robot25.Constants.*;
 
+import org.opencv.photo.Photo;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -80,7 +82,8 @@ public class RobotContainer
 
 	public static ShuffleBoard			shuffleBoard;
 	public static DriveBase 			driveBase;
-	public static PhotonVision			pvTagCamera;
+	public static PhotonVision			pvAlgaeTagCamera;
+	public static PhotonVision			pvCoralTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
 	public static ElevatedManipulator	elevatedManipulator;
@@ -200,7 +203,8 @@ public class RobotContainer
 
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
-		pvTagCamera = new PhotonVision(CAMERA_TAG, PipelineType.POSE_ESTIMATION, CAMERA_TAG_TRANSFORM);
+		pvCoralTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
+		pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
 		elevator = new Elevator(driveBase);
@@ -221,7 +225,8 @@ public class RobotContainer
 		// This sets up the photonVision subsystem to constantly update the robotDrive odometry
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
-		pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
+		pvCoralTagCamera.setDefaultCommand(new UpdateVisionPose(pvCoralTagCamera, driveBase));
+		pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
@@ -466,13 +471,12 @@ public class RobotContainer
 		new Trigger(() -> utilityController.getYButton())
 		.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
 
-        new Trigger(() -> utilityController.getYButton())
-            .onTrue(new InstantCommand(() -> elevatedManipulator.coralManipulator.pivotDown()));
 		
 		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
 		new Trigger(() -> utilityController.getLeftTrigger())
-			.onTrue(new IntakeCoral(elevatedManipulator));
-
+			.toggleOnTrue(new IntakeCoral(elevatedManipulator))
+			.toggleOnFalse(new InstantCommand(() -> elevatedManipulator.coralManipulator.stop()));
+			
 		//If the algae manipulator is in one of the removing positions, it will use the same intake button to remove algae.
 		// new Trigger(()-> utilityController.getLeftTrigger() && !elevatedManipulator.intakeCoralInsteadOfAlgae)
 		// 	.onTrue(new RemoveAlgae(elevatedManipulator));
@@ -598,7 +602,7 @@ public class RobotContainer
 		//NamedCommands.registerCommand("Align Center", new SetTagBasedPosition(driveBase, pvTagCamera, 0)
 		//												.andThen(new RotateToPose(driveBase, true, true))
 		//												.andThen(new GoToPose(driveBase, true, true)));
-	
+		NamedCommands.registerCommand("Climb", new Preset(elevatedManipulator, PresetPosition.CLIMB));
 		// Create a chooser with the PathPlanner Autos located in the PP
 		// folders.
 
