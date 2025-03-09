@@ -82,7 +82,7 @@ public class RobotContainer
 
 	public static ShuffleBoard			shuffleBoard;
 	public static DriveBase 			driveBase;
-	public static PhotonVision			pvAlgaeTagCamera;
+	// public static PhotonVision			pvAlgaeTagCamera;
 	public static PhotonVision			pvCoralTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
@@ -204,7 +204,7 @@ public class RobotContainer
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
 		pvCoralTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
-		pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
+		// pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
 		elevator = new Elevator(driveBase);
@@ -226,7 +226,7 @@ public class RobotContainer
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
 		pvCoralTagCamera.setDefaultCommand(new UpdateVisionPose(pvCoralTagCamera, driveBase));
-		pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
+		// pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
@@ -418,13 +418,13 @@ public class RobotContainer
 		 	//.andThen(new RotateToPose(driveBase, true, true))
 		 	//.andThen(new GoToPose(driveBase, true, true)));
             
-		 //new Trigger(()-> driverController.getLeftTrigger())
-		 //          .onTrue(new SetTagBasedPosition(driveBase, pvTagCamera, 0, false)
+		 new Trigger(()-> driverController.getLeftTrigger())
+		          .onTrue(new SetTagBasedPosition(driveBase, pvCoralTagCamera, 0, false));
 		 //                  .andThen(new RotateToPose(driveBase, true, true)));
 
-        //new Trigger(()-> driverController.getRightBumperButton())
-		 	//.whileTrue(new RotateToPose(driveBase, true, true)
-		 	//.andThen(new GoToPose(driveBase, true, true)));
+        new Trigger(()-> driverController.getRightBumperButton())
+		 	.whileTrue(new RotateToPose(driveBase, true, true)
+		 	.andThen(new GoToPose(driveBase, true, true)));
 		 	//.whileTrue(new GoToPose(driveBase, true, true));
 
 			
@@ -592,7 +592,7 @@ public class RobotContainer
 		NamedCommands.registerCommand("Algae Net Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING)); // TODO FIX FIX FIX
 		NamedCommands.registerCommand("Algae Processor Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING)); // TODO FIX FIX FIX
 		NamedCommands.registerCommand("Intake Algae Ground", new IntakeAlgaeGround(elevatedManipulator));
-		NamedCommands.registerCommand("Reset", new Preset(elevatedManipulator, PresetPosition.RESET));
+		NamedCommands.registerCommand("Reset Elevator", new Preset(elevatedManipulator, PresetPosition.RESET));
 		//NamedCommands.registerCommand("Align Left", new SetTagBasedPosition(driveBase, pvTagCamera, -1)
 		//												.andThen(new RotateToPose(driveBase, true, true)
 		//												.andThen(new GoToPose(driveBase, true, true))));

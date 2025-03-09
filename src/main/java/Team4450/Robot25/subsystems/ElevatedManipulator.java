@@ -107,7 +107,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
 
             case CORAL_SCORING_L2:
-                endGoalElevatorHeight = 0.60;
+                endGoalElevatorHeight = 0.55;
                 endGoalCoralPivotStatus = false;
                 if(algaeManipulator.hasAlgae())
                     endGoalAlgaeExtendStatus = true;
@@ -118,7 +118,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
             
             case CORAL_SCORING_L3:
-                endGoalElevatorHeight = 0.99;
+                endGoalElevatorHeight = 0.94;
                 endGoalCoralPivotStatus = false;
                 if(algaeManipulator.hasAlgae())
                     endGoalAlgaeExtendStatus = true;
@@ -129,7 +129,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
 
             case CORAL_SCORING_L4:
-                endGoalElevatorHeight = 1.60;
+                endGoalElevatorHeight = 1.52;
                 endGoalCoralPivotStatus = false;
                 if(algaeManipulator.hasAlgae())
                     endGoalAlgaeExtendStatus = true;
@@ -159,7 +159,10 @@ public class ElevatedManipulator extends SubsystemBase {
                 endGoalElevatorHeight = 1.72;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
-                endGoalAlgaePivotStatus = true;
+                if(hasAlgae() == true)
+                    endGoalAlgaePivotStatus = true;
+                else
+                    endGoalAlgaePivotStatus = true;
                 endGoalAlgaeGroundPistonStatus = false;
                 break;
             
@@ -221,6 +224,9 @@ public class ElevatedManipulator extends SubsystemBase {
         //endGoalAlgaeExtendStatus is equal to false when we are retracting & algaeExtendStatus is equal to true when we are extended
         boolean isExtending = endGoalAlgaeExtendStatus && !algaeManipulator.algaeExtendStatus;
         boolean isRetracting = !endGoalAlgaeExtendStatus && algaeManipulator.algaeExtendStatus;
+        boolean setPivotOnly = endGoalAlgaeExtendStatus == algaeManipulator.algaeExtendStatus;
+        boolean isSafe = false;
+        
 
         // Handle Algae Extend, Pivot, and Ground Piston based on direction
         if (isExtending) {
@@ -234,19 +240,21 @@ public class ElevatedManipulator extends SubsystemBase {
                 algaeManipulator.setAlgaeExtend(endGoalAlgaeExtendStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Extend");
                 atTarget = true;
+                isSafe = true;
                 }
-            else if (algaeManipulator.algaePivotStatus != endGoalAlgaePivotStatus) {
+            if (isSafe) {
                 algaeManipulator.setAlgaePivot(endGoalAlgaePivotStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Pivot Up");
                 atTarget = true;
+                isSafe = false;
             }
         } else if (isRetracting) {
             // Retract pivot first
-            if (algaeManipulator.algaePivotStatus != endGoalAlgaePivotStatus) {
                 algaeManipulator.setAlgaePivot(endGoalAlgaePivotStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Pivot Down");
                 atTarget = true;
-            } else if (algaeManipulator.algaeExtendStatus != endGoalAlgaeExtendStatus) {
+
+            if (algaeManipulator.algaeExtendStatus != endGoalAlgaeExtendStatus) {
                 algaeManipulator.setAlgaeExtend(endGoalAlgaeExtendStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Retract");
                 atTarget = true;
@@ -257,6 +265,10 @@ public class ElevatedManipulator extends SubsystemBase {
             //     atTarget = true;
             // }
         } 
+
+        if (setPivotOnly) {
+            algaeManipulator.setAlgaePivot(endGoalAlgaePivotStatus);
+        }
 
         // Handle Elevator
         if (atTarget) {

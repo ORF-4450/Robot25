@@ -72,14 +72,14 @@ public final class Constants
     // CAMERAS 
 
     public static Transform3d   CORAL_CAMERA_TAG_TRANSFORM = new Transform3d(
-        new Translation3d(0, 0.32, 0.28), // change last value to height in METERS of lens
-        new Rotation3d(0, 0, Math.toRadians(90)) // keep the 180, the -10 is the camera angle (negative!)
+        new Translation3d(0, 0.28, 0.22), // change last value to height in METERS of lens
+        new Rotation3d(0, 0, Math.toRadians(-90)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
-    public static Transform3d ALGAE_CAMERA_TAG_TRANSFORM = new Transform3d(
-        new Translation3d(0, 0.32, 0.28),
-        new Rotation3d(0, 0, Math.toRadians(90))
-    );
+    // public static Transform3d ALGAE_CAMERA_TAG_TRANSFORM = new Transform3d(
+    //     new Translation3d(0, 0.32, 0.28),
+    //     new Rotation3d(0, 0, Math.toRadians(90))
+    // );
 
     public static double robotCoralLongitudinalScoringDistance = 0.0; // 0.3 meters distance from the tag for scoring coral.
     public static double robotCoralLateralScoringOffset = 0.0; // Added to the target position if scoring left and subtracted if scoring right.
@@ -128,7 +128,7 @@ public final class Constants
         public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.
         
         //TrackingMode Speed:
-        public static final double kTrackingModeFactor = 0.10;
+        public static final double kTrackingModeFactor = 0.20;
         public static final double kRotTrackingModeFactor = 0.20;
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.

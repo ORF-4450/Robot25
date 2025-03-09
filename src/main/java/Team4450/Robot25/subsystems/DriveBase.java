@@ -222,6 +222,8 @@ public class DriveBase extends SubsystemBase {
 
     SmartDashboard.putNumber("Gyro angle", getGyroYaw());
     SmartDashboard.putString("Robot pose", currentPose.toString());
+    SmartDashboard.putString("Target Pose", targetPose.toString());
+
 
     // Following code tracks robot movement distance and yaw so we can reset
     // those values separately from the NavX.
@@ -310,6 +312,7 @@ public class DriveBase extends SubsystemBase {
   public void setTargetPose(Pose2d targetPose) {
     this.targetPose = targetPose;
     this.rotatedToTargetPose = false;
+    Util.consoleLog("target pose:" + targetPose.toString());
   }
 
   public boolean getRotatedToTargetPose() {

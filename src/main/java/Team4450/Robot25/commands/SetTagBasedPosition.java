@@ -52,7 +52,7 @@ public class SetTagBasedPosition extends Command {
 
     @Override
     public void execute() {
-        PhotonTrackedTarget target = photonVision.getLatestResult().getBestTarget();
+        PhotonTrackedTarget target = photonVision.getClosestTarget();
 
         if (target != null && photonVision.hasTargets()) { // Return early with no targets
 
@@ -74,7 +74,7 @@ public class SetTagBasedPosition extends Command {
                 if (algaeRemove) { // If algae remove rotate 180
                     robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CORAL_CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 180)))); 
                 } else {
-                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CORAL_CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 90)))); 
+                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CORAL_CAMERA_TAG_TRANSFORM.getRotation().getAngle()))))); 
                 }
                 isFinished = true; // Position has been set, return.
             } else {
