@@ -1,7 +1,6 @@
 package Team4450.Robot25.commands;
 
 import Team4450.Lib.Util;
-import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +22,7 @@ public class RemoveAlgae extends Command {
     public void initialize(){
         state = State.REMOVE;
         SmartDashboard.putString("Algae Manipulator Status", state.name());
+        Util.consoleLog("Remove Algae Initialized");
         // startTime = Util.timeStamp();
     }
 

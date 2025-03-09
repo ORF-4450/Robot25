@@ -37,6 +37,7 @@ public class Preset extends Command {
         // must be called every loop!
         // most of the code for this is in ElevatedManipulator, so better to look
         // there for info/code
+        Util.consoleLog("Preset Position:" + preset);
         done = elevatedManipulator.executeSetPosition(preset);
     }
 

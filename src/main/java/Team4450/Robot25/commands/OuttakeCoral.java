@@ -39,10 +39,10 @@ public class OuttakeCoral extends Command {
             else
                 elevatedManipulator.coralManipulator.startOuttaking();
                 
-                if(Util.getElaspedTime(startTime) > 5.0)
+                if(Util.getElaspedTime(startTime) > 2.0)
                     state = State.STOP;
                 SmartDashboard.putString("Outtake Coral Status", state.name());
-                SmartDashboard.putString("Outtake Coral Status: ", state.name());
+                Util.consoleLog("Outtake Coral Status: " + state.name());
                 break;
                 
             case STOP:

@@ -207,13 +207,14 @@ public class ElevatedManipulator extends SubsystemBase {
 
     public boolean execute() {
         
-
+        
         //Handle Coral Pivot
-        if (coralManipulator.coralPivotStatus != endGoalCoralPivotStatus) {
-            coralManipulator.setCoralPivot(endGoalCoralPivotStatus);
-            SmartDashboard.putString("Elevator Position Phase", "Setting Coral Pivot");
-            atTarget = true;
-        }
+        coralManipulator.setCoralPivot(endGoalCoralPivotStatus);
+        SmartDashboard.putString("Elevator Position Phase", "Setting Coral Pivot");
+        atTarget = true;
+
+        
+        
 
         //Determine if we are extending or retracting
         //endGoalAlgaeExtendStatus is equal to true when we are extending & algaeExtendStatus is equal to false when we aren't extended
@@ -224,20 +225,21 @@ public class ElevatedManipulator extends SubsystemBase {
         // Handle Algae Extend, Pivot, and Ground Piston based on direction
         if (isExtending) {
             // Extend ground intake piston first
-            if (algaeGroundIntake.algaeGroundPistonStatus != endGoalAlgaeGroundPistonStatus) {
-                algaeGroundIntake.setAlgaeGroundExtend(endGoalAlgaeGroundPistonStatus);
-                SmartDashboard.putString("Elevator Position Phase", "Setting Algae Ground Piston Extend");
-                atTarget = true;
-            } else if (algaeManipulator.algaeExtendStatus != endGoalAlgaeExtendStatus) {
+            // if (algaeGroundIntake.algaeGroundPistonStatus != endGoalAlgaeGroundPistonStatus) {
+            //     algaeGroundIntake.setAlgaeGroundExtend(endGoalAlgaeGroundPistonStatus);
+            //     SmartDashboard.putString("Elevator Position Phase", "Setting Algae Ground Piston Extend");
+            //     atTarget = true;
+            // } 
+            if (algaeManipulator.algaeExtendStatus != endGoalAlgaeExtendStatus) {
                 algaeManipulator.setAlgaeExtend(endGoalAlgaeExtendStatus);
                 SmartDashboard.putString("Elevator Position Phase", "Setting Algae Extend");
                 atTarget = true;
                 }
-            // else if (algaeManipulator.algaePivotStatus != endGoalAlgaePivotStatus) {
-            //     algaeManipulator.setAlgaePivot(endGoalAlgaePivotStatus);
-            //     SmartDashboard.putString("Elevator Position Phase", "Setting Algae Pivot Up");
-            //     atTarget = true;
-            // }
+            else if (algaeManipulator.algaePivotStatus != endGoalAlgaePivotStatus) {
+                algaeManipulator.setAlgaePivot(endGoalAlgaePivotStatus);
+                SmartDashboard.putString("Elevator Position Phase", "Setting Algae Pivot Up");
+                atTarget = true;
+            }
         } else if (isRetracting) {
             // Retract pivot first
             if (algaeManipulator.algaePivotStatus != endGoalAlgaePivotStatus) {

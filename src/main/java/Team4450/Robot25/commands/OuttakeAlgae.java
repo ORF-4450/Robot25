@@ -20,6 +20,7 @@ public class OuttakeAlgae extends Command {
     public void initialize(){
         state = State.OUTTAKE;
         SmartDashboard.putString("Algae Manipulator Status", state.name());
+        Util.consoleLog("Outtake Algae Initialized");
         startTime = Util.timeStamp();
     }
     public void execute(){
