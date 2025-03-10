@@ -99,8 +99,15 @@ public class AlgaeManipulator extends SubsystemBase {
 
     public void stop(){
         Util.consoleLog();
-
+        // if(hasAlgae() == true) {
+        //     holdAlgae();
+        // isAlgaeMotorRunning = true;
+        // }
+        // else if(hasAlgae() == false){
         algaeMotor.stopMotor();
+        // isAlgaeMotorRunning = false;
+        // }
+
         pivotDown();
 
         isAlgaeMotorRunning = false;

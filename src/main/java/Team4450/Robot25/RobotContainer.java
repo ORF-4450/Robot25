@@ -474,8 +474,8 @@ public class RobotContainer
 		
 		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
 		new Trigger(() -> utilityController.getLeftTrigger())
-			.toggleOnTrue(new IntakeCoral(elevatedManipulator))
-			.toggleOnFalse(new InstantCommand(() -> elevatedManipulator.coralManipulator.stop()));
+			.whileTrue(new IntakeCoral(elevatedManipulator))
+			.onFalse(new InstantCommand(() -> elevatedManipulator.coralManipulator.stop()));
 			
 		//If the algae manipulator is in one of the removing positions, it will use the same intake button to remove algae.
 		// new Trigger(()-> utilityController.getLeftTrigger() && !elevatedManipulator.intakeCoralInsteadOfAlgae)
@@ -508,11 +508,15 @@ public class RobotContainer
 		// 	.onTrue(new OuttakeAlgae(elevatedManipulator));
 
 		//Moves the elvator and manipulator to the reset position and extends out ground intake, and algae manipulator, and starts intaking.
-		// new Trigger(() -> utilityController.getLeftBumperButton())
-		// 	.onTrue(new IntakeAlgaeGround(elevatedManipulator));
-
 		new Trigger(() -> utilityController.getLeftBumperButton())
-			.onTrue(new RemoveAlgae(elevatedManipulator));
+			.whileTrue(new RemoveAlgae(elevatedManipulator));
+
+		// new Trigger(() -> utilityController.getLeftBumperButton() && elevatedManipulator.hasAlgae() == false)
+		// 	.whileTrue(new RemoveAlgae(elevatedManipulator))
+		// 	.onFalse(new InstantCommand(algaeManipulator::stop));
+
+		// new Trigger(() -> utilityController.getLeftBumperButton() && elevatedManipulator.hasAlgae() == true)
+		// 	.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.algaeManipulator.holdAlgae()));
 
 		new Trigger(() -> utilityController.getRightBumperButton())
 			.onTrue(new OuttakeAlgae(elevatedManipulator));
