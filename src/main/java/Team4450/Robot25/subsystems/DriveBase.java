@@ -301,7 +301,16 @@ public class DriveBase extends SubsystemBase {
     return odometry.getEstimatedPosition();
   }
 
+  public Rotation2d getRotation2d() {
+    return getPose().getRotation();
+  }
+
+  public double getAngle(){
+    return this.getRotation2d().getDegrees();
+  }
+
   private Pose2d targetPose = new Pose2d(0, 0, new Rotation2d(0));
+  private int targetID = 0;
   private boolean rotatedToTargetPose = false;
 
   /**
@@ -313,6 +322,10 @@ public class DriveBase extends SubsystemBase {
     this.targetPose = targetPose;
     this.rotatedToTargetPose = false;
     Util.consoleLog("target pose:" + targetPose.toString());
+  }
+
+  public void setTargetID(int targetID){
+    this.targetID = targetID;
   }
 
   public boolean getRotatedToTargetPose() {
@@ -336,6 +349,14 @@ public class DriveBase extends SubsystemBase {
     }
   }
 
+  public int getTargetID(){
+    if(this.targetID == 0){
+      return 0;
+    }
+    else {
+      return this.targetID;
+    }
+  }
   /**
    * Returns the currently-estimated pose of the robot for use in Pathplanner.
    * Currently acts exact same as getPose() but leaving it here for consistency
@@ -568,6 +589,8 @@ public class DriveBase extends SubsystemBase {
 
     updateDS();
   }
+
+
   /**
    * Sets the wheels into an X formation to prevent movement.
    */
@@ -970,6 +993,7 @@ public void disableTrackingSlowMode(){
   public void updateOdometryVision(Pose2d pose, double timestamp) {
     odometry.addVisionMeasurement(pose, timestamp);
   }
+
 
   /**
    * Configures the PathPlanner auto generation of paths/autos by telling

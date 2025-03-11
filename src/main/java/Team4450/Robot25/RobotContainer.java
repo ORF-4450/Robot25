@@ -24,6 +24,8 @@ import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RetractClimber;
 import Team4450.Robot25.commands.RotateToPose;
+import Team4450.Robot25.commands.RotateToTag;
+import Team4450.Robot25.commands.GoToTag;
 import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
 import Team4450.Robot25.subsystems.AlgaeManipulator;
@@ -424,9 +426,10 @@ public class RobotContainer
 
         new Trigger(()-> driverController.getRightBumperButton())
 		 	.whileTrue(new RotateToPose(driveBase, true, true)
-		 	.andThen(new GoToPose(driveBase, true, true)));
+		 	// .andThen(new GoToPose(driveBase, true, true)));
 		 	//.whileTrue(new GoToPose(driveBase, true, true));
-
+			// .whileTrue(new RotateToTag(pvCoralTagCamera, driveBase));
+			.andThen(new GoToTag(driveBase, true, true, pvCoralTagCamera)));
 			
 		//Drive to the Right Branch, offsetting from AprilTag (using Pose information)
 		new Trigger(()-> driverController.getRightTrigger())
