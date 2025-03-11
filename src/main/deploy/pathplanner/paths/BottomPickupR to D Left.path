@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8871478873239427,
-        "y": 1.332218309859153
+        "x": 5.567249999996172,
+        "y": 1.9482499999950584
       },
       "isLocked": false,
       "linkedName": "BottomPickupR"
@@ -20,12 +20,12 @@
         "y": 4.161499999999999
       },
       "prevControl": {
-        "x": 6.321211267605634,
-        "y": 2.134827464788731
+        "x": 6.0157499999961725,
+        "y": 2.9622499999950587
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "D"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
