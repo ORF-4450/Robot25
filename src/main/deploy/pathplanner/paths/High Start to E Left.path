@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.218474112986636,
-        "y": 5.459067126214809
+        "x": 5.936468262493918,
+        "y": 5.388164499107367
       },
       "isLocked": false,
       "linkedName": "MiddleStart"
@@ -20,12 +20,12 @@
         "y": 5.077999999999999
       },
       "prevControl": {
-        "x": 6.954212316641405,
-        "y": 5.851326512139413
+        "x": 6.917138572681498,
+        "y": 5.847988357305283
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "E Right"
+      "linkedName": "E Left"
     }
   ],
   "rotationTargets": [],
