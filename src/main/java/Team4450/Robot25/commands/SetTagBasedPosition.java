@@ -34,11 +34,10 @@ public class SetTagBasedPosition extends Command {
      * @param robotDrive the drive subsystem
      */
 
-    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, int side, boolean algaeRemove) {
+    public SetTagBasedPosition (DriveBase robotDrive, PhotonVision photonVision, int side) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.side = side; // If -1 score on left side, If 0 align with middle, If 1 score on right side
-        this.algaeRemove = algaeRemove;
     }
 
     public void initialize () {
@@ -71,11 +70,8 @@ public class SetTagBasedPosition extends Command {
                 // Matrix multiplication to rotate based on where on the reef the target is.
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
 
-                if (algaeRemove) { // If algae remove rotate 180
-                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CORAL_CAMERA_TAG_TRANSFORM.getRotation().getAngle()) - 180)))); 
-                } else {
-                    robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CORAL_CAMERA_TAG_TRANSFORM.getRotation().getAngle()))))); 
-                }
+                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CORAL_CAMERA_TAG_TRANSFORM.getRotation().getAngle()))))); 
+
                 isFinished = true; // Position has been set, return.
             } else {
                 return;

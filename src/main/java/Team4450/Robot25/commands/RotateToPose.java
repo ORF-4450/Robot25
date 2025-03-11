@@ -37,7 +37,9 @@ public class RotateToPose extends Command {
         Util.consoleLog("Init");
         isFinished = false;
         Util.consoleLog();
-
+        if(robotDrive.getRotatedToTargetPose() == true){
+            isFinished = true;
+        }
         // store the initial field relative state to reset it later.
         initialFieldRel = robotDrive.getFieldRelative();
         

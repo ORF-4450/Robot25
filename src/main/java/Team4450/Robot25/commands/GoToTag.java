@@ -25,8 +25,8 @@ public class GoToTag extends Command {
     private boolean alsoDrive;
     private boolean initialFieldRel;
     private boolean isFinished;
-    private double toleranceX = 0.1;
-    private double toleranceY = 0.1;
+    private double toleranceX = 0.01;
+    private double toleranceY = 0.01;
     private Pose2d targetPose;
 
     /**
@@ -47,7 +47,6 @@ public class GoToTag extends Command {
     public void initialize() {
         Util.consoleLog();
         isFinished = false;
-        Util.consoleLog();
 
         // store the initial field relative state to reset it later.
         initialFieldRel = robotDrive.getFieldRelative();
@@ -69,10 +68,25 @@ public class GoToTag extends Command {
         double errorX = targetPose.getX() - currentPose.getX();
         double errorY = targetPose.getY() - currentPose.getY();
 
-        double outputX = translationControllerX.calculate(currentPose.getX(), targetPose.getX());
-        double outputY = translationControllerY.calculate(currentPose.getY(), targetPose.getY());
+        // double outputX = translationControllerX.calculate(currentPose.getX(), targetPose.getX());
+        // double outputY = translationControllerY.calculate(currentPose.getY(), targetPose.getY());
 
-        robotDrive.drive(outputX, outputY, 0, false);
+        double outputX = targetPose.getX() - currentPose.getX();
+        double outputY = targetPose.getY() - currentPose.getY();
+        
+        SmartDashboard.putNumber("Output X Speed", outputX);
+        SmartDashboard.putNumber("Output Y Speed", outputY);
+
+        if(outputX > 0.5) outputX = 0.5;
+        if(outputY > 0.5) outputY = 0.5;
+        if(outputX < -0.5) outputX = -0.5;
+        if(outputY < -0.5) outputY = -0.5;
+
+        
+
+        if(robotDrive.getRotatedToTargetPose() == true){
+            robotDrive.drive(outputX, outputY, 0, false);
+        }
 
         if (Math.abs(errorX) < toleranceX && Math.abs(errorY) < toleranceY) {
             isFinished = true;
@@ -85,8 +99,10 @@ public class GoToTag extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        Util.consoleLog();
         robotDrive.drive(0, 0, 0, false);
         robotDrive.disableTracking();
+        robotDrive.disableTrackingSlowMode();
         if (initialFieldRel)
             robotDrive.toggleFieldRelative();
     }
