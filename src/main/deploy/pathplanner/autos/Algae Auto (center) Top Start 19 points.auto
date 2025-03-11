@@ -99,7 +99,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Net 2 to E"
+                  "pathName": "Net to E"
                 }
               },
               {
@@ -149,7 +149,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Net 1 to C"
+                  "pathName": "Net 1 to C Right"
                 }
               },
               {
@@ -171,6 +171,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Vision (Incomplete)",
   "choreoAuto": false
 }

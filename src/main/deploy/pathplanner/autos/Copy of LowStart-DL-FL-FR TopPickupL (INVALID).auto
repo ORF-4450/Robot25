@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LowStart to C Right"
+                  "pathName": "HighLowStart to D"
                 }
               },
               {
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C Right to RightPickup"
+                  "pathName": null
                 }
               },
               {
@@ -68,7 +68,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightPickup to B Right"
+                  "pathName": null
                 }
               },
               {
@@ -100,38 +100,13 @@
           }
         },
         {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "B-Coral to B-Algae"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Remove Algae L3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Remove Algae"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "B Right to RightPickup"
+                  "pathName": null
                 }
               },
               {
@@ -150,7 +125,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightPickup to B Right"
+                  "pathName": null
                 }
               },
               {
@@ -169,16 +144,9 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Outtake Coral"
-                }
-              }
-            ]
+            "name": "Outtake Coral"
           }
         },
         {
@@ -188,7 +156,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "B Right to RightPickup"
+                  "pathName": null
                 }
               },
               {
@@ -204,6 +172,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Vision (Incomplete)",
+  "folder": null,
   "choreoAuto": false
 }

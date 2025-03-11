@@ -100,31 +100,6 @@
           }
         },
         {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "B-Coral to B-Algae"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Remove Algae L3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Remove Algae"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -199,11 +174,49 @@
               }
             ]
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RightPickup to C Right"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise to L4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Align Right"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Outtake Coral"
+                }
+              }
+            ]
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Vision (Incomplete)",
+  "folder": null,
   "choreoAuto": false
 }

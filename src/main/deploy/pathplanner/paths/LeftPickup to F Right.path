@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.319092465753425,
-        "y": 2.8905607876712325
+        "x": 1.6809253246753246,
+        "y": 7.424837662337662
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.0191703480963925,
-        "y": 2.680314103507293
+        "x": 2.417318107928261,
+        "y": 5.609001097648124
       },
       "isLocked": false,
-      "linkedName": "C Right"
+      "linkedName": "LeftPickup"
     },
     {
       "anchor": {
-        "x": 5.203521126760563,
-        "y": 2.806161971830985
+        "x": 3.658714788732394,
+        "y": 5.116285211267606
       },
       "prevControl": {
-        "x": 5.372360469526246,
-        "y": 2.5714693491043827
+        "x": 1.924836488814016,
+        "y": 5.866793838887532
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "C Algae"
+      "linkedName": "F Right"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 1.0,
-    "rotation": 29.999999999999996
+    "rotation": 29.000000000000004
   },
   "reversed": false,
-  "folder": "Reef to Reef",
+  "folder": "Pickups To Reefs",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": -150.0
+    "rotation": -145.0
   },
   "useDefaultConstraints": true
 }

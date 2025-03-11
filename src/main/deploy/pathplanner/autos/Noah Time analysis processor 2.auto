@@ -7,43 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BottomPickupL to B"
+            "pathName": "RightPickup to B Right"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B to BottomPickupL"
+            "pathName": "B Right to RightPickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BottomPickupL to B"
+            "pathName": "RightPickup to B Right"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B to BottomPickupL"
+            "pathName": "B Right to RightPickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BottomPickupL to C"
+            "pathName": "RightPickup to C Right"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C to BottomPickupL"
+            "pathName": "C Right to RightPickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BottomPickupL to C"
+            "pathName": "RightPickup to C Right"
           }
         },
         {
@@ -67,7 +67,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "B to Processor"
+            "pathName": "B Right to Processor"
           }
         }
       ]

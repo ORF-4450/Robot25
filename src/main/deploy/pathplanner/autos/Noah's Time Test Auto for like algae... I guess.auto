@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to E"
+            "pathName": "LeftPickup to E Right"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "E to TopPickupR"
+            "pathName": "E Right to LeftPickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to E"
+            "pathName": "LeftPickup to E Right"
           }
         },
         {
@@ -37,25 +37,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Net to TopPickupR"
+            "pathName": "Net to LeftPickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to F"
+            "pathName": "LeftPickup to F Right"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "F to TopPickupR"
+            "pathName": "F to LeftPickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TopPickupR to F"
+            "pathName": "LeftPickup to F Right"
           }
         },
         {

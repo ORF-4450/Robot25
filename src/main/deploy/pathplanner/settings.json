@@ -16,9 +16,10 @@
   ],
   "autoFolders": [
     "Glacier Peak",
-    "Noah Time Analysis"
+    "No Vision",
+    "Noah Time Analysis",
+    "Vision (Incomplete)"
   ],
-
   "defaultMaxVel": 2.0,
   "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 540.0,

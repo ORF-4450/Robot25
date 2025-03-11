@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.647686688311688,
-        "y": 0.639407467532468
+        "x": 1.4194542253521114,
+        "y": 0.8220070422535195
       },
       "prevControl": {
-        "x": 3.336745660912368,
-        "y": 0.6921801947211027
+        "x": 3.1085131979527914,
+        "y": 0.8747797694421542
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BottomPickupL"
+      "linkedName": "RightPickup"
     }
   ],
   "rotationTargets": [],
