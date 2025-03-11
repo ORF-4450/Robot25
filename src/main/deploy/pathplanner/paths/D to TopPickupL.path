@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.810999999999999,
+        "y": 4.161499999999999
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.332757248033656,
+        "y": 6.098910256996524
+      },
+      "isLocked": false,
+      "linkedName": "D Left"
+    },
+    {
+      "anchor": {
+        "x": 0.6362824675324675,
+        "y": 6.655600649350649
+      },
+      "prevControl": {
+        "x": 3.176663961038961,
+        "y": 6.9072646103896105
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "TopCoralPickupL"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 1.0,
+    "rotation": -145.0
+  },
+  "reversed": false,
+  "folder": "Reefs to Pickups",
+  "idealStartingState": {
+    "velocity": 1.0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

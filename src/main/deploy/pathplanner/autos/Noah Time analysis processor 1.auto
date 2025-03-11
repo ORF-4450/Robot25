@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomPickupL to C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C-Coral to C-Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C to Processor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to BottomPickupL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomPickupL to C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C to BottomPickupL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomPickupL to B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B-Coral to B-Algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "B to Processor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Processor to BottomPickupL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomPickupL to B"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Noah Time Analysis",
+  "choreoAuto": false
+}
