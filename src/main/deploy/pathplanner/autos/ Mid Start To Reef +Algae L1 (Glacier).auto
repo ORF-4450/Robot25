@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Mid Start To D Left"
+                  "pathName": "Mid Start To D Right"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "D-Coral to D-Algae"
+                  "pathName": "D-Right to D-Algae"
                 }
               },
               {

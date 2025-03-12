@@ -17,7 +17,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L4"
+                  "name": "Raise to L1"
                 }
               }
             ]
@@ -26,20 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Align Left"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Outtake Coral"
-                }
-              }
-            ]
+            "name": "Outtake Coral"
           }
         },
         {
@@ -49,165 +36,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C to BottomPickupL"
+                  "pathName": "E Right to High Start"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake Coral"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BottomPickupL to B"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Left"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Outtake Coral"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "B to BottomPickupL"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake Coral"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BottomPickupL to B"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Right"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Outtake Coral"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "B to BottomPickupL"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake Coral"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BottomPickupL to C"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Right"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Outtake Coral"
+                  "name": "Reset Elevator"
                 }
               }
             ]
@@ -217,6 +52,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Glacier Peak",
   "choreoAuto": false
 }
