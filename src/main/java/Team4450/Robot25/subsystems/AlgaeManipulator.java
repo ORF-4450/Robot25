@@ -55,11 +55,13 @@ public class AlgaeManipulator extends SubsystemBase {
         updateDS();
     }
 
-    // public void periodic(){
-    //  Util.consoleLog("Algae Motor Current:" + algaeMotor.getOutputCurrent());
-    //  Util.consoleLog("Algae Motor Voltage:"+ algaeMotor.getAppliedOutput());
-     
-    // }
+    public void periodic(){
+     Util.consoleLog("Algae Motor Current:" + algaeMotor.getOutputCurrent());
+     Util.consoleLog("Algae Motor Voltage:"+ algaeMotor.getBusVoltage());
+     Util.consoleLog("Algae Motor Applied Output:"+ algaeMotor.getAppliedOutput());
+     Util.consoleLog("Algae Motor Temperature in Celsius:"+ algaeMotor.getMotorTemperature());
+    }
+    
     public void start(double speedfactor){
         isAlgaeMotorRunning = Math.abs(speedfactor) > 0.02;
         

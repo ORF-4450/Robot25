@@ -44,6 +44,9 @@ public final class Constants
     public static final int     CORAL_MANIPULATOR = 9;
     public static final int     ALGAE_MANIPULATOR = 10;
     public static final int     ALGAE_GROUND_INTAKE = 13;
+    public static final int     CORAL_GROUND_PIVOT = 14;
+    public static final int     CORAL_GROUND_INTAKE = 15;
+    public static final int     CORAL_GROUND_FEED = 16;
 
     //ELEVATOR:
     public static final int     ELEVATOR_LEFT = 11;
@@ -61,6 +64,9 @@ public final class Constants
     // The factor is negative, likely because the gears swap rotation direction, but this is not a significant issue.
     public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (38.0 / 8.0)) * (2 * Math.PI) * 0.022225; //Changed to 2025 Value!
 
+    // multiplied by shaft rotations to get degrees of shooter angle.
+    public static final double  CORAL_GROUND_PIVOT_FACTOR = (1.0 / (765.0 / 13.0)) * 360; //NEEDS TO BE UPDATED TO 2025 VALUE!
+    
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
 	public static final int		CORAL_PIVOT = 0;		
