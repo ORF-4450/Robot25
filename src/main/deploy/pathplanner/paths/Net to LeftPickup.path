@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.786008081360182,
-        "y": 4.4633770000665685
+        "x": 6.100981143961704,
+        "y": 5.690706406973183
       },
       "isLocked": false,
-      "linkedName": "Netspot 1"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.203521126760563,
-        "y": 2.806161971830985
+        "x": 1.6809253246753246,
+        "y": 7.424837662337662
       },
       "prevControl": {
-        "x": 6.7199823943661965,
-        "y": 3.373063380281689
+        "x": 3.088474990939983,
+        "y": 6.858192679727307
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "C Algae"
+      "linkedName": "LeftPickup"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 29.999999999999996
+    "rotation": -145.0
   },
   "reversed": false,
-  "folder": "Net to Reef (good)",
+  "folder": "Net to Pickup (good)",
   "idealStartingState": {
     "velocity": 1.0,
     "rotation": -90.0

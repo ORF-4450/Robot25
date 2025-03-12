@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.386091549290821,
-        "y": 5.224250000000959
+        "x": 7.315228873239437,
+        "y": 1.9132922535211252
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.786008081360182,
-        "y": 4.4633770000665685
+        "x": 6.988456723665569,
+        "y": 2.0576412435326223
       },
       "isLocked": false,
-      "linkedName": "Netspot 1"
+      "linkedName": "LowStart"
     },
     {
       "anchor": {
-        "x": 5.203521126760563,
-        "y": 2.806161971830985
+        "x": 5.048630136986302,
+        "y": 2.8304580479452057
       },
       "prevControl": {
-        "x": 6.7199823943661965,
-        "y": 3.373063380281689
+        "x": 5.297090493643527,
+        "y": 2.802755138896437
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "C Algae"
+      "linkedName": "C Left"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 29.999999999999996
+    "rotation": -150.0
   },
   "reversed": false,
-  "folder": "Net to Reef (good)",
+  "folder": "Starts to Reefs",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
