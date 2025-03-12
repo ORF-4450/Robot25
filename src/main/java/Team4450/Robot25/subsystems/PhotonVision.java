@@ -1,5 +1,7 @@
 package Team4450.Robot25.subsystems;
 
+import static Team4450.Robot25.Constants.maxVisionDistance;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +48,7 @@ public class PhotonVision extends SubsystemBase
 {
     private PhotonCamera            camera;
     private PhotonPipelineResult    latestResult;
+    private DriveBase               driveBase = new DriveBase();
 
     private VisionLEDMode           ledMode = VisionLEDMode.kOff;
 
@@ -72,7 +75,8 @@ public class PhotonVision extends SubsystemBase
      */
     public PhotonVision(String cameraName, PipelineType pipelineType) {
         this(cameraName, pipelineType, new Transform3d());
-    }
+    }    
+        
 
     public Transform3d getRobotToCam() {
         return robotToCam;
@@ -482,7 +486,7 @@ public class PhotonVision extends SubsystemBase
      */
     public Optional<EstimatedRobotPose> getEstimatedPose() {
         if (!isAprilTag()) return Optional.empty();
-
+        List<PhotonPipelineResult> cameraPipeline  = camera.getAllUnreadResults();
         //if (latestResult == null) return Optional.empty();
 
         Optional<EstimatedRobotPose> estimatedPoseOptional = poseEstimator.update(getLatestResult());
@@ -503,30 +507,48 @@ public class PhotonVision extends SubsystemBase
             ArrayList<Pose3d> usedTagPoses = new ArrayList<Pose3d>();
             
             
+            
             for (int i = 0; i < estimatedPose.targetsUsed.size(); i++) {
                 int id = estimatedPose.targetsUsed.get(i).getFiducialId();
                 // if a target was used with ID > 22 then return no estimated pose
-                if (id > 22) {
+                if(id>22){
                     return Optional.empty();
                 }
+            
+            Optional<Pose3d> tagPose = fieldLayout.getTagPose(id);
+                
+            if (tagPose.isPresent())
+                usedTagPoses.add(tagPose.get());
+            
+            for (int n = 0; i<cameraPipeline.size(); n++){
+                if(tagPose.isPresent()){
+                    field.setRobotPose(tagPose.get().toPose2d());
+                    double tagDistance = cameraPipeline.get(n).getBestTarget().bestCameraToTarget.getTranslation().getNorm();
+                    double poseAmbiguity = cameraPipeline.get(n).getBestTarget().getPoseAmbiguity();
+
+                    if(tagDistance < maxVisionDistance && poseAmbiguity < 0.05){
+                        
+                        driveBase.updateOdometryVision(
+                            estimatedPose.estimatedPose.toPose2d(),
+                            estimatedPose.timestampSeconds);
+                }
+                
+            }
                 
                 
-                Optional<Pose3d> tagPose = fieldLayout.getTagPose(id);
-                
-                if (tagPose.isPresent())
-                    usedTagPoses.add(tagPose.get());
+            return Optional.of(estimatedPose);
             }
             
-            // send the tag poses used to AS to show green laser indicators of tag sights
-            AdvantageScope.getInstance().setVisionTargets(usedTagPoses);
+            // // send the tag poses used to AS to show green laser indicators of tag sights
+            // AdvantageScope.getInstance().setVisionTargets(usedTagPoses);
             // Util.consoleLog("used %d tags for estimation", usedTagPoses.size());
 
-            return Optional.of(estimatedPose);
-        } else {
+            
+        }} else {
             // Clears vision targets by loading empty list.
             AdvantageScope.getInstance().setVisionTargets(new ArrayList<Pose3d>());
-            return Optional.empty();
         }
+        return Optional.empty();
     }
 
     public PhotonCamera getCamera()
