@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.177249999997534,
-        "y": 5.224250000000959
+        "x": 5.189348591549296,
+        "y": 5.258010563380281
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.209122784109454,
-        "y": 5.311637275167038
+        "x": 6.221221375661215,
+        "y": 5.34539783854636
       },
       "isLocked": false,
-      "linkedName": "E Right"
+      "linkedName": "E Algae"
     },
     {
       "anchor": {
@@ -45,10 +45,10 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Reefs to Net",
+  "folder": "Reefs to Net (good)",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": -31.0
+    "rotation": 149.0
   },
   "useDefaultConstraints": false
 }

@@ -37,7 +37,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "F to LeftPickup"
+            "pathName": "F Right to LeftPickup"
           }
         },
         {
@@ -49,7 +49,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "F to LeftPickup"
+            "pathName": "F Right to LeftPickup"
           }
         },
         {
@@ -61,7 +61,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "E-Coral to E-Algae"
+            "pathName": "E-Right to E-Algae"
           }
         },
         {
@@ -79,7 +79,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "F-Coral to F-Algae"
+            "pathName": "F-Right to F-Algae"
           }
         },
         {

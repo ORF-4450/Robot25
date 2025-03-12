@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.658714788732394,
-        "y": 5.116285211267606
+        "x": 3.7862676056338023,
+        "y": 5.258010563380281
       },
       "prevControl": {
-        "x": 5.160680236058258,
-        "y": 5.7992172561196345
+        "x": 5.288233052959667,
+        "y": 5.94094260823231
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "F Right"
+      "linkedName": "F Algae"
     }
   ],
   "rotationTargets": [],
@@ -34,18 +34,18 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": 29.000000000000004
+    "velocity": 0.0,
+    "rotation": -151.0
   },
   "reversed": false,
-  "folder": "Net to Reef",
+  "folder": "Net to Reef (good)",
   "idealStartingState": {
     "velocity": 1.0,
     "rotation": 0.6740368979845263

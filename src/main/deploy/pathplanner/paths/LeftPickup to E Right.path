@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.177249999997534,
-        "y": 5.224250000000959
+        "x": 5.047623239436619,
+        "y": 5.272183098591549
       },
       "prevControl": {
-        "x": 3.7221396069258645,
-        "y": 6.055281840822739
+        "x": 3.592512846364949,
+        "y": 6.10321493941333
       },
       "nextControl": null,
       "isLocked": true,
@@ -34,18 +34,18 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": -31.0
   },
   "reversed": false,
-  "folder": "Pickups To Reefs",
+  "folder": "Pickups To Reefs (good)",
   "idealStartingState": {
     "velocity": 1.0,
     "rotation": -145.0

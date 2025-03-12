@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.99718309859155,
-        "y": 0.5102112676056322
+        "x": 5.047623239436619,
+        "y": 5.272183098591549
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.0293036563174836,
-        "y": 0.8475732870074328
+        "x": 5.404001415606517,
+        "y": 5.065638631917573
       },
       "isLocked": false,
-      "linkedName": "Processor"
+      "linkedName": "E Right"
     },
     {
       "anchor": {
-        "x": 1.4194542253521114,
-        "y": 0.8220070422535195
+        "x": 5.177249999997534,
+        "y": 5.224250000000959
       },
       "prevControl": {
-        "x": 3.1085131979527914,
-        "y": 0.8747797694421542
+        "x": 5.361683674091971,
+        "y": 5.630991748386765
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightPickup"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,21 +34,21 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": -35.0
+    "velocity": 0.0,
+    "rotation": 149.0
   },
   "reversed": false,
-  "folder": "Misc.",
+  "folder": "Reef to Reef (good-enough)",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": 180.0
+    "rotation": -31.0
   },
   "useDefaultConstraints": true
 }

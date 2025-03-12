@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C-Coral to C-Algae"
+            "pathName": "C-Right to C-Algae"
           }
         },
         {
@@ -25,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Processor to BottomPickupL"
+            "pathName": "Processor to RightPickup"
           }
         },
         {
@@ -49,19 +49,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "B-Coral to B-Algae"
+            "pathName": "B-Right to B-Algae"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "B Right to Processor"
+            "pathName": "B to Processor"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Processor to BottomPickupL"
+            "pathName": "Processor to RightPickup"
           }
         },
         {
