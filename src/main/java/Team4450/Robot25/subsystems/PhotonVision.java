@@ -48,7 +48,7 @@ public class PhotonVision extends SubsystemBase
 {
     private PhotonCamera            camera;
     private PhotonPipelineResult    latestResult;
-    private DriveBase               driveBase = new DriveBase();
+    private DriveBase               driveBase;
 
     private VisionLEDMode           ledMode = VisionLEDMode.kOff;
 
@@ -73,8 +73,8 @@ public class PhotonVision extends SubsystemBase
      *                   (likely from manufacturer, best not to change it to avoid conflict issues -Cole)
      * @param pipelineType the PipelineType of what it's going to be used for
      */
-    public PhotonVision(String cameraName, PipelineType pipelineType) {
-        this(cameraName, pipelineType, new Transform3d());
+    public PhotonVision(DriveBase driveBase,String cameraName, PipelineType pipelineType) {
+        this(driveBase, cameraName, pipelineType, new Transform3d());
     }    
         
 
@@ -89,10 +89,11 @@ public class PhotonVision extends SubsystemBase
      * @param pipelineType the PipelineType of what it's going to be used for
      * @param robotToCam a Tranformation3d of the camera relative to the bottom center of the robot (off floor).
      */
-	public PhotonVision(String cameraName, PipelineType pipelineType, Transform3d robotToCam)
+	public PhotonVision(DriveBase driveBase, String cameraName, PipelineType pipelineType, Transform3d robotToCam)
 	{
         camera = new PhotonCamera(cameraName);
         this.robotToCam = robotToCam;
+        this.driveBase = driveBase;
         fieldLayout = AprilTagFieldLayout.loadField(fields);
 
         // adds a simulated camera to the vision sim: "real" camera will
@@ -539,9 +540,9 @@ public class PhotonVision extends SubsystemBase
             return Optional.of(estimatedPose);
             }
             
-            // // send the tag poses used to AS to show green laser indicators of tag sights
-            // AdvantageScope.getInstance().setVisionTargets(usedTagPoses);
-            // Util.consoleLog("used %d tags for estimation", usedTagPoses.size());
+            // send the tag poses used to AS to show green laser indicators of tag sights
+            AdvantageScope.getInstance().setVisionTargets(usedTagPoses);
+            Util.consoleLog("used %d tags for estimation", usedTagPoses.size());
 
             
         }} else {

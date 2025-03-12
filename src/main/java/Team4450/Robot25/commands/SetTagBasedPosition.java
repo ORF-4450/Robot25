@@ -70,7 +70,7 @@ public class SetTagBasedPosition extends Command {
                 // Matrix multiplication to rotate based on where on the reef the target is.
                 Translation2d robotTargetPose = aprilTagPose.getTranslation().plus(robotOffset.rotateBy(aprilTagPose.getRotation().unaryMinus()));
 
-                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.CORAL_CAMERA_TAG_TRANSFORM.getRotation().getAngle()))))); 
+                robotDrive.setTargetPose(new Pose2d(robotTargetPose, new Rotation2d(Math.toRadians(aprilTagPose.getRotation().getDegrees() - Math.toDegrees(Constants.ALGAE_CAMERA_TAG_TRANSFORM.getRotation().getAngle()))))); 
 
                 isFinished = true; // Position has been set, return.
             } else {

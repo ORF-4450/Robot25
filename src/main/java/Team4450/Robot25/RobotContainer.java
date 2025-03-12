@@ -44,6 +44,7 @@ import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import Team4450.Robot25.subsystems.Elevator;
 import Team4450.Robot25.subsystems.Climber;
+import Team4450.Robot25.subsystems.CoralGroundIntake;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
@@ -88,7 +89,7 @@ public class RobotContainer
 
 	public static ShuffleBoard			shuffleBoard;
 	public static DriveBase 			driveBase;
-	// public static PhotonVision			pvAlgaeTagCamera;
+	public static PhotonVision			pvAlgaeTagCamera;
 	public static PhotonVision			pvCoralTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
@@ -96,6 +97,7 @@ public class RobotContainer
 	public static AlgaeManipulator 		algaeManipulator;
 	public static AlgaeGroundIntake		algaeGroundIntake;
 	public static CoralManipulator		coralManipulator;
+	public static CoralGroundIntake 	coralGroundIntake;
 	public static Climber 				climber;
 
 	// Subsystem Default Commands.
@@ -209,14 +211,19 @@ public class RobotContainer
 
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
-		pvCoralTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
-		// pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
+		pvCoralTagCamera = new PhotonVision(driveBase, CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
+		pvAlgaeTagCamera = new PhotonVision(driveBase, ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
 		elevator = new Elevator(driveBase);
 		climber = new Climber();
 		algaeGroundIntake = new AlgaeGroundIntake();
-		elevatedManipulator = new ElevatedManipulator(coralManipulator, algaeManipulator, algaeGroundIntake, elevator);
+		// coralGroundIntake = new CoralGroundIntake();
+		elevatedManipulator = new ElevatedManipulator(coralManipulator, 
+														coralGroundIntake, 
+														algaeManipulator, 
+														algaeGroundIntake, 
+														elevator);
 		
 		// if (RobotBase.isReal()) 
 		// {
@@ -232,7 +239,7 @@ public class RobotContainer
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
 		pvCoralTagCamera.setDefaultCommand(new UpdateVisionPose(pvCoralTagCamera, driveBase));
-		// pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
+		pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
@@ -503,33 +510,43 @@ public class RobotContainer
 
 		//Moves the algae Manipulator/elevator to the removing position for Algae on L3
 		new Trigger(()-> utilityController.getPOV() == 0)
-			.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3));
+		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3), 
+			new InstantCommand(() -> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
+			// .onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3));
 
 
 		//Moves the algae Manipulator/Elevator to the removing position for Algae on L2
 		new Trigger(()-> utilityController.getPOV() == 180)
-			.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2));
+		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2), 
+			new InstantCommand(() -> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
 
 		//Moves the elevator and algae manipulator to the scoring position for the algae net.
 		new Trigger(()-> utilityController.getPOV() == 90)
-			.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING));
+		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING), 
+			new InstantCommand(() -> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
 		
 		//Moves the elevator and algae manipulator to the scoring position for the algae processor.
-		new Trigger(()-> utilityController.getPOV() == 270)
-			.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING));
+		new Trigger(()-> utilityController.getPOV() == 0)
+		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING), 
+			new InstantCommand(() -> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
 		
 		//Runs coral outtake if the elevator and manipulator are in the correct position.
-		new Trigger(() -> utilityController.getRightTrigger())
+		new Trigger(() -> utilityController.getRightTrigger() && elevatedManipulator.scoreCoralInsteadOfAlgae)
 			.onTrue(new OuttakeCoral(elevatedManipulator));
 		
-		//Runs algae outtake if the elevator and manipulator are in the correct position.
-		// new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
-		// 	.onTrue(new OuttakeAlgae(elevatedManipulator));
+		// Runs algae outtake if the elevator and manipulator are in the correct position.
+		new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
+			.onTrue(new OuttakeAlgae(elevatedManipulator));
 
 		//Moves the elvator and manipulator to the reset position and extends out ground intake, and algae manipulator, and starts intaking.
 		new Trigger(() -> utilityController.getLeftBumperButton())
 			.whileTrue(new RemoveAlgae(elevatedManipulator));
 
+		new Trigger(() -> utilityController.getLeftTrigger() && elevatedManipulator.intakeCoralInsteadOfAlgae)
+			.onTrue(new OuttakeCoral(elevatedManipulator));
+
+		new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
+			.onTrue(new OuttakeAlgae(elevatedManipulator));
 		// new Trigger(() -> utilityController.getLeftBumperButton() && elevatedManipulator.hasAlgae() == false)
 		// 	.whileTrue(new RemoveAlgae(elevatedManipulator))
 		// 	.onFalse(new InstantCommand(algaeManipulator::stop));

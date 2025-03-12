@@ -78,14 +78,14 @@ public final class Constants
     // CAMERAS 
 
     public static Transform3d   CORAL_CAMERA_TAG_TRANSFORM = new Transform3d(
-        new Translation3d(0, 0.28, 0.22), // change last value to height in METERS of lens
+        new Translation3d(-0.18, 0.21, 0.60), // change last value to height in METERS of lens
         new Rotation3d(0, 0, Math.toRadians(-90)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
-    // public static Transform3d ALGAE_CAMERA_TAG_TRANSFORM = new Transform3d(
-    //     new Translation3d(0, 0.32, 0.28),
-    //     new Rotation3d(0, 0, Math.toRadians(90))
-    // );
+    public static Transform3d ALGAE_CAMERA_TAG_TRANSFORM = new Transform3d(
+        new Translation3d(0.18, 0.21, 0.60),
+        new Rotation3d(0, 0, Math.toRadians(90))
+    );
 
     public static double robotCoralLongitudinalScoringDistance = 0.0; // 0.3 meters distance from the tag for scoring coral.
     public static double robotCoralLateralScoringOffset = 0.0; // Added to the target position if scoring left and subtracted if scoring right.
@@ -96,8 +96,8 @@ public final class Constants
     public static double yCameraOffset = 0;
 
     // the names of the cameras in the PhotonVision software
-    public static String        CORAL_CAMERA_TAG = "HD_USB_Camera";
-    public static String        ALGAE_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
+    public static String        ALGAE_CAMERA_TAG = "HD_USB_Camera";
+    public static String        CORAL_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
 
     public static final int     REV_PDB = 20;
     public static final int     CTRE_CANDLE = 21;
