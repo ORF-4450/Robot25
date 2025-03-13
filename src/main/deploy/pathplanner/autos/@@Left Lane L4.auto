@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LowStart to C Right"
+                  "pathName": "HighStart to E Left"
                 }
               },
               {
@@ -21,12 +21,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Left"
           }
         },
         {
@@ -49,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C Right to RightPickup"
+                  "pathName": "E Left to LeftPickup"
                 }
               },
               {
@@ -68,7 +62,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightPickup to B Right"
+                  "pathName": "LeftPickup to F Right"
                 }
               },
               {
@@ -78,12 +72,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Left"
           }
         },
         {
@@ -100,38 +88,13 @@
           }
         },
         {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "B-Right to B-Algae"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Remove Algae L3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Remove Algae"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "B Right to RightPickup"
+                  "pathName": "F Right to LeftPickup"
                 }
               },
               {
@@ -150,7 +113,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightPickup to B Right"
+                  "pathName": "LeftPickup to F Left"
                 }
               },
               {
@@ -160,12 +123,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Right"
           }
         },
         {
@@ -188,7 +145,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "B Right to RightPickup"
+                  "pathName": "F Left to LeftPickup"
                 }
               },
               {
@@ -204,6 +161,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Best Autos",
   "choreoAuto": false
 }

@@ -11,22 +11,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "HighStart to E"
+                  "pathName": "HighStart to E Left"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L4"
+                  "name": "Raise to L3"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Left"
           }
         },
         {
@@ -49,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "E Right to LeftPickup"
+                  "pathName": "E Left to LeftPickup"
                 }
               },
               {
@@ -74,16 +68,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L4"
+                  "name": "Raise to L3"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Left"
           }
         },
         {
@@ -97,24 +85,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "F-Right to F-Algae"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Remove Algae L3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Remove Algae"
           }
         },
         {
@@ -143,22 +113,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftPickup to F Right"
+                  "pathName": "LeftPickup to F Left"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L4"
+                  "name": "Raise to L3"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Right"
           }
         },
         {
@@ -181,7 +145,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "F Right to LeftPickup"
+                  "pathName": "F Left to LeftPickup"
                 }
               },
               {
@@ -197,6 +161,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Best Autos",
   "choreoAuto": false
 }
