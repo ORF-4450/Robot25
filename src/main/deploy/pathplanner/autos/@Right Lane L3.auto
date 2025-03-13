@@ -11,13 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LowStart to C Right"
+                  "pathName": "LowStart to C Left"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L4"
+                  "name": "Raise to L3"
                 }
               }
             ]
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C Right to RightPickup"
+                  "pathName": "C Left to RightPickup"
                 }
               },
               {
@@ -68,7 +68,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L4"
+                  "name": "Raise to L3"
                 }
               }
             ]
@@ -119,7 +119,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L4"
+                  "name": "Raise to L3"
                 }
               }
             ]
@@ -161,6 +161,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "No Vision",
+  "folder": "Best Autos",
   "choreoAuto": false
 }
