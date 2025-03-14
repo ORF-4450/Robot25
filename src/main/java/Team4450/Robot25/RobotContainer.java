@@ -10,24 +10,27 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.DriveCommand;
+import Team4450.Robot25.commands.DriveToTag;
 import Team4450.Robot25.commands.ExtendClimber;
-import Team4450.Robot25.commands.GetPoseEsimate;
+// import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
 import Team4450.Robot25.commands.PointToYaw;
-import Team4450.Robot25.commands.SetTargetPose;
+// import Team4450.Robot25.commands.SetTargetPose;
 import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
-import Team4450.Robot25.commands.GoToPose;
+// import Team4450.Robot25.commands.GoToPose;
 import Team4450.Robot25.commands.IntakeAlgaeGround;
 import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RetractClimber;
-import Team4450.Robot25.commands.RotateToPose;
-import Team4450.Robot25.commands.RotateToTag;
-import Team4450.Robot25.commands.GoToTag;
-import Team4450.Robot25.commands.SetTagBasedPosition;
+import Team4450.Robot25.commands.SetTarget;
+// import Team4450.Robot25.commands.RotateToPose;
+// import Team4450.Robot25.commands.RotateToTag;
+// import Team4450.Robot25.commands.GoToTag;
+// import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
+
 import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.AlgaeGroundIntake;
 import Team4450.Robot25.subsystems.Candle;
@@ -84,8 +87,7 @@ public class RobotContainer
 
 	public static ShuffleBoard			shuffleBoard;
 	public static DriveBase 			driveBase;
-	// public static PhotonVision			pvAlgaeTagCamera;
-	public static PhotonVision			pvCoralTagCamera;
+	public static PhotonVision			pvTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
 	public static ElevatedManipulator	elevatedManipulator;
@@ -205,7 +207,7 @@ public class RobotContainer
 
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
-		pvCoralTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
+		pvTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
 		// pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
@@ -227,7 +229,7 @@ public class RobotContainer
 		// This sets up the photonVision subsystem to constantly update the robotDrive odometry
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
-		pvCoralTagCamera.setDefaultCommand(new UpdateVisionPose(pvCoralTagCamera, driveBase));
+		pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
 		// pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
@@ -408,11 +410,12 @@ public class RobotContainer
 				.onTrue(new RunCommand(() -> driveBase.setX(), driveBase));
 
 		// toggle brake mode
-		
+		new Trigger(()-> driverController.getLeftTrigger())
+			.whileTrue(new SetTarget(driveBase, pvTagCamera));
 
  		//Drive to the AprilTag
-		// new Trigger(() -> driverController.getXButton())
-		// 	.whileTrue(new GetPoseEsimate(driveBase, pvTagCamera, true, true));
+		new Trigger(() -> driverController.getXButton())
+			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
 		
     	// Drive to the AprilTag using Pose information
 		 //new Trigger(()-> driverController.getLeftTrigger())
@@ -420,16 +423,6 @@ public class RobotContainer
 		 	//.andThen(new RotateToPose(driveBase, true, true))
 		 	//.andThen(new GoToPose(driveBase, true, true)));
             
-		 new Trigger(()-> driverController.getLeftTrigger())
-		          .onTrue(new SetTagBasedPosition(driveBase, pvCoralTagCamera, 0, false));
-		 //                  .andThen(new RotateToPose(driveBase, true, true)));
-
-        new Trigger(()-> driverController.getRightBumperButton())
-		 	.whileTrue(new RotateToPose(driveBase, true, true)
-		 	// .andThen(new GoToPose(driveBase, true, true)));
-		 	//.whileTrue(new GoToPose(driveBase, true, true));
-			// .whileTrue(new RotateToTag(pvCoralTagCamera, driveBase));
-			.andThen(new GoToTag(driveBase, true, true, pvCoralTagCamera)));
 			
 		//Drive to the Right Branch, offsetting from AprilTag (using Pose information)
 		new Trigger(()-> driverController.getRightTrigger())

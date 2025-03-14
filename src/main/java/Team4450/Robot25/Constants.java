@@ -88,8 +88,8 @@ public final class Constants
     public static double yCameraOffset = 0;
 
     // the names of the cameras in the PhotonVision software
-    public static String        CORAL_CAMERA_TAG = "HD_USB_Camera";
-    public static String        ALGAE_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
+    public static String        CORAL_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
+    public static String        ALGAE_CAMERA_TAG = "HD_USB_Camera";
 
     public static final int     REV_PDB = 20;
     public static final int     CTRE_CANDLE = 21;

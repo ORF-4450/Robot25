@@ -40,7 +40,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * is handled through the Network Tables and the tables are wrapped by
  * by PhotonLib.
  */
-@SuppressWarnings("unused")
 public class PhotonVision extends SubsystemBase
 {
     private PhotonCamera            camera;
@@ -66,7 +65,7 @@ public class PhotonVision extends SubsystemBase
     /**
      * Create an instance of PhotonVision class for a camera with a default transform. (One per camera)
      * @param cameraName the name in PhotonVision used for the camera like HD_USB_Camera
-     *                   (likely from manufacturer, best not to change it to avoid conflict issues -Cole)
+     *                   (likely from manufacturer, best not to change it to avoid conflict issues -cole)
      * @param pipelineType the PipelineType of what it's going to be used for
      */
     public PhotonVision(String cameraName, PipelineType pipelineType) {
@@ -80,7 +79,7 @@ public class PhotonVision extends SubsystemBase
     /**
      * Create an instance of PhotonVision class for a camera with a default transform. (One per camera)
      * @param cameraName the name in PhotonVision used for the camera like HD_USB_Camera
-     *                   (likely from manufacturer, best not to change it to avoid conflict issues -Cole)
+     *                   (likely from manufacturer, best not to change it to avoid conflict issues -cole)
      * @param pipelineType the PipelineType of what it's going to be used for
      * @param robotToCam a Tranformation3d of the camera relative to the bottom center of the robot (off floor).
      */
@@ -91,7 +90,7 @@ public class PhotonVision extends SubsystemBase
         fieldLayout = AprilTagFieldLayout.loadField(fields);
 
         // adds a simulated camera to the vision sim: "real" camera will
-        // act just like normal on real robot and in sim! ask Cole on slack if this isn't working
+        // act just like normal on real robot and in sim! ask cole on slack if this isn't working
         // you can manually change the 680x680 resolution and FOV
         if (RobotBase.isSimulation()) {
             visionSim = new VisionSystemSim(cameraName);
@@ -112,10 +111,8 @@ public class PhotonVision extends SubsystemBase
             // setup the AprilTag pose etimator.
             poseEstimator = new PhotonPoseEstimator(
                 fieldLayout, // feed in the current year's field layout
-                // Before reinstating this PoseStrategy camera setting will need to be checked as this PoseStrategy setting * likely * relies on a camera setting.
-                // PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, // best one as far as we can tell
-                PoseStrategy.AVERAGE_BEST_TARGETS,
-                // camera,
+                PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, // best one as far as we can tell
+                //camera,
                 robotToCam
             );
         }
@@ -482,6 +479,7 @@ public class PhotonVision extends SubsystemBase
         if (!isAprilTag()) return Optional.empty();
 
         //if (latestResult == null) return Optional.empty();
+
         Optional<EstimatedRobotPose> estimatedPoseOptional = poseEstimator.update(getLatestResult());
 
         if (estimatedPoseOptional.isPresent()) {
@@ -500,8 +498,8 @@ public class PhotonVision extends SubsystemBase
             
             for (int i = 0; i < estimatedPose.targetsUsed.size(); i++) {
                 int id = estimatedPose.targetsUsed.get(i).getFiducialId();
-                // if a target was used with ID > 22 then return no estimated pose
-                if (id > 22) {
+                // if a target was used with ID > 16 then return no estimated pose
+                if (id > 16) {
                     return Optional.empty();
                 }
                 
