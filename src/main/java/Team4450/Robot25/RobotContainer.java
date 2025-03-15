@@ -47,7 +47,7 @@ import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import Team4450.Robot25.subsystems.Elevator;
 import Team4450.Robot25.subsystems.Climber;
-import Team4450.Robot25.subsystems.CoralGroundIntake;
+// import Team4450.Robot25.subsystems.CoralGroundIntake;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
@@ -99,7 +99,7 @@ public class RobotContainer
 	public static AlgaeManipulator 		algaeManipulator;
 	public static AlgaeGroundIntake		algaeGroundIntake;
 	public static CoralManipulator		coralManipulator;
-	public static CoralGroundIntake 	coralGroundIntake;
+	// public static CoralGroundIntake 	coralGroundIntake;
 	public static Climber 				climber;
 
 	// Subsystem Default Commands.
@@ -222,7 +222,7 @@ public class RobotContainer
 		algaeGroundIntake = new AlgaeGroundIntake();
 		// coralGroundIntake = new CoralGroundIntake();
 		elevatedManipulator = new ElevatedManipulator(coralManipulator, 
-														coralGroundIntake, 
+														// coralGroundIntake, 
 														algaeManipulator, 
 														algaeGroundIntake, 
 														elevator);
@@ -434,6 +434,11 @@ public class RobotContainer
  		//Drive to the AprilTag
 		new Trigger(() -> driverController.getXButton())
 			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
+
+		new Trigger(() -> driverController.getRightTrigger())
+			.whileTrue(new DriveToRight(driveBase, pvTagCamera));
+		new Trigger(() -> driverController.getLeftTrigger())
+			.whileTrue(new DriveToLeft(driveBase, pvTagCamera, true, true));
 		
     	// Drive to the AprilTag using Pose information
 		 //new Trigger(()-> driverController.getLeftTrigger())
@@ -636,15 +641,9 @@ public class RobotContainer
 		NamedCommands.registerCommand("Algae Processor Scoring", new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING)); // TODO FIX FIX FIX
 		NamedCommands.registerCommand("Intake Algae Ground", new IntakeAlgaeGround(elevatedManipulator));
 		NamedCommands.registerCommand("Reset Elevator", new Preset(elevatedManipulator, PresetPosition.RESET));
-		//NamedCommands.registerCommand("Align Left", new SetTagBasedPosition(driveBase, pvTagCamera, -1)
-		//												.andThen(new RotateToPose(driveBase, true, true)
-		//												.andThen(new GoToPose(driveBase, true, true))));
-		//NamedCommands.registerCommand("Align Right", new SetTagBasedPosition(driveBase, pvTagCamera, 1)
-		//												.andThen(new RotateToPose(driveBase, true, true))
-		//												.andThen(new GoToPose(driveBase, true, true)));
-		//NamedCommands.registerCommand("Align Center", new SetTagBasedPosition(driveBase, pvTagCamera, 0)
-		//												.andThen(new RotateToPose(driveBase, true, true))
-		//												.andThen(new GoToPose(driveBase, true, true)));
+		NamedCommands.registerCommand("Align Left", new DriveToLeft(driveBase, pvTagCamera, isComp, isClone));
+		NamedCommands.registerCommand("Align Right", new DriveToRight(driveBase, pvTagCamera));
+		NamedCommands.registerCommand("Align Center", new DriveToTag(driveBase, pvTagCamera, true, true));
 		NamedCommands.registerCommand("Climb", new Preset(elevatedManipulator, PresetPosition.CLIMB));
 		// Create a chooser with the PathPlanner Autos located in the PP
 		// folders.

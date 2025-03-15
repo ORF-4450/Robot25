@@ -18,9 +18,9 @@ import Team4450.Robot25.subsystems.DriveBase;
  * rotation to be commanded seperately from translation.
  */
 
-class DriveToRight extends Command {
-    PIDController rotationController = new PIDController(0.02, 0, 0); // for rotating drivebase
-    PIDController translationController = new PIDController(0.02, 0, 0); // for moving drivebase in X,Y plane
+public class DriveToRight extends Command {
+    PIDController rotationController = new PIDController(0.03, 0, 0); // for rotating drivebase
+    PIDController translationController = new PIDController(0.08, 0, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
     PhotonVision photonVision;
     private boolean alsoDrive;
@@ -28,7 +28,7 @@ class DriveToRight extends Command {
     /**
      * @param robotDrive the drive subsystem
      */
-    public DriveToRight (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel) {
+    public DriveToRight (DriveBase robotDrive, PhotonVision photonVision) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;

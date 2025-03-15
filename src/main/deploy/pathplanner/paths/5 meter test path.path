@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.973589117388524,
-        "y": 3.0593577347349954
+        "x": 7.232898582175925,
+        "y": 6.177256944444444
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8648989012376878,
-        "y": 2.8342212496574217
+        "x": 8.061861522901452,
+        "y": 6.196913485475487
       },
       "isLocked": false,
-      "linkedName": "B Right"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.792344300981833,
-        "y": 2.8295457268224835
+        "x": 2.223,
+        "y": 6.177
       },
       "prevControl": {
-        "x": 3.571748973304662,
-        "y": 2.9471794864623146
+        "x": 1.3942328404762558,
+        "y": 6.157353237036473
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "B Algae"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -29.000000000000004
+    "velocity": 0,
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Reef to Reef (good-enough)",
+  "folder": null,
   "idealStartingState": {
-    "velocity": 1.0,
-    "rotation": 151.0
+    "velocity": 0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

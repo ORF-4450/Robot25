@@ -19,8 +19,8 @@ import Team4450.Robot25.subsystems.DriveBase;
  */
 
 public class DriveToLeft extends Command {
-    PIDController rotationController = new PIDController(0.02, 0, 0); // for rotating drivebase
-    PIDController translationController = new PIDController(0.02, 0, 0); // for moving drivebase in X,Y plane
+    PIDController rotationController = new PIDController(0.08, 0, 0); // for rotating drivebase
+    PIDController translationController = new PIDController(0.08, 0, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
     PhotonVision photonVision;
     private boolean alsoDrive;

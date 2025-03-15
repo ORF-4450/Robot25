@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ElevatedManipulator extends SubsystemBase {
 
     public final CoralManipulator coralManipulator;
-    public final CoralGroundIntake coralGroundIntake;
+    // public final CoralGroundIntake coralGroundIntake;
     public final AlgaeManipulator algaeManipulator;
     public final AlgaeGroundIntake algaeGroundIntake;
     public final Elevator elevator;
@@ -54,14 +54,14 @@ public class ElevatedManipulator extends SubsystemBase {
     private PresetPosition position = PresetPosition.NONE;
 
     public ElevatedManipulator(CoralManipulator coralManipulator, 
-                               CoralGroundIntake coralGroundIntake,
+                            //    CoralGroundIntake coralGroundIntake,
                                AlgaeManipulator algaeManipulator, 
                                AlgaeGroundIntake algaeGroundIntake,
                                Elevator elevator){
         Util.consoleLog();
 
         this.coralManipulator = coralManipulator;
-        this.coralGroundIntake = coralGroundIntake;
+        // this.coralGroundIntake = coralGroundIntake;
         this.algaeManipulator = algaeManipulator;
         this.algaeGroundIntake = algaeGroundIntake;
         this.elevator = elevator;
@@ -310,14 +310,14 @@ public class ElevatedManipulator extends SubsystemBase {
             algaeManipulator.setAlgaePivot(endGoalAlgaePivotStatus);
         }
 
-        if(isPivotAtTarget(endGoalCoralGroundPivotAngle)){
-            coralGroundIntake.setAngle(endGoalCoralGroundPivotAngle);
-            coralGroundIntake.movePivotRelative(0);
-            SmartDashboard.putString("Elevator Position Phase", "Setting Coral Ground Pivot");
-        } else {
-            coralGroundIntake.setAngle(endGoalCoralGroundPivotAngle);
-            SmartDashboard.putString("Elevator Position Phase", "Coral Ground Pivot at Target");
-        }
+        // if(isPivotAtTarget(endGoalCoralGroundPivotAngle)){
+        //     coralGroundIntake.setAngle(endGoalCoralGroundPivotAngle);
+        //     coralGroundIntake.movePivotRelative(0);
+        //     SmartDashboard.putString("Elevator Position Phase", "Setting Coral Ground Pivot");
+        // } else {
+        //     coralGroundIntake.setAngle(endGoalCoralGroundPivotAngle);
+        //     SmartDashboard.putString("Elevator Position Phase", "Coral Ground Pivot at Target");
+        // }
         // Handle Elevator
         if (atTarget) {
             if (isElevatorAtTarget(endGoalElevatorHeight)) {
@@ -360,9 +360,9 @@ public class ElevatedManipulator extends SubsystemBase {
         return elevator.isElevatorAtTarget(height);
     }
 
-    public boolean isPivotAtTarget(double goal){
-        return coralGroundIntake.isPivotAtTarget(goal);
-    }
+    // public boolean isPivotAtTarget(double goal){
+    //     return coralGroundIntake.isPivotAtTarget(goal);
+    // }
 
     public void resetEncoders(){
         elevator.resetEncoders();
