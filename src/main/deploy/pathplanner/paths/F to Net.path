@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.820862676056337,
-        "y": 5.768221830985915
+        "x": 4.849207746478872,
+        "y": 5.966637323943662
       },
       "isLocked": false,
-      "linkedName": "F"
+      "linkedName": "F Algae"
     },
     {
       "anchor": {
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Reefs to Net",
+  "folder": "Reefs to Net (good)",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": 29.000000000000004
+    "rotation": -151.0
   },
   "useDefaultConstraints": false
 }

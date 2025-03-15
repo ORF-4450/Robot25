@@ -3,31 +3,33 @@
   "robotLength": 0.8128,
   "holonomicMode": true,
   "pathFolders": [
-    "Misc.",
-    "Net to Pickup",
-    "Net to Reef",
-    "Pickups To Reefs",
-    "Processor to reef",
-    "Reef to Processor",
-    "Reef to Reef",
-    "Reefs to Net",
+    "Misc. (good)",
+    "Net to Pickup (good)",
+    "Net to Reef (good)",
+    "Pickups To Reefs (good)",
+    "Processor to reef (good)",
+    "Reef to Processor (good)",
+    "Reef to Reef (good-enough)",
+    "Reefs to Net (good)",
     "Reefs to Pickups",
     "Starts to Reefs"
   ],
   "autoFolders": [
     "Glacier Peak",
-    "Noah Time Analysis"
+    "Best Autos",
+    "No Vision",
+    "Noah Time Analysis",
+    "Vision"
   ],
-
-  "defaultMaxVel": 2.0,
-  "defaultMaxAccel": 1.5,
+  "defaultMaxVel": 1.0,
+  "defaultMaxAccel": 2.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 52.16,
   "robotMOI": 16.37,
   "robotTrackwidth": 0.546,
-  "driveWheelRadius": 0.0381,
+  "driveWheelRadius": 0.038,
   "driveGearing": 5.5,
   "maxDriveSpeed": 4.92,
   "driveMotorType": "vortex",
@@ -45,6 +47,7 @@
   "bumperOffsetY": 0.0,
   "robotFeatures": [
     "{\"name\":\"Coral\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.0,\"y\":-0.3},\"size\":{\"width\":0.2,\"length\":0.5},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}",
-    "{\"name\":\"Algae\",\"type\":\"circle\",\"data\":{\"center\":{\"x\":0.0,\"y\":0.3},\"radius\":0.15,\"strokeWidth\":0.0,\"filled\":true}}"
+    "{\"name\":\"Algae\",\"type\":\"circle\",\"data\":{\"center\":{\"x\":0.0,\"y\":0.3},\"radius\":0.15,\"strokeWidth\":0.0,\"filled\":true}}",
+    "{\"name\":\"Circle\",\"type\":\"circle\",\"data\":{\"center\":{\"x\":-0.14,\"y\":-0.3},\"radius\":0.05,\"strokeWidth\":0.02,\"filled\":true}}"
   ]
 }

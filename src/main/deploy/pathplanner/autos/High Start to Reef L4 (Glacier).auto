@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "HighMiddleStart to E"
+                  "pathName": null
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "E to High Start"
+                  "pathName": "E Right to High Start"
                 }
               },
               {
