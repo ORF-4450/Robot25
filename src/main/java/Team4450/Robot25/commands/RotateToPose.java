@@ -40,6 +40,7 @@
 
 //         // store the initial field relative state to reset it later.
 //         initialFieldRel = robotDrive.getFieldRelative();
+
         
 //         if(initialFieldRel)
 //             robotDrive.toggleFieldRelative();

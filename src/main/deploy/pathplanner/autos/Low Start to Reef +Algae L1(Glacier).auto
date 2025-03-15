@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Low Start to C(Most optimal)"
+                  "pathName": null
                 }
               },
               {
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C-Coral to C-Algae"
+                  "pathName": "C-Right to C-Algae"
                 }
               },
               {

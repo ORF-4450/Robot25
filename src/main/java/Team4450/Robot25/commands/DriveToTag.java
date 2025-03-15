@@ -76,10 +76,12 @@ public class DriveToTag extends Command {
         double rotation = rotationController.calculate(targetYaw); // attempt to minimize
         double movement = translationController.calculate(targetPitch); // attempt to minimize
 
+
         Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
 
         if (alsoDrive) {
             robotDrive.driveRobotRelative(0, movement, rotation);
+
         } else {
             robotDrive.setTrackingRotation(rotation);
         }

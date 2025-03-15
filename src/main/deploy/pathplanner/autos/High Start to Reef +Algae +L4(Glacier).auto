@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "HighMiddleStart to E"
+                  "pathName": null
                 }
               },
               {
@@ -48,7 +48,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "E-Coral to E-Algae"
+                  "pathName": "E-Right to E-Algae"
                 }
               },
               {

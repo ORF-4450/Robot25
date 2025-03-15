@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 4.778918545677745,
-        "y": 1.2986223826570764
+        "y": 1.2986223826570766
       },
       "isLocked": false,
       "linkedName": "C Algae"
@@ -34,18 +34,18 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Reef to Processor",
+  "folder": "Reef to Processor (good)",
   "idealStartingState": {
     "velocity": 1.0,
     "rotation": 29.999999999999996

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.609394213386761,
-        "y": 4.523386185432134
+        "x": 5.786008081360182,
+        "y": 4.4633770000665685
       },
       "isLocked": false,
       "linkedName": "Netspot 1"
@@ -20,8 +20,8 @@
         "y": 2.806161971830985
       },
       "prevControl": {
-        "x": 6.776672535211268,
-        "y": 3.42975352112676
+        "x": 6.7199823943661965,
+        "y": 3.373063380281689
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,18 +34,18 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": 29.999999999999996
   },
   "reversed": false,
-  "folder": "Net to Reef",
+  "folder": "Net to Reef (good)",
   "idealStartingState": {
     "velocity": 1.0,
     "rotation": -90.0

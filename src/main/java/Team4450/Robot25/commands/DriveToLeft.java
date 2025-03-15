@@ -35,8 +35,8 @@ public class DriveToLeft extends Command {
 
         if (alsoDrive) addRequirements(robotDrive);
 
-        SendableRegistry.addLW(translationController, "DriveToTag Translation PID");
-        SendableRegistry.addLW(rotationController, "DriveToTag Rotation PID");
+        SendableRegistry.addLW(translationController, "DriveToLeft Translation PID");
+        SendableRegistry.addLW(rotationController, "DriveToLeft Rotation PID");
     }
 
     public void initialize (){
@@ -56,7 +56,8 @@ public class DriveToLeft extends Command {
         translationController.setSetpoint(-15); // target should be at -15 pitch
         translationController.setTolerance(0.5);
 
-        SmartDashboard.putString("DriveToTag", "Tag Tracking Initialized");
+
+        SmartDashboard.putString("DriveToLeft", "Tag Tracking Initialized");
     }
 
     @Override
@@ -75,11 +76,12 @@ public class DriveToLeft extends Command {
 
         double rotation = rotationController.calculate(targetYaw - 25); // attempt to minimize
         double movement = translationController.calculate(targetPitch); // attempt to minimize
-
+      
         Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
 
         if (alsoDrive) {
             robotDrive.driveRobotRelative(0, movement, rotation);
+
         } else {
             robotDrive.setTrackingRotation(rotation);
         }
@@ -98,7 +100,8 @@ public class DriveToLeft extends Command {
         robotDrive.disableTrackingSlowMode();
         robotDrive.clearPPRotationOverride();
 
-        SmartDashboard.putString("DriveToTag", "Tag Tracking Ended");
+
+        SmartDashboard.putString("DriveToLeft", "Tag Tracking Ended");
 
     }
 }
