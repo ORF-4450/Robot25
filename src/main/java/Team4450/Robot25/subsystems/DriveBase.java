@@ -33,7 +33,6 @@ import Team4450.Lib.Talon_FX;
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -46,7 +45,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.util.WPIUtilJNI;
-import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -89,7 +87,7 @@ public class DriveBase extends SubsystemBase {
   private final AHRS    navx = RobotContainer.navx.getAHRS();
 
   private double        simAngle; // used to drive navx sim.
-
+  
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
   private Pose2d        lastPose;
@@ -122,6 +120,7 @@ public class DriveBase extends SubsystemBase {
   private SlewRateLimiter magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate, Double.NEGATIVE_INFINITY, 0);
   private SlewRateLimiter rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
   private double prevTime = WPIUtilJNI.now() * 1e-6;
+
 
   private boolean slowModeEnabled = false;
 
@@ -163,7 +162,6 @@ public class DriveBase extends SubsystemBase {
     // This thread will wait until NavX calibration is complete then reset the navx while 
     // this constructor continues to run. We do this because we can't reset during the
     // calibration process.
-
     new Thread(() -> {
       try {
         do {
@@ -222,8 +220,6 @@ public class DriveBase extends SubsystemBase {
 
     SmartDashboard.putNumber("Gyro angle", getGyroYaw());
     SmartDashboard.putString("Robot pose", currentPose.toString());
-    SmartDashboard.putString("Target Pose", targetPose.toString());
-
 
     // Following code tracks robot movement distance and yaw so we can reset
     // those values separately from the NavX.
@@ -301,62 +297,6 @@ public class DriveBase extends SubsystemBase {
     return odometry.getEstimatedPosition();
   }
 
-  public Rotation2d getRotation2d() {
-    return getPose().getRotation();
-  }
-
-  public double getAngle(){
-    return this.getRotation2d().getDegrees();
-  }
-
-  private Pose2d targetPose = new Pose2d(0, 0, new Rotation2d(0));
-  private int targetID = 0;
-  private boolean rotatedToTargetPose = false;
-
-  /**
-   * Set that target pose that the robot will try to get to while goToPose is being called.
-   * This will not ovoid any objects.
-   * @param targetPose
-   */
-  public void setTargetPose(Pose2d targetPose) {
-    this.targetPose = targetPose;
-    this.rotatedToTargetPose = false;
-    Util.consoleLog("target pose:" + targetPose.toString());
-  }
-
-  public void setTargetID(int targetID){
-    this.targetID = targetID;
-  }
-
-  public boolean getRotatedToTargetPose() {
-      return this.rotatedToTargetPose;
-  }
-
-  public void setRotatedToTargetPose(boolean isRotatedToTargetPose) {
-      this.rotatedToTargetPose = true;
-  }
-
-  /**
-   * Get the pose set by setTargetPose function
-   * @return targetPose
-   */
-  public Pose2d getTargetPose() {
-    if (this.targetPose == null) {
-      return new Pose2d(0, 0, new Rotation2d(0));
-    } 
-    else {
-      return this.targetPose;
-    }
-  }
-
-  public int getTargetID(){
-    if(this.targetID == 0){
-      return 0;
-    }
-    else {
-      return this.targetID;
-    }
-  }
   /**
    * Returns the currently-estimated pose of the robot for use in Pathplanner.
    * Currently acts exact same as getPose() but leaving it here for consistency
@@ -398,14 +338,13 @@ public class DriveBase extends SubsystemBase {
    * times, including re-zeroing gyro to be 180 on red. We set the flag to
    * change it as soon as teleop starts! Other teams simply reverse their joystick
    * values on Red, but because we are doing such advanced control replicating
-   * joystick inputs that I didn't want to mess with that (-Cole)
+   * joystick inputs that I didn't want to mess with that (-cole)
    * @param pose the pose
    */
   public void resetOdometryPP(Pose2d pose) {
     ppGyroReversed = alliance == Alliance.Red;
     resetOdometry(pose);
   }
-
   /**
    * Must be called every teleop init. in Robot.java.
    * Fixes the issue(/feature?) where red alliance PathPlanner has an
@@ -413,13 +352,13 @@ public class DriveBase extends SubsystemBase {
    * resets it by subtracting 180 from current gyro value.
    */
   public void fixPathPlannerGyro() {
-      Util.consoleLog("alliance %s", alliance);
-    if (alliance == Alliance.Red) {
-      startingGyroRotation -= 180;
-      // we don't just set it to 0 because it might nit have started/ended in downfield state
-      ppGyroReversed = false; // set the flag so if re-eneabled twice in teleop it doesn't cycle back and forth
-    }
+    Util.consoleLog("alliance %s", alliance);
+  if (alliance == Alliance.Red) {
+    startingGyroRotation -= 180;
+    // we don't just set it to 0 because it might nit have started/ended in downfield state
+    ppGyroReversed = false; // set the flag so if re-eneabled twice in teleop it doesn't cycle back and forth
   }
+}
 
   /**
    * Method to drive the robot using joystick info.
@@ -445,10 +384,10 @@ public class DriveBase extends SubsystemBase {
       double inputTranslationDir = Math.atan2(ySpeed, xSpeed);
 
       // Calculate the direction slew rate based on an estimate of the lateral acceleration
-      // Cole note: basically this stuff (from Rev's starter code) limits how fast you can change path
+      // cole note: basically this stuff (from Rev's starter code) limits how fast you can change path
       // direction. it has effect of rounding out sharp turns but can be quite disorienting for drivers
       // so we put the slew rate to infinity so it doesn't affect anything. we only use rotation and magnitude
-      // slew rate limiting - Cole 2024
+      // slew rate limiting - cole 2024
       double directionSlewRate;
 
       // BEGIN REV CODE THAT IS KIND OF WEIRD BUT WORKS ============================================
@@ -573,23 +512,6 @@ public class DriveBase extends SubsystemBase {
 
     updateDS();
   }
-
-  public void driveFieldRelative(double xSpeed, double ySpeed, double rotSpeed) {
-    //// store the current state of field-relative toggle to restore later
-    //boolean previousState = fieldRelative;
-    fieldRelative = true;
-
-    updateDS();
-
-    // drive using the robot relative speeds/joystick values
-    drive(xSpeed, ySpeed, rotSpeed, false);
-
-    //// restore previous state of field-relative.
-    //fieldRelative = previousState;
-
-    updateDS();
-  }
-
 
   /**
    * Sets the wheels into an X formation to prevent movement.
@@ -813,7 +735,7 @@ public class DriveBase extends SubsystemBase {
    * Sets the gyroscope yaw angle to zero. This can be used to set the direction
    * the robot is currently facing to the 'forwards' direction.
    */
-  public void zeroGyro() // This is currently the elevator side! 3/6/25 - Cole Pearson
+  public void zeroGyro()
   {
     Util.consoleLog();
 
@@ -901,7 +823,6 @@ public class DriveBase extends SubsystemBase {
    */
   public void enableSlowMode()
   {
-    slowModeEnabled = true;
     speedLimiter = DriveConstants.kSlowModeFactor;
     rotSpeedLimiter = DriveConstants.kRotSlowModeFactor;
 
@@ -915,7 +836,6 @@ public class DriveBase extends SubsystemBase {
    */
   public void disableSlowMode()
   {
-    slowModeEnabled = false;
     Util.consoleLog();
 
     speedLimiter = 1;
@@ -923,8 +843,27 @@ public class DriveBase extends SubsystemBase {
 
     updateDS();
   }
+  public void enableTrackingSlowMode(){
 
-  /**
+    speedLimiter = DriveConstants.kTrackingModeFactor;
+    rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
+  
+    Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+    updateDS();
+  
+  }
+  
+  public void disableTrackingSlowMode(){
+  
+    Util.consoleLog();
+  
+    speedLimiter = 1;
+    rotSpeedLimiter = 1;
+  
+    updateDS();
+    
+  }
+   /**
    * Set max drivebase speed based on the height of the elevator. Height 0 will set speed to 1.
    */
   public void setElevatorHeightSpeed(double height)
@@ -944,26 +883,6 @@ public class DriveBase extends SubsystemBase {
     }
   }
 
-public void enableTrackingSlowMode(){
-
-  speedLimiter = DriveConstants.kTrackingModeFactor;
-  rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
-
-  Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
-  updateDS();
-
-}
-
-public void disableTrackingSlowMode(){
-
-  Util.consoleLog();
-
-  speedLimiter = 1;
-  rotSpeedLimiter = 1;
-
-  updateDS();
-  
-}
   /**
    * Sets an override rotation joystick value for tracking to objects or tags. Must call enableTracking first!
    * Setting commandedRotation as NaN temporarily disables tracking without a call to disableTrackiing.
@@ -994,7 +913,24 @@ public void disableTrackingSlowMode(){
     odometry.addVisionMeasurement(pose, timestamp);
   }
 
+  private double goalPitch;
+  private double goalYaw;
 
+  public void setTargetPitch(double targetPitch){
+    goalPitch = targetPitch;
+  }
+
+  public double getTargetPitch(){
+    return goalPitch;
+  }
+
+  public void setTargetYaw(double targetYaw){
+    goalYaw = targetYaw;
+  }
+
+  public double getTargetYaw(){
+    return goalYaw;
+  }
   /**
    * Configures the PathPlanner auto generation of paths/autos by telling
    * PathPlaner about our the drive train.
