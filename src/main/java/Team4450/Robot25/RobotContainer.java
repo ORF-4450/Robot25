@@ -449,7 +449,12 @@ public class RobotContainer
 
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new RetractClimber(climber));
-		
+
+        new Trigger(() -> driverController.getXButton())
+            .onTrue(new InstantCommand(() -> algaeGroundIntake.start()));		
+
+        new Trigger(() -> driverController.getYButton())
+            .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
 			
 		// -------- Utility pad buttons ----------
 
