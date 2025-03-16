@@ -133,7 +133,7 @@ public final class Constants
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.
         public static final double kDirectionSlewRate = Double.POSITIVE_INFINITY; // radians per second.
-        public static final double kMagnitudeSlewRate = 1; // percent per second (1 = 100%).
+        public static final double kMagnitudeSlewRate = 0.70; // percent per second (1 = 100%).
         public static final double kRotationalSlewRate = Double.POSITIVE_INFINITY; // percent per second (1 = 100%).
 
         // Chassis configuration:
