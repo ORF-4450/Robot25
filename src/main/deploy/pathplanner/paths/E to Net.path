@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.680798218405838,
-        "y": 5.268361256126017
+        "x": 5.189348591549296,
+        "y": 5.258010563380281
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.905700281947563,
-        "y": 6.208057987700891
+        "x": 6.221221375661215,
+        "y": 5.34539783854636
       },
       "isLocked": false,
       "linkedName": "E Algae"
     },
     {
       "anchor": {
-        "x": 7.1679805414386735,
-        "y": 5.245043696151677
+        "x": 7.386091549290821,
+        "y": 5.224250000000959
       },
       "prevControl": {
-        "x": 4.827144150791659,
-        "y": 5.483887785824159
+        "x": 6.40365296342127,
+        "y": 5.232971734537968
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 2.8,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
