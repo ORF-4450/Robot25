@@ -452,10 +452,10 @@ public class RobotContainer
     		.onTrue(new RetractClimber(climber));
 
         new Trigger(() -> driverController.getXButton())
-            .onTrue(new InstantCommand(() -> algaeGroundIntake.start()));		
+            .onTrue(new IntakeAlgaeGround(elevatedManipulator));
 
-        new Trigger(() -> driverController.getYButton())
-            .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
+        // new Trigger(() -> driverController.getYButton())
+        //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
 			
 		// -------- Utility pad buttons ----------
 
@@ -512,6 +512,9 @@ public class RobotContainer
 		//Runs algae outtake if the elevator and manipulator are in the correct position.
 		// new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
 		// 	.onTrue(new OuttakeAlgae(elevatedManipulator));
+
+		// new Trigger(() -> utilityController.getLeftBumperButton() )
+		// 	.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_GROUND_INTAKE));
 
 		//Moves the elvator and manipulator to the reset position and extends out ground intake, and algae manipulator, and starts intaking.
 		new Trigger(() -> utilityController.getLeftBumperButton())

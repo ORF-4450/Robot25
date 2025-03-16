@@ -1,6 +1,7 @@
 package Team4450.Robot25.commands;
 
 import Team4450.Lib.Util;
+import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import Team4450.Robot25.subsystems.ElevatedManipulator.PresetPosition;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -39,14 +40,17 @@ public class IntakeAlgaeGround extends Command {
             case INTAKE_ALGAE:
                 elevatedManipulator.algaeManipulator.startIntaking();
                 elevatedManipulator.algaeGroundIntake.startRollers();
-                if(Util.timeStamp() - startTime > 3.0)
+                if(elevatedManipulator.algaeManipulator.hasAlgae() == true){
+                    elevatedManipulator.elevator.setElevatorHeight(0.20);
                     state = State.STOP;
+                }
                 break;
 
             case STOP:
-                elevatedManipulator.algaeManipulator.stop();
+                elevatedManipulator.algaeManipulator.holdAlgae();
                 elevatedManipulator.algaeGroundIntake.stop();
-                elevatedManipulator.executeSetPosition(PresetPosition.RESET);
+                elevatedManipulator.algaeGroundIntake.setAlgaeGroundExtend(false);
+                elevatedManipulator.executeSetPosition(PresetPosition.NONE);
                 break;
         }
     }
@@ -57,8 +61,8 @@ public class IntakeAlgaeGround extends Command {
 
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
-        elevatedManipulator.algaeManipulator.stop();    
+        elevatedManipulator.algaeManipulator.holdAlgae();    
         elevatedManipulator.algaeGroundIntake.stop();
-        elevatedManipulator.executeSetPosition(PresetPosition.RESET);
+        elevatedManipulator.executeSetPosition(PresetPosition.NONE);
     }
 }

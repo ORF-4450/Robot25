@@ -266,6 +266,7 @@ public class Robot extends TimedRobot
     robotContainer.fixPathPlannerGyro(); // Because of this only use blue alliance during practice
 
     RobotContainer.algaeManipulator.intialize();
+    RobotContainer.algaeGroundIntake.intialize();
     RobotContainer.coralManipulator.intialize();
     RobotContainer.driveBase.setFieldRelative(true);
 

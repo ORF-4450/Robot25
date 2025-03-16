@@ -37,6 +37,7 @@ public class Elevator extends SubsystemBase {
 
     private double targetPosition = Double.NaN; //in units of Rotations
     private boolean isManualControl = false;
+    private boolean isSlow = false;
 
     private DriveBase driveBase;
 
@@ -96,6 +97,10 @@ public class Elevator extends SubsystemBase {
         // Adjust motor output based on distance to target
         double motorOutput;
         
+        if(isSlow == true){
+            motorOutput = Util.clampValue(nonclamped, 0.30);
+        }
+
         if (distanceToTarget <= slowDownThreshold && isManualControl == false) {
             double slowDownFactor = 0.1; // Adjust this factor as needed
             motorOutput = Util.clampValue(nonclamped * slowDownFactor, 0.15);
@@ -105,6 +110,7 @@ public class Elevator extends SubsystemBase {
             // motorOutput = Util.clampValue(nonclamped, 0.40);
 
         }
+        
 
         SmartDashboard.putNumber("Elevator Speed", motorOutput);
         motorMain.set(motorOutput);
@@ -118,6 +124,7 @@ public class Elevator extends SubsystemBase {
     public void unlockPosition(){
         targetPosition = Double.NaN;
     }
+    
 
     /**
      * Increase/Decrease the target position by a certain amount
@@ -129,6 +136,10 @@ public class Elevator extends SubsystemBase {
         targetPosition -= change;
     }
 
+    public void moveSlow(double change){
+        isSlow = true;
+        targetPosition -= change;
+    }
     /**
      * Bypass all setpoint generation and just run direct motor power. This
      * also bypasses all soft limits, so use EXTREME CAUTION! Remember, the elevator
