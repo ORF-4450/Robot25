@@ -27,7 +27,7 @@ public class OuttakeAlgae extends Command {
         switch(state){
             case OUTTAKE:
                 elevatedManipulator.algaeManipulator.startOuttaking();
-                if(Util.timeStamp() - startTime > 2.0)
+                if(Util.timeStamp() - startTime > 0.5)
                     state = State.STOP;
                 break;
             // case RETURN:

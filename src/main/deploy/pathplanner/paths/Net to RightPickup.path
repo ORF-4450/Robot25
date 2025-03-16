@@ -8,36 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.117214661381136,
-        "y": 6.176399809442392
+        "x": 7.155042317708332,
+        "y": 0.875111400462961
       },
       "isLocked": false,
       "linkedName": "Netspot 1"
     },
     {
       "anchor": {
-        "x": 6.873885646772816,
-        "y": 7.047770934887191
+        "x": 7.0091710069444435,
+        "y": 0.7758839699074065
       },
       "prevControl": {
-        "x": 7.31734511489477,
-        "y": 6.529915910086691
+        "x": 7.258913895375645,
+        "y": 0.7872192986649001
       },
       "nextControl": {
-        "x": 6.587121493433239,
-        "y": 7.382643157524508
+        "x": 3.403360122322726,
+        "y": 0.612223446593662
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0293399160879617,
-        "y": 7.33921947337963
+        "x": 2.402374493634258,
+        "y": 0.6746766493055543
       },
       "prevControl": {
-        "x": 6.80445035313483,
-        "y": 7.002474001930907
+        "x": 6.998922164351851,
+        "y": 0.7418182146990739
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,7 +53,7 @@
   "constraintZones": [
     {
       "name": "Runway",
-      "minWaypointRelativePos": 1.406613372093025,
+      "minWaypointRelativePos": 1.04,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
         "maxVelocity": 4.0,
@@ -67,9 +67,9 @@
     {
       "name": "Wind Up",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 1.41,
+      "maxWaypointRelativePos": 1.04,
       "constraints": {
-        "maxVelocity": 2.0,
+        "maxVelocity": 2.5,
         "maxAcceleration": 4.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,

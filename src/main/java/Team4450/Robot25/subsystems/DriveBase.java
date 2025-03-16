@@ -393,6 +393,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void fixPathPlannerGyro() {
       Util.consoleLog("alliance %s", alliance);
+      startingGyroRotation -= 90;
     if (alliance == Alliance.Red) {
       startingGyroRotation -= 180;
       // we don't just set it to 0 because it might nit have started/ended in downfield state
