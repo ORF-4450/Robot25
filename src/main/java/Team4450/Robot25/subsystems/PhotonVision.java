@@ -28,6 +28,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -40,7 +41,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * is handled through the Network Tables and the tables are wrapped by
  * by PhotonLib.
  */
-@SuppressWarnings("unused")
 public class PhotonVision extends SubsystemBase
 {
     private PhotonCamera            camera;
@@ -66,7 +66,7 @@ public class PhotonVision extends SubsystemBase
     /**
      * Create an instance of PhotonVision class for a camera with a default transform. (One per camera)
      * @param cameraName the name in PhotonVision used for the camera like HD_USB_Camera
-     *                   (likely from manufacturer, best not to change it to avoid conflict issues -Cole)
+     *                   (likely from manufacturer, best not to change it to avoid conflict issues -cole)
      * @param pipelineType the PipelineType of what it's going to be used for
      */
     public PhotonVision(String cameraName, PipelineType pipelineType) {
@@ -80,7 +80,7 @@ public class PhotonVision extends SubsystemBase
     /**
      * Create an instance of PhotonVision class for a camera with a default transform. (One per camera)
      * @param cameraName the name in PhotonVision used for the camera like HD_USB_Camera
-     *                   (likely from manufacturer, best not to change it to avoid conflict issues -Cole)
+     *                   (likely from manufacturer, best not to change it to avoid conflict issues -cole)
      * @param pipelineType the PipelineType of what it's going to be used for
      * @param robotToCam a Tranformation3d of the camera relative to the bottom center of the robot (off floor).
      */
@@ -91,12 +91,12 @@ public class PhotonVision extends SubsystemBase
         fieldLayout = AprilTagFieldLayout.loadField(fields);
 
         // adds a simulated camera to the vision sim: "real" camera will
-        // act just like normal on real robot and in sim! ask Cole on slack if this isn't working
+        // act just like normal on real robot and in sim! ask cole on slack if this isn't working
         // you can manually change the 680x680 resolution and FOV
         if (RobotBase.isSimulation()) {
             visionSim = new VisionSystemSim(cameraName);
             SimCameraProperties cameraProp = new SimCameraProperties();
-            cameraProp.setCalibration(680, 680, Rotation2d.fromDegrees(100)); // resolution, FOV
+            cameraProp.setCalibration(680, 680, Rotation2d.fromDegrees(70)); // resolution, FOV
             this.cameraSim = new PhotonCameraSim(camera, cameraProp);
             cameraSim.enableDrawWireframe(true); // to simulate camera view
             visionSim.addCamera(cameraSim, robotToCam);
@@ -112,10 +112,8 @@ public class PhotonVision extends SubsystemBase
             // setup the AprilTag pose etimator.
             poseEstimator = new PhotonPoseEstimator(
                 fieldLayout, // feed in the current year's field layout
-                // Before reinstating this PoseStrategy camera setting will need to be checked as this PoseStrategy setting * likely * relies on a camera setting.
-                // PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, // best one as far as we can tell
-                PoseStrategy.AVERAGE_BEST_TARGETS,
-                // camera,
+                PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, // best one as far as we can tell
+                //camera,
                 robotToCam
             );
         }
@@ -168,19 +166,19 @@ public class PhotonVision extends SubsystemBase
      * @param y field coordinate Y
      * @param id zero-based index of note
      */
-    private void addNoteSimTarget(double x, double y, int id) {
-        // we use cuboids to represent Notes because it's close enough and easier
-        TargetModel noteModel = new TargetModel(0.3556, 0.3556, 0.0508); // approx size of note in meters
+    // private void addNoteSimTarget(double x, double y, int id) {
+    //     // we use cuboids to represent Notes because it's close enough and easier
+    //     TargetModel noteModel = new TargetModel(0.3556, 0.3556, 0.0508); // approx size of note in meters
         
-        VisionTargetSim target = new VisionTargetSim(
-            new Pose3d(new Pose2d(x, y, new Rotation2d())), // no Z makes them kind of in floor but oh well
-            noteModel
-        );
+    //     VisionTargetSim target = new VisionTargetSim(
+    //         new Pose3d(new Pose2d(x, y, new Rotation2d())), // no Z makes them kind of in floor but oh well
+    //         noteModel
+    //     );
 
-        // instead of giving them one "type" we give them a unique "type" to re-access them later
-        // because order of type list appears to be indeterminant so it's kind of a hacky solution but it works!
-        visionSim.addVisionTargets("note"+Integer.toString(id), target);
-    }
+    //     // instead of giving them one "type" we give them a unique "type" to re-access them later
+    //     // because order of type list appears to be indeterminant so it's kind of a hacky solution but it works!
+    //     visionSim.addVisionTargets("note"+Integer.toString(id), target);
+    // }
 
     @Override
     public void simulationPeriodic() {
@@ -482,6 +480,7 @@ public class PhotonVision extends SubsystemBase
         if (!isAprilTag()) return Optional.empty();
 
         //if (latestResult == null) return Optional.empty();
+
         Optional<EstimatedRobotPose> estimatedPoseOptional = poseEstimator.update(getLatestResult());
 
         if (estimatedPoseOptional.isPresent()) {
@@ -491,6 +490,7 @@ public class PhotonVision extends SubsystemBase
             // pose2d to pose3d (ignore the Z axis which is height off ground)
             Pose2d pose2d = new Pose2d(pose.getX(), pose.getY(), new Rotation2d(pose.getRotation().getAngle()));
 
+            poseEstimator.setLastPose(pose);
             // update the field2d object in NetworkTables to visualize where the camera thinks it's at
             field.setRobotPose(pose2d);
 
@@ -498,12 +498,14 @@ public class PhotonVision extends SubsystemBase
             // for example:
             ArrayList<Pose3d> usedTagPoses = new ArrayList<Pose3d>();
             
+            
             for (int i = 0; i < estimatedPose.targetsUsed.size(); i++) {
                 int id = estimatedPose.targetsUsed.get(i).getFiducialId();
-                // if a target was used with ID > 22 then return no estimated pose
-                if (id > 22) {
+                // if a target was used with ID > 16 then return no estimated pose
+                if (id > 16) {
                     return Optional.empty();
                 }
+                
                 
                 Optional<Pose3d> tagPose = fieldLayout.getTagPose(id);
                 
