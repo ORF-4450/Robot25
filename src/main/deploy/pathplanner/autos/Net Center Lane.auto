@@ -152,6 +152,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Best Autos",
+  "folder": null,
   "choreoAuto": false
 }
