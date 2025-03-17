@@ -125,7 +125,7 @@ public final class Constants
         public static final double kMaxSpeedMetersPerSecond = 4.92;  // 1.0; Speed limited for demos.
         //public static final double kMaxSpeedMetersPerSecond = ModuleConstants.kDriveWheelFreeSpeedRps; // max speed
         public static final double kMaxAngularSpeed = 1.5 * (2 * Math.PI); // radians per second (1.5 rots / sec)
-        public static final double kSlowModeFactor = .25; // 50% of normal.
+        public static final double kSlowModeFactor = .20; // 50% of normal.
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
 
         // For vision testing only!!!
@@ -141,7 +141,7 @@ public final class Constants
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.
         public static final double kDirectionSlewRate = Double.POSITIVE_INFINITY; // radians per second.
-        public static final double kMagnitudeSlewRate = 0.70; // percent per second (1 = 100%).
+        public static final double kMagnitudeSlewRate = 0.60; // percent per second (1 = 100%).
         public static final double kRotationalSlewRate = Double.POSITIVE_INFINITY; // percent per second (1 = 100%).
 
         // Chassis configuration:

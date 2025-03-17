@@ -53,7 +53,7 @@ public class AlgaeGroundIntake extends SubsystemBase {
 
     public void startRollers(){
         isRunning = true;
-        algaeGroundMotor.set(-0.5);
+        algaeGroundMotor.set(1);
         updateDS();
     }
 
@@ -71,7 +71,7 @@ public class AlgaeGroundIntake extends SubsystemBase {
     public void extendOut(){
         Util.consoleLog();
 
-        algaeGroundPiston.SetA();
+        algaeGroundPiston.SetB();
 
         algaeGroundPistonStatus = true;
 
@@ -81,7 +81,7 @@ public class AlgaeGroundIntake extends SubsystemBase {
     public void retractIn(){
         Util.consoleLog();
 
-        algaeGroundPiston.SetB();
+        algaeGroundPiston.SetA();
 
         algaeGroundPistonStatus = false;
 

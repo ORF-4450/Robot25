@@ -94,6 +94,12 @@ public class AlgaeManipulator extends SubsystemBase {
         updateDS();
     }
 
+    public void processAlgae(){
+        isAlgaeMotorRunning = true;
+        algaeMotor.set(0.05);
+        updateDS();
+    }
+
     public void start(){
        start(0.1);
        isAlgaeMotorRunning = true;
