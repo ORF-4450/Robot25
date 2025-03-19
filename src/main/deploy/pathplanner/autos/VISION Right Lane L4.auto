@@ -68,7 +68,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightPickup to B Right"
+                  "pathName": "RightPickup to B-Right"
                 }
               },
               {
@@ -125,7 +125,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightPickup to B Left"
+                  "pathName": "RightPickup to B-Left"
                 }
               },
               {
