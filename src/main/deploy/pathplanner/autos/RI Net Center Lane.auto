@@ -153,6 +153,12 @@
           "data": {
             "name": "Reset Elevator"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Net to RightPickup"
+          }
         }
       ]
     }
