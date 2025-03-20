@@ -99,6 +99,21 @@ public final class Constants
     public static String        CORAL_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
     public static String        ALGAE_CAMERA_TAG = "HD_USB_Camera";
 
+    //Limelight Constants:
+    public static final double X_REEF_ALIGNMENT_P = 0.05;
+	public static final double Y_REEF_ALIGNMENT_P = 0.05;
+	public static final double ROT_REEF_ALIGNMENT_P = 0.03;
+
+	public static final double ROT_SETPOINT_REEF_ALIGNMENT = 0;  // Rotation (Needs to be changed to our value)
+	public static final double ROT_TOLERANCE_REEF_ALIGNMENT = 1;
+	public static final double X_SETPOINT_REEF_ALIGNMENT = -0.34;  // Vertical pose (Needs to be changed to our value)
+	public static final double X_TOLERANCE_REEF_ALIGNMENT = 0.02;
+	public static final double Y_SETPOINT_REEF_ALIGNMENT = 0.16;  // Horizontal pose (Needs to be changed to our value)
+	public static final double Y_TOLERANCE_REEF_ALIGNMENT = 0.02; 
+
+	public static final double DONT_SEE_TAG_WAIT_TIME = 1;
+	public static final double POSE_VALIDATION_TIME = 0.3;
+
     public static final int     REV_PDB = 20;
     public static final int     CTRE_CANDLE = 21;
 	

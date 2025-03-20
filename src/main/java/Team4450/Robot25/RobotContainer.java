@@ -2,22 +2,20 @@
 package Team4450.Robot25;
 
 import static Team4450.Robot25.Constants.*;
-
-import org.opencv.photo.Photo;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import Team4450.Robot25.commands.AlignToReefTagRelative;
 import Team4450.Robot25.commands.DriveCommand;
 import Team4450.Robot25.commands.ExtendClimber;
 // import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
 import Team4450.Robot25.commands.OuttakeProcessor;
-import Team4450.Robot25.commands.PointToYaw;
+// import Team4450.Robot25.commands.PointToYaw;
 // import Team4450.Robot25.commands.SetTargetPose;
-import Team4450.Robot25.commands.UpdateCandle;
+// import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
 // import Team4450.Robot25.commands.GoToPose;
 import Team4450.Robot25.commands.IntakeAlgaeGround;
@@ -31,8 +29,8 @@ import Team4450.Robot25.commands.RetractClimber;
 // import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
 import Team4450.Robot25.commands.DriveToTag;
-import Team4450.Robot25.commands.DriveToRight;
-import Team4450.Robot25.commands.DriveToLeft;
+// import Team4450.Robot25.commands.DriveToRight;
+// import Team4450.Robot25.commands.DriveToLeft;
 
 
 import Team4450.Robot25.subsystems.AlgaeManipulator;
@@ -499,6 +497,11 @@ public class RobotContainer
 			new InstantCommand(() -> driveBase.enableSlowMode())))
 			.onFalse(new InstantCommand(driveBase::disableSlowMode));
 
+		new Trigger(() -> driverController.getLeftTrigger())
+			.whileTrue(new AlignToReefTagRelative(false, driveBase));
+
+		new Trigger(() -> driverController.getRightTrigger())
+			.onTrue(new AlignToReefTagRelative(true, driveBase));
 
         // new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
