@@ -11,28 +11,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Mid Start To D Right"
+                  "pathName": "RightWall to C Right"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise to L2"
+                  "name": "Raise to L4"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Raise to L4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Left"
           }
         },
         {
@@ -48,13 +36,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "D-Right to D-Algae"
+                  "pathName": "C-Right to C-Algae"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Remove Algae L2"
+                  "name": "Remove Algae L3"
                 }
               }
             ]
@@ -73,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "D to Net"
+                  "pathName": "C to Net"
                 }
               },
               {
@@ -92,15 +80,41 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Reset Elevator"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Reset Elevator"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Net to RightPickup"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Glacier Peak",
+  "folder": null,
   "choreoAuto": false
 }
