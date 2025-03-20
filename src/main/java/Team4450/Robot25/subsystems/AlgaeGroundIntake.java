@@ -3,11 +3,11 @@ package Team4450.Robot25.subsystems;
 import static Team4450.Robot25.Constants.ALGAE_GROUND;
 import static Team4450.Robot25.Constants.ALGAE_GROUND_INTAKE;
 
-import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import Team4450.Lib.Util;
 import Team4450.Lib.ValveDA;
@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgaeGroundIntake extends SubsystemBase {
-    private SparkFlex algaeGroundMotor = new SparkFlex(ALGAE_GROUND_INTAKE, MotorType.kBrushless);
-    private SparkFlexConfig algaeGroundConfig = new SparkFlexConfig();
+    private SparkMax algaeGroundMotor = new SparkMax(ALGAE_GROUND_INTAKE, MotorType.kBrushless);
+    private SparkMaxConfig algaeGroundConfig = new SparkMaxConfig();
 
     private ValveDA algaeGroundPiston = new ValveDA(ALGAE_GROUND, PneumaticsModuleType.REVPH);
 
@@ -57,21 +57,27 @@ public class AlgaeGroundIntake extends SubsystemBase {
         updateDS();
     }
 
+    public void feedAlgae(){
+        algaeGroundMotor.set(0.4);
+        isRunning = true;
+        updateDS();
+    }
     public void start(){
         start(1);
         isRunning = true;
         updateDS();
      }
 
-    public void stop(){
+    public void stopRollers(){
         algaeGroundMotor.set(0);
         isRunning = false;
         updateDS();
     }
+    
     public void extendOut(){
         Util.consoleLog();
 
-        algaeGroundPiston.SetB();
+        algaeGroundPiston.SetA();
 
         algaeGroundPistonStatus = true;
 
@@ -81,7 +87,7 @@ public class AlgaeGroundIntake extends SubsystemBase {
     public void retractIn(){
         Util.consoleLog();
 
-        algaeGroundPiston.SetA();
+        algaeGroundPiston.SetB();
 
         algaeGroundPistonStatus = false;
 

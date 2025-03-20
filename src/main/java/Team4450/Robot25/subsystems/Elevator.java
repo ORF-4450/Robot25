@@ -136,9 +136,9 @@ public class Elevator extends SubsystemBase {
         targetPosition -= change;
     }
 
-    public void moveSlow(double change){
+    public void moveSlowToHeight(double height){
         isSlow = true;
-        targetPosition -= change;
+        targetPosition = height/ELEVATOR_WINCH_FACTOR;
     }
     /**
      * Bypass all setpoint generation and just run direct motor power. This

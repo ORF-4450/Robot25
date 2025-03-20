@@ -10,7 +10,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.DriveCommand;
-import Team4450.Robot25.commands.DriveToTag;
 import Team4450.Robot25.commands.ExtendClimber;
 // import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
@@ -25,7 +24,7 @@ import Team4450.Robot25.commands.IntakeAlgaeGround;
 import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RetractClimber;
-import Team4450.Robot25.commands.SetTarget;
+// import Team4450.Robot25.commands.SetTarget;
 // import Team4450.Robot25.commands.RotateToPose;
 // import Team4450.Robot25.commands.RotateToTag;
 // import Team4450.Robot25.commands.GoToTag;
@@ -433,13 +432,13 @@ public class RobotContainer
 		// 	.onTrue(new DriveToRight(driveBase, pvCoralTagCamera, true, true));
 
  		//Drive to the AprilTag
-		new Trigger(() -> driverController.getXButton())
-			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
+		// new Trigger(() -> driverController.getXButton())
+		// 	.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
 
-		new Trigger(() -> driverController.getRightTrigger())
-			.whileTrue(new DriveToRight(driveBase, pvTagCamera));
-		new Trigger(() -> driverController.getLeftTrigger())
-			.whileTrue(new DriveToLeft(driveBase, pvTagCamera, true, true));
+		// new Trigger(() -> driverController.getRightTrigger())
+		// 	.whileTrue(new DriveToRight(driveBase, pvTagCamera));
+		// new Trigger(() -> driverController.getLeftTrigger())
+		// 	.whileTrue(new DriveToLeft(driveBase, pvTagCamera, true, true));
 		
     	// Drive to the AprilTag using Pose information
 		 //new Trigger(()-> driverController.getLeftTrigger())
@@ -488,6 +487,19 @@ public class RobotContainer
         new Trigger(() -> driverController.getXButton())
             .onTrue(new IntakeAlgaeGround(elevatedManipulator));
 
+		new Trigger(() -> driverController.getYButton())
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.RESET));
+		
+		new Trigger(() -> driverController.getRightBumperButton())
+			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
+
+
+		new Trigger(() -> driverController.getLeftBumperButton() && driverController.getRightBumperButton())
+			.whileTrue(new ParallelCommandGroup(new DriveToTag(driveBase, pvTagCamera, true, true), 
+			new InstantCommand(() -> driveBase.enableSlowMode())))
+			.onFalse(new InstantCommand(driveBase::disableSlowMode));
+
+
         // new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
 			
@@ -511,11 +523,6 @@ public class RobotContainer
 		new Trigger(() -> utilityController.getYButton())
 		.onTrue(new Preset(elevatedManipulator, PresetPosition.CORAL_SCORING_L4));
 
-		
-		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
-		new Trigger(() -> utilityController.getLeftTrigger())
-			.whileTrue(new IntakeCoral(elevatedManipulator))
-			.onFalse(new InstantCommand(() -> elevatedManipulator.coralManipulator.stop()));
 			
 		//If the algae manipulator is in one of the removing positions, it will use the same intake button to remove algae.
 		// new Trigger(()-> utilityController.getLeftTrigger() && !elevatedManipulator.intakeCoralInsteadOfAlgae)
@@ -524,46 +531,48 @@ public class RobotContainer
 
 		//Moves the algae Manipulator/elevator to the removing position for Algae on L3
 		new Trigger(()-> utilityController.getPOV() == 0)
-		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3), 
-			new InstantCommand(() -> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
-			// .onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3));
+		// .onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3), 
+		// 	new InstantCommand(() -> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
+			.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L3));
 
 
 		//Moves the algae Manipulator/Elevator to the removing position for Algae on L2
 		new Trigger(()-> utilityController.getPOV() == 180)
-		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2), 
-			new InstantCommand(() -> elevatedManipulator.intakeCoralInsteadOfAlgae = false)));
+		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_REMOVE_L2)));
 
 		//Moves the elevator and algae manipulator to the scoring position for the algae net.
 		new Trigger(()-> utilityController.getPOV() == 90)
-		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING), 
-			new InstantCommand(() -> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
+		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_NET_SCORING)));
 		
 		//Moves the elevator and algae manipulator to the scoring position for the algae processor.
-		new Trigger(()-> utilityController.getPOV() == 0)
-		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING), 
-			new InstantCommand(() -> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
+		new Trigger(()-> utilityController.getPOV() == 270)
+		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING)));
+			// new InstantCommand(() -> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
+		
+		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.
+		new Trigger(() -> utilityController.getLeftTrigger())
+			.whileTrue(new IntakeCoral(elevatedManipulator))
+			.onFalse(new InstantCommand(() -> elevatedManipulator.coralManipulator.stop()));
 		
 		//Runs coral outtake if the elevator and manipulator are in the correct position.
-		new Trigger(() -> utilityController.getRightTrigger() && elevatedManipulator.scoreCoralInsteadOfAlgae)
+		new Trigger(() -> utilityController.getRightTrigger())
 			.onTrue(new OuttakeCoral(elevatedManipulator));
 		
 		// Runs algae outtake if the elevator and manipulator are in the correct position.
-		new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
+		new Trigger(() -> utilityController.getRightBumperButton())
 			.onTrue(new OuttakeAlgae(elevatedManipulator));
 
 		// new Trigger(() -> utilityController.getLeftBumperButton() )
 		// 	.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_GROUND_INTAKE));
 
-		//Moves the elvator and manipulator to the reset position and extends out ground intake, and algae manipulator, and starts intaking.
 		new Trigger(() -> utilityController.getLeftBumperButton())
 			.whileTrue(new RemoveAlgae(elevatedManipulator));
 
-		new Trigger(() -> utilityController.getLeftTrigger() && elevatedManipulator.intakeCoralInsteadOfAlgae)
-			.onTrue(new OuttakeCoral(elevatedManipulator));
+		// new Trigger(() -> utilityController.getLeftTrigger())
+		// 	.onTrue(new IntakeCoral(elevatedManipulator));
 
-		new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
-			.onTrue(new OuttakeAlgae(elevatedManipulator));
+		// new Trigger(() -> utilityController.getRightTrigger() && !elevatedManipulator.scoreCoralInsteadOfAlgae)
+		// 	.onTrue(new OuttakeAlgae(elevatedManipulator));
 		// new Trigger(() -> utilityController.getLeftBumperButton() && elevatedManipulator.hasAlgae() == false)
 		// 	.whileTrue(new RemoveAlgae(elevatedManipulator))
 		// 	.onFalse(new InstantCommand(algaeManipulator::stop));
@@ -571,8 +580,8 @@ public class RobotContainer
 		// new Trigger(() -> utilityController.getLeftBumperButton() && elevatedManipulator.hasAlgae() == true)
 		// 	.toggleOnTrue(new InstantCommand(() -> elevatedManipulator.algaeManipulator.holdAlgae()));
 
-		new Trigger(() -> utilityController.getRightBumperButton())
-			.onTrue(new OuttakeAlgae(elevatedManipulator));
+		// new Trigger(() -> utilityController.getRightBumperButton())
+		// 	.onTrue(new OuttakeAlgae(elevatedManipulator));
 		
 		 //Resets the manipulators and elevator to the default position.
 		new Trigger(() -> utilityController.getBackButton())

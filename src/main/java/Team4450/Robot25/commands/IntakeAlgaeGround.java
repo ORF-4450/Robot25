@@ -1,7 +1,6 @@
 package Team4450.Robot25.commands;
 
 import Team4450.Lib.Util;
-import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import Team4450.Robot25.subsystems.ElevatedManipulator.PresetPosition;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -11,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class IntakeAlgaeGround extends Command {
     private final ElevatedManipulator elevatedManipulator;
 
-    private static enum State{MOVING, INTAKE_ALGAE, STOP};
+    private static enum State{MOVING, INTAKE_ALGAE, FEEDING, HOLDING, STOP};
     private State state = State.MOVING;
 
     double startTime;
@@ -24,7 +23,6 @@ public class IntakeAlgaeGround extends Command {
         state = State.INTAKE_ALGAE;
         elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_GROUND_INTAKE); //Moves the algae manipulator and elevator to the intake position and extends the ground intake
         SmartDashboard.putString("Algae Ground Intake Status", state.name());
-        startTime = Util.timeStamp();
     }
 
     public void execute(){
@@ -41,16 +39,30 @@ public class IntakeAlgaeGround extends Command {
                 elevatedManipulator.algaeManipulator.startIntaking();
                 elevatedManipulator.algaeGroundIntake.startRollers();
                 if(elevatedManipulator.algaeManipulator.hasAlgae() == true){
-                    elevatedManipulator.elevator.setElevatorHeight(0.20);
+                    state = State.FEEDING;
+                }
+                break;
+
+            case FEEDING:
+                elevatedManipulator.algaeGroundIntake.feedAlgae();
+                elevatedManipulator.algaeManipulator.holdAlgae();
+                elevatedManipulator.algaeManipulator.pivotUp();
+                if(elevatedManipulator.algaeManipulator.hasAlgae() == true){
+                    state = State.HOLDING;
+                }
+                break;
+            case HOLDING:
+                if(elevatedManipulator.elevator.getElevatorHeight() > 0.45){
+                    elevatedManipulator.algaeManipulator.holdAlgae();
+                    elevatedManipulator.algaeManipulator.pivotDown();
+                    elevatedManipulator.algaeGroundIntake.stopRollers();
+                    elevatedManipulator.algaeGroundIntake.retractIn();
                     state = State.STOP;
                 }
                 break;
 
-            case STOP:
-                elevatedManipulator.algaeManipulator.holdAlgae();
-                elevatedManipulator.algaeGroundIntake.stop();
-                elevatedManipulator.algaeGroundIntake.setAlgaeGroundExtend(false);
-                elevatedManipulator.executeSetPosition(PresetPosition.NONE);
+            case STOP: 
+                SmartDashboard.putString("status", "Algae Ground Intake Sequenced");               
                 break;
         }
     }
@@ -62,7 +74,6 @@ public class IntakeAlgaeGround extends Command {
     public void end(boolean interrupted){
         Util.consoleLog("interrupted=%b", interrupted);
         elevatedManipulator.algaeManipulator.holdAlgae();    
-        elevatedManipulator.algaeGroundIntake.stop();
-        elevatedManipulator.executeSetPosition(PresetPosition.NONE);
+        elevatedManipulator.algaeGroundIntake.stopRollers();
     }
 }
