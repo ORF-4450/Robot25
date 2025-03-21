@@ -38,7 +38,7 @@ public class IntakeAlgaeGround extends Command {
             case INTAKE_ALGAE:
                 elevatedManipulator.algaeManipulator.startIntaking();
                 elevatedManipulator.algaeGroundIntake.startRollers();
-                if(elevatedManipulator.algaeManipulator.hasAlgae() == true){
+                if(elevatedManipulator.algaeManipulator.getCurrent() > 75.0){
                     state = State.FEEDING;
                 }
                 break;
@@ -52,7 +52,7 @@ public class IntakeAlgaeGround extends Command {
                 }
                 break;
             case HOLDING:
-                if(elevatedManipulator.elevator.getElevatorHeight() > 0.45){
+                if(elevatedManipulator.elevator.getElevatorHeight() > 0.35){
                     elevatedManipulator.algaeManipulator.holdAlgae();
                     elevatedManipulator.algaeManipulator.pivotDown();
                     elevatedManipulator.algaeGroundIntake.stopRollers();

@@ -27,7 +27,7 @@ public class AlgaeManipulator extends SubsystemBase {
     public boolean isAlgaeMotorRunning = false;
     public boolean algaePivotStatus = false;
     public boolean algaeExtendStatus = false;
-    public double algaeCurrent;
+    public double algCurrent;
 
     public AlgaeManipulator(){
         //algaeConfig.idleMode(IdleMode.kBrake);
@@ -55,13 +55,10 @@ public class AlgaeManipulator extends SubsystemBase {
         updateDS();
     }
 
-    // public void periodic(){
-    //  Util.consoleLog("Algae Motor Current:" + algaeMotor.getOutputCurrent());
-    //  Util.consoleLog("Algae Motor Voltage:"+ algaeMotor.getBusVoltage());
-    // //  Util.consoleLog("Algae Motor Applied Output:"+ algaeMotor.getAppliedOutput());
-    // //  Util.consoleLog("Algae Motor Temperature in Celsius:"+ algaeMotor.getMotorTemperature());
-    //  Util.consoleLog("Algae Motor Velocity:"+ algaeMotor.getEncoder().getVelocity());
-    // }
+    public void periodic(){
+        double algCurrent = this.getCurrent();
+     SmartDashboard.putNumber("Algae Manipulator Current", algCurrent);
+    }
     
     public void start(double speedfactor){
         isAlgaeMotorRunning = Math.abs(speedfactor) > 0.02;
@@ -193,7 +190,15 @@ public class AlgaeManipulator extends SubsystemBase {
     }   
 
     public boolean hasAlgae(){
-        return this.getCurrent() > 80.0;
+        if(isAlgaeMotorRunning && this.getCurrent() > 20.0){
+            return true;
+        } else if(this.getCurrent() > 80.0){
+            return true;
+        } else if(this.getCurrent() < 20.0){
+            return false;
+        } else {
+            return false;
+        }
     }
 
     public double getCurrent(){

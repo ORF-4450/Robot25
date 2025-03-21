@@ -8,6 +8,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.AlignToReefTagRelative;
 import Team4450.Robot25.commands.DriveCommand;
+import Team4450.Robot25.commands.DriveToLeft;
+import Team4450.Robot25.commands.DriveToRight;
 import Team4450.Robot25.commands.ExtendClimber;
 // import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
@@ -90,7 +92,8 @@ public class RobotContainer
 
 	public static ShuffleBoard			shuffleBoard;
 	public static DriveBase 			driveBase;
-	public static PhotonVision			pvTagCamera;
+	public static PhotonVision			pvCoralTagCamera;
+	public static PhotonVision			pvAlgaeTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
 	public static ElevatedManipulator	elevatedManipulator;
@@ -211,8 +214,8 @@ public class RobotContainer
 
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
-		pvTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
-		// pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
+		pvCoralTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
+		pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
 		elevator = new Elevator(driveBase);
@@ -238,7 +241,7 @@ public class RobotContainer
 		// This sets up the photonVision subsystem to constantly update the robotDrive odometry
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
-		pvTagCamera.setDefaultCommand(new UpdateVisionPose(pvTagCamera, driveBase));
+		pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
 		// pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
 
 		// Set the default drive command. This command will be scheduled automatically to run
@@ -489,19 +492,19 @@ public class RobotContainer
 			.onTrue(new Preset(elevatedManipulator, PresetPosition.RESET));
 		
 		new Trigger(() -> driverController.getRightBumperButton())
-			.whileTrue(new DriveToTag(driveBase, pvTagCamera, true, true));
+			.whileTrue(new DriveToTag(driveBase, pvAlgaeTagCamera, true, true));
 
 
 		new Trigger(() -> driverController.getLeftBumperButton() && driverController.getRightBumperButton())
-			.whileTrue(new ParallelCommandGroup(new DriveToTag(driveBase, pvTagCamera, true, true), 
+			.whileTrue(new ParallelCommandGroup(new DriveToTag(driveBase, pvAlgaeTagCamera, true, true), 
 			new InstantCommand(() -> driveBase.enableSlowMode())))
 			.onFalse(new InstantCommand(driveBase::disableSlowMode));
 
 		new Trigger(() -> driverController.getLeftTrigger())
-			.whileTrue(new AlignToReefTagRelative(false, driveBase));
+			.whileTrue(new DriveToLeft(driveBase, pvCoralTagCamera, true, true));
 
 		new Trigger(() -> driverController.getRightTrigger())
-			.onTrue(new AlignToReefTagRelative(true, driveBase));
+			.whileTrue(new DriveToRight(driveBase, pvCoralTagCamera, true, true));
 
         // new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
@@ -592,6 +595,10 @@ public class RobotContainer
 		
 		new Trigger(() -> utilityController.getStartButton())
 			.onTrue(new InstantCommand(elevator::resetEncoders));
+
+		new Trigger(() -> utilityController.getRightStickButton())
+			.onTrue(new InstantCommand(() -> elevatedManipulator.algaeManipulator.pivotUp()))
+			.onFalse(new InstantCommand(() -> elevatedManipulator.algaeManipulator.pivotDown()));
 		
 		
 			

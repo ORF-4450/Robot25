@@ -59,9 +59,9 @@ public class AlignToReefTagRelative extends Command {
       double xSpeed = xController.calculate(postions[2]);
       SmartDashboard.putNumber("xspee", xSpeed);
       double ySpeed = -yController.calculate(postions[0]);
-      double rotValue = -rotController.calculate(postions[4]);
+      double rotValue = rotController.calculate(postions[4]);
 
-      robotDrive.drive(xSpeed, ySpeed, rotValue, false);
+      robotDrive.drive(-ySpeed, -xSpeed, rotValue, false);
 
       if (!rotController.atSetpoint() ||
           !yController.atSetpoint() ||
