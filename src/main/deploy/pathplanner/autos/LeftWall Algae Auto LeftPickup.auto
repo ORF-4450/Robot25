@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left Wall Start to E-Right"
+                  "pathName": "LeftWallStart to E-Right"
                 }
               },
               {
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "E to Net"
+                  "pathName": "E-Algae to Net"
                 }
               },
               {

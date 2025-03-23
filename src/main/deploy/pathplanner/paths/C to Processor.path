@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.8229632065756105,
-        "y": 1.3368889719798247
+        "x": 5.840118243243243,
+        "y": 1.2679898648648649
       },
       "isLocked": false,
       "linkedName": "C Algae"
@@ -20,15 +20,20 @@
         "y": 0.47555789432010104
       },
       "prevControl": {
-        "x": 6.16675419560185,
-        "y": 1.4222596448988047
+        "x": 5.415202702702702,
+        "y": 2.167229729729729
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Processor"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.17422748191978737,
+      "rotationDegrees": 29.999999999999996
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
