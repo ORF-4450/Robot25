@@ -46,5 +46,6 @@ public class OuttakeProcessor extends Command {
         Util.consoleLog("interrupted=%b", interrupted);
         elevatedManipulator.algaeManipulator.stop();   
         elevatedManipulator.scoreCoralInsteadOfAlgae = true; // Change to true to score coral instead of algae.
+        elevatedManipulator.outtakeProcessor = false;
     }
 }

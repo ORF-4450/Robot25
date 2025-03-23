@@ -68,6 +68,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -149,9 +155,35 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Reset Elevator"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Reset Elevator"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.15
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Net To End"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]
