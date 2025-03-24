@@ -77,7 +77,12 @@ public final class Constants
     
     // CAMERAS 
 
-    public static Transform3d   CORAL_CAMERA_TAG_TRANSFORM = new Transform3d(
+    public static Transform3d   CORAL_CAMERA_TAG_LEFT_TRANSFORM = new Transform3d(
+        new Translation3d(-0.18, 0.21, 0.60), // change last value to height in METERS of lens
+        new Rotation3d(0, 0, Math.toRadians(-90)) // keep the 180, the -10 is the camera angle (negative!)
+    );
+
+    public static Transform3d   CORAL_CAMERA_TAG_RIGHT_TRANSFORM = new Transform3d(
         new Translation3d(-0.18, 0.21, 0.60), // change last value to height in METERS of lens
         new Rotation3d(0, 0, Math.toRadians(-90)) // keep the 180, the -10 is the camera angle (negative!)
     );
@@ -97,7 +102,8 @@ public final class Constants
 
     // the names of the cameras in the PhotonVision software
     public static String        ALGAE_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
-    public static String        CORAL_CAMERA_TAG = "HD_USB_Camera";
+    public static String        CORAL_CAMERA_TAG_LEFT = "HD_USB_Camera";
+    public static String        CORAL_CAMERA_TAG_RIGHT = "HD_USB_Camera";
 
     //Limelight Constants:
     public static final double X_REEF_ALIGNMENT_P = 0.05;

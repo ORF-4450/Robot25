@@ -18,7 +18,7 @@ import Team4450.Robot25.subsystems.DriveBase;
  * rotation to be commanded seperately from translation.
  */
 
-public class DriveToTag extends Command {
+public class DriveToCoralTag extends Command {
     PIDController rotationController = new PIDController(0.03, 0, 0); // for rotating drivebase
     PIDController translationController = new PIDController(0.08, 0.005, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
@@ -28,15 +28,15 @@ public class DriveToTag extends Command {
     /**
      * @param robotDrive the drive subsystem
      */
-    public DriveToTag (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel) {
+    public DriveToCoralTag (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
 
         if (alsoDrive) addRequirements(robotDrive);
 
-        SendableRegistry.addLW(translationController, "DriveToTag Translation PID");
-        SendableRegistry.addLW(rotationController, "DriveToTag Rotation PID");
+        SendableRegistry.addLW(translationController, "DriveToCoralTag Translation PID");
+        SendableRegistry.addLW(rotationController, "DriveToCoralTag Rotation PID");
     }
 
     public void initialize (){
@@ -56,7 +56,7 @@ public class DriveToTag extends Command {
         translationController.setSetpoint(-15); // target should be at -15 pitch
         translationController.setTolerance(0.5);
 
-        SmartDashboard.putString("DriveToTag", "Tag Tracking Initialized");
+        SmartDashboard.putString("DriveToCoralTag", "Tag Tracking Initialized");
     }
 
     @Override
@@ -80,12 +80,18 @@ public class DriveToTag extends Command {
         Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
 
         if (alsoDrive) {
-            robotDrive.driveRobotRelative(0, -movement, rotation);
+            robotDrive.driveRobotRelative(0, movement, rotation);
 
         } else {
             robotDrive.setTrackingRotation(rotation);
         }
         
+    }
+
+    public boolean isFinished(){
+        if(photonVision.getClosestTarget() == null) 
+            return true;
+        return false;
     }
     @Override
     public void end(boolean interrupted) {
@@ -100,7 +106,7 @@ public class DriveToTag extends Command {
         robotDrive.disableTrackingSlowMode();
         robotDrive.clearPPRotationOverride();
 
-        SmartDashboard.putString("DriveToTag", "Tag Tracking Ended");
+        SmartDashboard.putString("DriveToCoralTag", "Tag Tracking Ended");
 
     }
 }
