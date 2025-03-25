@@ -8,32 +8,20 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.AlignToReefTagRelative;
 import Team4450.Robot25.commands.DriveCommand;
-import Team4450.Robot25.commands.DriveToLeft;
-import Team4450.Robot25.commands.DriveToRight;
+import Team4450.Robot25.commands.DriveToAlgaeTag;
+import Team4450.Robot25.commands.DriveToCoralTag;
 import Team4450.Robot25.commands.ExtendClimber;
-// import Team4450.Robot25.commands.GetPoseEsimate;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
 import Team4450.Robot25.commands.OuttakeProcessor;
-// import Team4450.Robot25.commands.PointToYaw;
-// import Team4450.Robot25.commands.SetTargetPose;
-// import Team4450.Robot25.commands.UpdateCandle;
 import Team4450.Robot25.commands.UpdateVisionPose;
-// import Team4450.Robot25.commands.GoToPose;
 import Team4450.Robot25.commands.IntakeAlgaeGround;
 import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RetractClimber;
-// import Team4450.Robot25.commands.SetTarget;
-// import Team4450.Robot25.commands.RotateToPose;
-// import Team4450.Robot25.commands.RotateToTag;
-// import Team4450.Robot25.commands.GoToTag;
-// import Team4450.Robot25.commands.SetTagBasedPosition;
 import Team4450.Robot25.commands.OuttakeAlgae;
 import Team4450.Robot25.commands.DriveToAlgaeTag;
 import Team4450.Robot25.commands.DriveToCoralTag;
-// import Team4450.Robot25.commands.DriveToRight;
-// import Team4450.Robot25.commands.DriveToLeft;
 
 
 import Team4450.Robot25.subsystems.AlgaeManipulator;
@@ -48,7 +36,6 @@ import Team4450.Robot25.subsystems.PhotonVision.PipelineType;
 import Team4450.Robot25.subsystems.ElevatedManipulator;
 import Team4450.Robot25.subsystems.Elevator;
 import Team4450.Robot25.subsystems.Climber;
-// import Team4450.Robot25.subsystems.CoralGroundIntake;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.NavX;
 import Team4450.Lib.Util;
@@ -92,7 +79,7 @@ public class RobotContainer
 	// Subsystems.
 
 	public static ShuffleBoard			shuffleBoard;
-	public static DriveBase 			driveBase;
+	public static DriveBase 			  driveBase;
 	public static PhotonVision			pvCoralTagCameraLeft;
 	public static PhotonVision 			pvCoralTagCameraRight;
 	public static PhotonVision			pvAlgaeTagCamera;
@@ -244,8 +231,7 @@ public class RobotContainer
 		// This sets up the photonVision subsystem to constantly update the robotDrive odometry
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
-		pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
-		// pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(pvAlgaeTagCamera, driveBase));
+		pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(driveBase, pvAlgaeTagCamera));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
