@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class UpdateVisionPose extends Command {
     DriveBase       robotDrive;
-    String          cameraName;
     PhotonVision photonVision;
 
     /**
@@ -43,7 +42,7 @@ public class UpdateVisionPose extends Command {
     
     @Override
     public void initialize() {
-        Util.consoleLog(cameraName);
+
 	}
 
     @Override
