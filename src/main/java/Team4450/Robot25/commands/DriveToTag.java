@@ -62,13 +62,14 @@ public class DriveToTag extends Command {
     @Override
     public void execute() {
       // logic for chosing "closest" target in PV subsystem
-      PhotonTrackedTarget target = photonVision.getClosestTarget();
 
-      if (target == null) {
-        robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
-        robotDrive.clearPPRotationOverride();
-        return;
-    }
+        PhotonTrackedTarget target = photonVision.getClosestTarget();
+
+        if (target == null) {
+            robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
+            robotDrive.clearPPRotationOverride();
+            return;
+        }
 
         double targetYaw = target.getYaw();
         double targetPitch = target.getPitch();
