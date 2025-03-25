@@ -5,13 +5,11 @@ import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 
 import Team4450.Lib.Util;
+import Team4450.Robot25.subsystems.DriveBase;
+import Team4450.Robot25.subsystems.PhotonVision;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import Team4450.Robot25.AdvantageScope;
-import Team4450.Robot25.Robot;
-import Team4450.Robot25.subsystems.DriveBase;
-import Team4450.Robot25.subsystems.PhotonVision;
 
 /**
  * This class runs as the default command of a PhotonVision
@@ -25,8 +23,9 @@ import Team4450.Robot25.subsystems.PhotonVision;
  * in the simulator.
  */
 public class UpdateVisionPose extends Command {
-    PhotonVision    cameraSubsystem;
     DriveBase       robotDrive;
+    String          cameraName;
+    PhotonVision photonVision;
 
     /**
      * updates the odometry pose estimator to include sighted AprilTag positions from
@@ -34,18 +33,15 @@ public class UpdateVisionPose extends Command {
      * @param cameraSubsystem the PhotonVision subsystem in use
      * @param robotDrive the drive base
      */
-    public UpdateVisionPose(PhotonVision cameraSubsystem, DriveBase robotDrive) {
-        this.cameraSubsystem = cameraSubsystem;
+    public UpdateVisionPose(DriveBase robotDrive, PhotonVision photonVision) {
         this.robotDrive = robotDrive;
-
-        // require camera subsystem because defaultcommand
-        addRequirements(cameraSubsystem);
+        this.photonVision = photonVision;
     }
     
     @Override
     public void initialize() {
-        Util.consoleLog(cameraSubsystem.getCamera().getName());
-    }
+        Util.consoleLog(cameraName);
+	}
 
     @Override
     public boolean runsWhenDisabled() {
@@ -54,14 +50,8 @@ public class UpdateVisionPose extends Command {
 
     @Override
     public void execute() {
-        if (Robot.isSimulation()) {
-            cameraSubsystem.updateSimulationPose(robotDrive.getPose());
-        }
 
-        // If vision pose estimation stops working, this if will not use it.
-        // if (RobotState.isAutonomous()) return;
-        
-        Optional<EstimatedRobotPose> estimatedPoseOptional = cameraSubsystem.getEstimatedPose();
+         Optional<EstimatedRobotPose> estimatedPoseOptional = photonVision.getEstimatedPose();
 
         // update pose estimator pose with current epoch timestamp and the pose from the camera
         // if the camera has a good pose output.
@@ -77,13 +67,6 @@ public class UpdateVisionPose extends Command {
                 new Rotation2d(estimatedPoseContainer.estimatedPose.getRotation().getZ())
             );
             
-            // Util.consoleLog("%d %d",
-            //     Math.round(pose2d.getRotation().getDegrees()),
-            //     Math.round(robotDrive.getPose().getRotation().getDegrees())
-            // );
-            
-            // send the "green ghost" vision pose to AS
-            AdvantageScope.getInstance().sendPoses("vision_pose", estimatedPoseContainer.estimatedPose);
             robotDrive.updateOdometryVision(pose2d, estimatedPoseContainer.timestampSeconds);
         }
     }
