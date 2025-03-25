@@ -20,6 +20,9 @@ import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RetractClimber;
 import Team4450.Robot25.commands.OuttakeAlgae;
+import Team4450.Robot25.commands.DriveToAlgaeTag;
+import Team4450.Robot25.commands.DriveToCoralTag;
+
 
 import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.AlgaeGroundIntake;
@@ -76,9 +79,9 @@ public class RobotContainer
 	// Subsystems.
 
 	public static ShuffleBoard			shuffleBoard;
-	public static DriveBase 			driveBase;
+	public static DriveBase 			  driveBase;
 	public static PhotonVision			pvCoralTagCameraLeft;
-	public static PhotonVision			pvCoralTagCameraRight;
+	public static PhotonVision 			pvCoralTagCameraRight;
 	public static PhotonVision			pvAlgaeTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
@@ -485,7 +488,6 @@ public class RobotContainer
 
 		new Trigger(() -> driverController.getRightTrigger())
 			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true));
-
 
         // new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
