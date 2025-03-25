@@ -8,8 +8,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import Team4450.Robot25.commands.AlignToReefTagRelative;
 import Team4450.Robot25.commands.DriveCommand;
-import Team4450.Robot25.commands.DriveToLeft;
-import Team4450.Robot25.commands.DriveToRight;
+import Team4450.Robot25.commands.DriveToAlgaeTag;
+import Team4450.Robot25.commands.DriveToCoralTag;
 import Team4450.Robot25.commands.ExtendClimber;
 import Team4450.Robot25.commands.IntakeCoral;
 import Team4450.Robot25.commands.OuttakeCoral;
@@ -20,8 +20,6 @@ import Team4450.Robot25.commands.Preset;
 import Team4450.Robot25.commands.RemoveAlgae;
 import Team4450.Robot25.commands.RetractClimber;
 import Team4450.Robot25.commands.OuttakeAlgae;
-import Team4450.Robot25.commands.DriveToTag;
-
 
 import Team4450.Robot25.subsystems.AlgaeManipulator;
 import Team4450.Robot25.subsystems.AlgaeGroundIntake;
@@ -79,7 +77,8 @@ public class RobotContainer
 
 	public static ShuffleBoard			shuffleBoard;
 	public static DriveBase 			driveBase;
-	public static PhotonVision			pvCoralTagCamera;
+	public static PhotonVision			pvCoralTagCameraLeft;
+	public static PhotonVision			pvCoralTagCameraRight;
 	public static PhotonVision			pvAlgaeTagCamera;
 	private Candle        				candle = null;
 	public static Elevator				elevator;
@@ -201,7 +200,8 @@ public class RobotContainer
 
 		shuffleBoard = new ShuffleBoard();
 		driveBase = new DriveBase();
-		pvCoralTagCamera = new PhotonVision(CORAL_CAMERA_TAG, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_TRANSFORM);
+		pvCoralTagCameraLeft = new PhotonVision(CORAL_CAMERA_TAG_LEFT, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_LEFT_TRANSFORM);
+		pvCoralTagCameraRight = new PhotonVision(CORAL_CAMERA_TAG_RIGHT, PipelineType.POSE_ESTIMATION, CORAL_CAMERA_TAG_RIGHT_TRANSFORM);
 		pvAlgaeTagCamera = new PhotonVision(ALGAE_CAMERA_TAG, PipelineType.POSE_ESTIMATION, ALGAE_CAMERA_TAG_TRANSFORM);
 		algaeManipulator = new AlgaeManipulator();
 		coralManipulator = new CoralManipulator();
@@ -478,19 +478,14 @@ public class RobotContainer
 			.onTrue(new Preset(elevatedManipulator, PresetPosition.RESET));
 		
 		new Trigger(() -> driverController.getRightBumperButton())
-			.whileTrue(new DriveToTag(driveBase, pvAlgaeTagCamera, true, true));
-
-
-		new Trigger(() -> driverController.getLeftBumperButton() && driverController.getRightBumperButton())
-			.whileTrue(new ParallelCommandGroup(new DriveToTag(driveBase, pvAlgaeTagCamera, true, true), 
-			new InstantCommand(() -> driveBase.enableSlowMode())))
-			.onFalse(new InstantCommand(driveBase::disableSlowMode));
+			.whileTrue(new DriveToAlgaeTag(driveBase, pvAlgaeTagCamera, true, true));
 
 		new Trigger(() -> driverController.getLeftTrigger())
-			.whileTrue(new DriveToLeft(driveBase, pvCoralTagCamera, true, true));
+			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true));
 
 		new Trigger(() -> driverController.getRightTrigger())
-			.whileTrue(new DriveToRight(driveBase, pvCoralTagCamera, true, true));
+			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true));
+
 
         // new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		

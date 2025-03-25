@@ -63,9 +63,6 @@ public final class Constants
     // The spool radius is 0.875 inches, which is 0.022225 meters (source: looked it up).
     // The factor is negative, likely because the gears swap rotation direction, but this is not a significant issue.
     public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (38.0 / 8.0)) * (2 * Math.PI) * 0.022225; //Changed to 2025 Value!
-
-    // multiplied by shaft rotations to get degrees of shooter angle.
-    public static final double  CORAL_GROUND_PIVOT_FACTOR = (1.0 / (765.0 / 13.0)) * 360; //NEEDS TO BE UPDATED TO 2025 VALUE!
     
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
@@ -77,7 +74,12 @@ public final class Constants
     
     // CAMERAS 
 
-    public static Transform3d   CORAL_CAMERA_TAG_TRANSFORM = new Transform3d(
+    public static Transform3d   CORAL_CAMERA_TAG_LEFT_TRANSFORM = new Transform3d(
+        new Translation3d(-0.18, 0.21, 0.60), // change last value to height in METERS of lens
+        new Rotation3d(0, 0, Math.toRadians(-90)) // keep the 180, the -10 is the camera angle (negative!)
+    );
+
+    public static Transform3d   CORAL_CAMERA_TAG_RIGHT_TRANSFORM = new Transform3d(
         new Translation3d(-0.18, 0.21, 0.60), // change last value to height in METERS of lens
         new Rotation3d(0, 0, Math.toRadians(-90)) // keep the 180, the -10 is the camera angle (negative!)
     );
@@ -97,7 +99,8 @@ public final class Constants
 
     // the names of the cameras in the PhotonVision software
     public static String        ALGAE_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
-    public static String        CORAL_CAMERA_TAG = "HD_USB_Camera";
+    public static String        CORAL_CAMERA_TAG_LEFT = "HD_USB_Camera";
+    public static String        CORAL_CAMERA_TAG_RIGHT = "HD_USB_Camera";
 
     //Limelight Constants:
     public static final double X_REEF_ALIGNMENT_P = 0.05;

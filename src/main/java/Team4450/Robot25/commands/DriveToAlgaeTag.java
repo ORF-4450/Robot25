@@ -18,7 +18,7 @@ import Team4450.Robot25.subsystems.DriveBase;
  * rotation to be commanded seperately from translation.
  */
 
-public class DriveToRight extends Command {
+public class DriveToAlgaeTag extends Command {
     PIDController rotationController = new PIDController(0.03, 0, 0); // for rotating drivebase
     PIDController translationController = new PIDController(0.08, 0.005, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
@@ -28,15 +28,15 @@ public class DriveToRight extends Command {
     /**
      * @param robotDrive the drive subsystem
      */
-    public DriveToRight (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel) {
+    public DriveToAlgaeTag (DriveBase robotDrive, PhotonVision photonVision, boolean alsoDrive, boolean initialFieldRel) {
         this.robotDrive = robotDrive;
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
 
         if (alsoDrive) addRequirements(robotDrive);
 
-        SendableRegistry.addLW(translationController, "DriveToTag Translation PID");
-        SendableRegistry.addLW(rotationController, "DriveToTag Rotation PID");
+        SendableRegistry.addLW(translationController, "DriveToAlgaeTag Translation PID");
+        SendableRegistry.addLW(rotationController, "DriveToAlgaeTag Rotation PID");
     }
 
     public void initialize (){
@@ -56,7 +56,7 @@ public class DriveToRight extends Command {
         translationController.setSetpoint(-15); // target should be at -15 pitch
         translationController.setTolerance(0.5);
 
-        SmartDashboard.putString("DriveToTag", "Tag Tracking Initialized");
+        SmartDashboard.putString("DriveToAlgaeTag", "Tag Tracking Initialized");
     }
 
     @Override
@@ -73,14 +73,14 @@ public class DriveToRight extends Command {
         double targetYaw = target.getYaw();
         double targetPitch = target.getPitch();
 
-        double rotation = rotationController.calculate(targetYaw + 15); // attempt to minimize
+        double rotation = rotationController.calculate(targetYaw); // attempt to minimize
         double movement = translationController.calculate(targetPitch); // attempt to minimize
 
 
         Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
 
         if (alsoDrive) {
-            robotDrive.driveRobotRelative(0, movement, rotation);
+            robotDrive.driveRobotRelative(0, -movement, rotation);
 
         } else {
             robotDrive.setTrackingRotation(rotation);
@@ -100,7 +100,7 @@ public class DriveToRight extends Command {
         robotDrive.disableTrackingSlowMode();
         robotDrive.clearPPRotationOverride();
 
-        SmartDashboard.putString("DriveToTag", "Tag Tracking Ended");
+        SmartDashboard.putString("DriveToAlgaeTag", "Tag Tracking Ended");
 
     }
 }
