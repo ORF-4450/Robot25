@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RightWall to C Right"
+                  "pathName": "RightWall to C-Right"
                 }
               },
               {
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C to Net"
+                  "pathName": "C-Algae to Net"
                 }
               },
               {

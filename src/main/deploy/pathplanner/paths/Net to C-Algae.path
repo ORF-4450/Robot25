@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.048630136986302,
-        "y": 2.8304580479452057
+        "x": 7.4292570891203695,
+        "y": 5.554756221064816
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.95175513697897,
-        "y": 1.9589683219198881
+        "x": 5.405320945945946,
+        "y": 1.9498310810810806
       },
       "isLocked": false,
-      "linkedName": "C Left"
+      "linkedName": "Net"
     },
     {
       "anchor": {
-        "x": 1.4194542253521114,
-        "y": 0.8220070422535195
+        "x": 4.9169798254719845,
+        "y": 2.8767806184214773
       },
       "prevControl": {
-        "x": 2.644520547937874,
-        "y": 2.139276541097969
+        "x": 5.3855574324324325,
+        "y": 1.9103040540540541
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightPickup"
+      "linkedName": "C Algae"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7725180802103996,
+      "rotationDegrees": 29.999999999999996
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -35.0
+    "rotation": 29.999999999999996
   },
   "reversed": false,
-  "folder": "Reefs to Pickups",
+  "folder": "Net to Reef (good)",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": -150.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

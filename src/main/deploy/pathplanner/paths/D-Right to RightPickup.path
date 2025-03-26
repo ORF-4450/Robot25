@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.358556338028168,
-        "y": 5.917049295774648
+        "x": 6.4296401572191995,
+        "y": 2.5977040532904456
       },
       "isLocked": false,
       "linkedName": "D Right"
     },
     {
       "anchor": {
-        "x": 1.6809253246753246,
-        "y": 7.424837662337662
+        "x": 1.4194542253521114,
+        "y": 0.8220070422535195
       },
       "prevControl": {
-        "x": 4.389263352844337,
-        "y": 6.605313014450338
+        "x": 4.339705848728735,
+        "y": 2.3319908084872845
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LeftPickup"
+      "linkedName": "RightPickup"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -145.0
+    "rotation": -35.0
   },
   "reversed": false,
-  "folder": "Reefs to Pickups",
+  "folder": "Reefs to Pickups (good) ",
   "idealStartingState": {
     "velocity": 1.0,
     "rotation": -90.0
