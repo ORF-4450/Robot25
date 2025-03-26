@@ -100,7 +100,7 @@ public final class Constants
     // the names of the cameras in the PhotonVision software
     public static String        ALGAE_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
     public static String        CORAL_CAMERA_TAG_LEFT = "HD_USB_Camera";
-    public static String        CORAL_CAMERA_TAG_RIGHT = "HD_USB_Camera";
+    public static String        CORAL_CAMERA_TAG_RIGHT = "CORAL_RIGHT_USB";
 
     //Limelight Constants:
     public static final double X_REEF_ALIGNMENT_P = 0.05;

@@ -19,8 +19,8 @@ import Team4450.Robot25.subsystems.DriveBase;
  */
 
 public class DriveToCoralTag extends Command {
-    PIDController rotationController = new PIDController(0.04, 0.001, 0); // for rotating drivebase
-    PIDController translationController = new PIDController(0.05, 0.005, 0); // for moving drivebase in X,Y plane
+    PIDController rotationController = new PIDController(0.03, 0.0001, 0); // for rotating drivebase
+    PIDController translationController = new PIDController(0.04, 0.005, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
     PhotonVision photonVision;
     private boolean alsoDrive;
@@ -80,7 +80,7 @@ public class DriveToCoralTag extends Command {
         Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
 
         if (alsoDrive) {
-            robotDrive.driveRobotRelative(0, movement, rotation);
+            robotDrive.driveRobotRelative(rotation, movement, 0);
 
         } else {
             robotDrive.setTrackingRotation(rotation);
@@ -88,11 +88,6 @@ public class DriveToCoralTag extends Command {
         
     }
 
-    public boolean isFinished(){
-        if(photonVision.getClosestTarget() == null) 
-            return true;
-        return false;
-    }
     @Override
     public void end(boolean interrupted) {
         Util.consoleLog("interrupted=%b", interrupted);
