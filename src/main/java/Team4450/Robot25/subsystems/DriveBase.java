@@ -297,6 +297,14 @@ public class DriveBase extends SubsystemBase {
     return odometry.getEstimatedPosition();
   }
 
+  public Rotation2d getRotation2d() {
+    return getPose().getRotation();
+  }
+
+  public double getAngle(){
+    return this.getRotation2d().getDegrees();
+  }
+
   /**
    * Returns the currently-estimated pose of the robot for use in Pathplanner.
    * Currently acts exact same as getPose() but leaving it here for consistency
@@ -508,6 +516,22 @@ public class DriveBase extends SubsystemBase {
 
     // restore previous state of field-relative.
     fieldRelative = previousState;
+
+    updateDS();
+  }
+
+  public void driveFieldRelative(double xSpeed, double ySpeed, double rotSpeed) {
+    //// store the current state of field-relative toggle to restore later
+    //boolean previousState = fieldRelative;
+    fieldRelative = true;
+
+    updateDS();
+
+    // drive using the robot relative speeds/joystick values
+    drive(xSpeed, ySpeed, rotSpeed, false);
+
+    //// restore previous state of field-relative.
+    //fieldRelative = previousState;
 
     updateDS();
   }
@@ -915,6 +939,45 @@ public class DriveBase extends SubsystemBase {
   private double goalPitch;
   private double goalYaw;
 
+  private Pose2d targetPose = new Pose2d(0,0, new Rotation2d(0));
+  private int targetID = 0;
+  private boolean rotatedToTargetPose = false;
+
+  public void setTargetPose(Pose2d targetPose) {
+    this.targetPose = targetPose;
+    this.rotatedToTargetPose = false;
+    Util.consoleLog("target pose:" + targetPose.toString());
+  }
+
+  public Pose2d getTargetPose() {
+    if (this.targetPose == null) {
+      return new Pose2d(0, 0, new Rotation2d(0));
+    } 
+    else {
+      return this.targetPose;
+    }
+  }
+
+  public void setTargetID(int targetID){
+    this.targetID = targetID;
+  }
+
+  public int getTargetID(){
+    if(this.targetID == 0){
+      return 0;
+    }
+    else {
+      return this.targetID;
+    }
+  }
+
+  public void setRotatedToTargetPose(boolean isRotatedToTargetPose) {
+    this.rotatedToTargetPose = true;
+}
+
+  public boolean getRotatedToTargetPose() {
+    return this.rotatedToTargetPose;
+  }
   public void setTargetPitch(double targetPitch){
     goalPitch = targetPitch;
   }

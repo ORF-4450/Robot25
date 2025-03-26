@@ -6,6 +6,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import Team4450.Robot25.commands.AlignToTag;
 import Team4450.Robot25.commands.DriveCommand;
 import Team4450.Robot25.commands.DriveToAlgaeTag;
 import Team4450.Robot25.commands.DriveToCoralTag;
@@ -482,12 +483,14 @@ public class RobotContainer
 			.whileTrue(new DriveToAlgaeTag(driveBase, pvAlgaeTagCamera, true, true));
 
 		new Trigger(() -> driverController.getLeftTrigger())
-			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true));
+			.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraRight, true, true)
+			.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true)));
 
 		new Trigger(() -> driverController.getRightTrigger())
-			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true));
-
-        // new Trigger(() -> driverController.getYButton())
+			.whileTrue(new AlignToTag(driveBase,pvCoralTagCameraLeft, true, true)
+			.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true)));
+        
+			// new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
 			
 		// -------- Utility pad buttons ----------

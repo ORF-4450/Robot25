@@ -137,6 +137,12 @@ public class PhotonVision extends SubsystemBase
         return Optional.of(latestResult);
     }
 
+    public boolean hasTargets()
+    {
+        getLatestResult();
+
+        return latestResult.hasTargets();
+    }
     public PhotonTrackedTarget getClosestTarget() {
         PhotonTrackedTarget closest; // will hold the current closest for replacement or return
 
