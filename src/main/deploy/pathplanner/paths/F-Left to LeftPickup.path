@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.047623239436619,
-        "y": 5.272183098591549
+        "x": 3.9846830985915482,
+        "y": 5.286355633802816
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.19190455996576,
-        "y": 5.642804676703956
+        "x": 2.3050954695077883,
+        "y": 5.865974558557509
       },
       "isLocked": false,
-      "linkedName": "E Right"
+      "linkedName": "F Left"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 7.424837662337662
       },
       "prevControl": {
-        "x": 1.4830634102272793,
-        "y": 7.577646899005327
+        "x": 2.5517613500145195,
+        "y": 5.703245544407347
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,10 +45,10 @@
     "rotation": -145.0
   },
   "reversed": false,
-  "folder": "Reefs to Pickups",
+  "folder": "Reefs to Pickups (good) ",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": -31.0
+    "rotation": 29.000000000000004
   },
   "useDefaultConstraints": true
 }

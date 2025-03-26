@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.400264084507042,
-        "y": 6.122535211267604
+        "x": 7.315228873239437,
+        "y": 1.9132922535211252
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.389442567567568,
-        "y": 5.833361486486485
+        "x": 7.070948557524188,
+        "y": 1.9664629912822151
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LowStart"
     },
     {
       "anchor": {
-        "x": 3.7862676056338023,
-        "y": 5.258010563380281
+        "x": 5.9404929577464785,
+        "y": 3.869102112676055
       },
       "prevControl": {
-        "x": 3.3202702702702704,
-        "y": 6.030996621621621
+        "x": 7.54637939402048,
+        "y": 2.5253044977185564
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "F Algae"
+      "linkedName": "D Left"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7909270216962672,
-      "rotationDegrees": -151.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -151.0
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Net to Reef (good)",
+  "folder": "Starts to Reefs",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": 0.6740368979845263
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

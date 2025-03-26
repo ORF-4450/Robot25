@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Mid Start To D Right"
+                  "pathName": "MidStart To D-Right"
                 }
               },
               {
@@ -80,7 +80,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "D to Net"
+                  "pathName": "D-Algae to Net"
                 }
               },
               {
@@ -130,7 +130,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "E to Net"
+                  "pathName": "E-Algae to Net"
                 }
               },
               {
