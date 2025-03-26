@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.988456723665569,
-        "y": 2.0576412435326223
+        "x": 5.572007042253521,
+        "y": 2.097535211267604
       },
       "isLocked": false,
       "linkedName": "LowStart"
@@ -20,15 +20,20 @@
         "y": 2.8905607876712325
       },
       "prevControl": {
-        "x": 5.56755282241065,
-        "y": 2.8628578786224637
+        "x": 5.685387323943662,
+        "y": 2.2392605633802805
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "C Right"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7053140096618362,
+      "rotationDegrees": -150.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -48,7 +53,7 @@
   "folder": "Starts to Reefs",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": 180.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
