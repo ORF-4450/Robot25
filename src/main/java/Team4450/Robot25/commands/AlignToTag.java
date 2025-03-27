@@ -35,7 +35,7 @@ public class AlignToTag extends Command {
 
         if (alsoDrive) addRequirements(robotDrive);
 
-        SendableRegistry.addLW(rotationController, "DriveToAlgaeTag Rotation PID");
+        SendableRegistry.addLW(rotationController, "AlignToTag Rotation PID");
     }
 
     public void initialize (){
@@ -53,7 +53,7 @@ public class AlignToTag extends Command {
         rotationController.setSetpoint(0);
         rotationController.setTolerance(0.5);
 
-        SmartDashboard.putString("DriveToAlgaeTag", "Tag Tracking Initialized");
+        SmartDashboard.putString("AlignToTag", "Tag Tracking Initialized");
     }
 
     @Override
@@ -109,7 +109,7 @@ public class AlignToTag extends Command {
         robotDrive.disableTrackingSlowMode();
         robotDrive.clearPPRotationOverride();
 
-        SmartDashboard.putString("DriveToAlgaeTag", "Tag Tracking Ended");
+        SmartDashboard.putString("AlignToTag", "Tag Tracking Ended");
 
     }
 }
