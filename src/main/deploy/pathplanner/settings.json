@@ -15,11 +15,8 @@
     "Starts to Reefs"
   ],
   "autoFolders": [
-    "Glacier Peak",
-    "Best Autos",
-    "No Vision",
-    "Noah Time Analysis",
-    "Vision"
+    "1s Delay",
+    "2s Delay"
   ],
   "defaultMaxVel": 2.0,
   "defaultMaxAccel": 4.0,
