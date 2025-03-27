@@ -75,8 +75,8 @@ public final class Constants
     // CAMERAS 
 
     public static Transform3d   CORAL_CAMERA_TAG_LEFT_TRANSFORM = new Transform3d(
-        new Translation3d(-0.18, 0.21, 0.60), // change last value to height in METERS of lens
-        new Rotation3d(0, 0, Math.toRadians(-90)) // keep the 180, the -10 is the camera angle (negative!)
+        new Translation3d(-0.15, 0.18, 0.31), // change last value to height in METERS of lens
+        new Rotation3d(0, 0, Math.toRadians(90)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
     public static Transform3d   CORAL_CAMERA_TAG_RIGHT_TRANSFORM = new Transform3d(
