@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.989260563380282,
-        "y": 3.883274647887323
+        "x": 7.070948557524188,
+        "y": 1.9664629912822151
       },
       "isLocked": false,
       "linkedName": "LowStart"
@@ -20,8 +20,8 @@
         "y": 3.869102112676055
       },
       "prevControl": {
-        "x": 6.87588028169014,
-        "y": 3.84075704225352
+        "x": 7.54637939402048,
+        "y": 2.5253044977185564
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Starts to Reefs",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
