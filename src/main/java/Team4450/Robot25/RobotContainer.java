@@ -231,6 +231,7 @@ public class RobotContainer
 
 		// pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(driveBase, pvAlgaeTagCamera));
 		pvCoralTagCameraLeft.setDefaultCommand(new UpdateVisionPose(driveBase, pvCoralTagCameraLeft));
+		pvCoralTagCameraRight.setDefaultCommand(new UpdateVisionPose(driveBase, pvCoralTagCameraRight));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
