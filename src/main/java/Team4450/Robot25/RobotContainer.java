@@ -661,9 +661,7 @@ public class RobotContainer
 		//NamedCommands.registerCommand("Align Left", new SetTagBasedPosition(driveBase, pvTagCamera, -1)
 		//												.andThen(new RotateToPose(driveBase, true, true)
 		//												.andThen(new GoToPose(driveBase, true, true))));
-		//NamedCommands.registerCommand("Align Right", new SetTagBasedPosition(driveBase, pvTagCamera, 1)
-		//												.andThen(new RotateToPose(driveBase, true, true))
-		//												.andThen(new GoToPose(driveBase, true, true)));
+		NamedCommands.registerCommand("Align Right", new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true));
 		//NamedCommands.registerCommand("Align Center", new SetTagBasedPosition(driveBase, pvTagCamera, 0)
 		//												.andThen(new RotateToPose(driveBase, true, true))
 		//												.andThen(new GoToPose(driveBase, true, true)));
