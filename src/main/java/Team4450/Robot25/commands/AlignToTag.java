@@ -19,7 +19,7 @@ import Team4450.Robot25.subsystems.DriveBase;
  */
 
 public class AlignToTag extends Command {
-    PIDController rotationController = new PIDController(0.03, 0, 0); // for rotating drivebase
+    PIDController rotationController = new PIDController(0.035, 0, 0); // for rotating drivebase
     DriveBase robotDrive;
     PhotonVision photonVision;
     private boolean alsoDrive;
@@ -81,7 +81,7 @@ public class AlignToTag extends Command {
             robotDrive.setTrackingRotation(rotation);
         }
 
-        if(rotation < 0.01){
+        if(rotation < 0.07){
             finished = true;
         }
     }
