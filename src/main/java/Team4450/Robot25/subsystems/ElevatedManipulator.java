@@ -181,7 +181,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
 
             case ALGAE_GROUND_INTAKE:
-                endGoalElevatorHeight = 0;
+                endGoalElevatorHeight = 0.03;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;

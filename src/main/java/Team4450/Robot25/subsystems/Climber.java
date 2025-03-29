@@ -35,6 +35,10 @@ public class Climber extends SubsystemBase {
         return pistonExtended;
     }
 
+    public void periodic(){
+        SmartDashboard.putBoolean("Climber Piston", pistonExtended);
+    }
+
     private void updateDS() {
         SmartDashboard.putBoolean("Climber Piston", pistonExtended);
     }

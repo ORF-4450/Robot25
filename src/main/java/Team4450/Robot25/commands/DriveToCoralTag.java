@@ -67,6 +67,7 @@ public class DriveToCoralTag extends Command {
       if (target == null) {
         robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
         robotDrive.clearPPRotationOverride();
+        robotDrive.drive(0, 0, 0, false);
         return;
     }
 

@@ -466,10 +466,14 @@ public class RobotContainer
 		// // 	.andThen(new RotateToPose(driveBase, true, true))
 		// // 	.andThen(new GoToPose(driveBase, true, true)));
 		
-		new Trigger(() -> driverController.getBButton())
+		new Trigger(() -> driverController.getBButton() && climber.pistonStatus() == false)
 			.onTrue(new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CLIMB), elevatedManipulator),
                 new ExtendClimber(climber),
 				new InstantCommand(() -> algaeManipulator.extendOut())));
+
+		new Trigger(() -> driverController.getBButton() && climber.pistonStatus() == true)
+			.onTrue(new RetractClimber(climber));
+		
 
 		new Trigger(() -> driverController.getAButton())
     		.onTrue(new RetractClimber(climber));

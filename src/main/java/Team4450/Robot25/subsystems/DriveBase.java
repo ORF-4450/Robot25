@@ -110,8 +110,8 @@ public class DriveBase extends SubsystemBase {
   private double currentTranslationMag = 0.0;
 
   // multiplied by X,Y translation and rotation outputs for "slow mode".
-  private double speedLimiter = 1;
-  private double rotSpeedLimiter = 1;
+  public double speedLimiter = 1;
+  public double rotSpeedLimiter = 1;
   
   // we limit magnitude changes in the positive direction (acceleration), but allow crazy high rates in negative direction
   // (deceleration). this has effect that deceleration is instant but acceleration is limited
@@ -122,7 +122,7 @@ public class DriveBase extends SubsystemBase {
   private double prevTime = WPIUtilJNI.now() * 1e-6;
 
 
-  private boolean slowModeEnabled = false;
+  public boolean slowModeEnabled = false;
 
   // Odometry class for tracking robot pose
   // SwerveDriveOdometry odometry = new SwerveDriveOdometry(
@@ -258,6 +258,7 @@ public class DriveBase extends SubsystemBase {
     setField2dModulePoses();
 
     AdvantageScope.getInstance().setSwerveModules(frontLeft, frontRight, rearLeft, rearRight);
+
   }
 
   /**

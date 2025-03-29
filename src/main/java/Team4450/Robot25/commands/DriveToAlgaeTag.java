@@ -67,8 +67,14 @@ public class DriveToAlgaeTag extends Command {
       // logic for chosing "closest" target in PV subsystem
       Optional<PhotonPipelineResult> pipeline = photonVision.getLatestResult();
       //PhotonTrackedTarget target = photonVision.getLatestResult();
-      if (pipeline.isEmpty()) {
-          return;
+      if (pipeline.isEmpty() || pipeline == null) {
+        robotDrive.drive(0, 0, 0, false);
+        return;
+      }
+
+      if(pipeline.get().getTargets().size() == 0){
+        robotDrive.drive(0, 0, 0, false);
+        return;
       }
 
       PhotonTrackedTarget target = pipeline.get().getTargets().get(0);
@@ -80,6 +86,7 @@ public class DriveToAlgaeTag extends Command {
       if (target == null) {
         robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
         robotDrive.clearPPRotationOverride();
+        robotDrive.drive(0, 0, 0, false);
         return;
       }
 
