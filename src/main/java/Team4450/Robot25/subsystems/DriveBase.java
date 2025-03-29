@@ -847,6 +847,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void enableSlowMode()
   {
+    slowModeEnabled = true;
     speedLimiter = DriveConstants.kSlowModeFactor;
     rotSpeedLimiter = DriveConstants.kRotSlowModeFactor;
 
@@ -860,6 +861,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void disableSlowMode()
   {
+    slowModeEnabled = false;
     Util.consoleLog();
 
     speedLimiter = 1;
@@ -869,6 +871,8 @@ public class DriveBase extends SubsystemBase {
   }
   public void enableTrackingSlowMode(){
 
+    slowModeEnabled = true;
+    magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
     speedLimiter = DriveConstants.kTrackingModeFactor;
     rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
   
@@ -878,7 +882,11 @@ public class DriveBase extends SubsystemBase {
   }
   
   public void disableTrackingSlowMode(){
-  
+    
+    slowModeEnabled = false;
+
+    magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate, Double.NEGATIVE_INFINITY, 0);
+
     Util.consoleLog();
   
     speedLimiter = 1;
