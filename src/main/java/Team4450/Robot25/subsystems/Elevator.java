@@ -148,7 +148,7 @@ public class Elevator extends SubsystemBase {
         // height 0.99 L3 0.48 drive speed and 0.68 rotation speed
         // height 1.59 L4 0.2 drive speed and 0.4 rotation speed
         if(limiter == true){
-        if (!driveBase.slowModeEnabled) {
+            if (!driveBase.slowModeEnabled) {
             driveBase.speedLimiter = Math.pow(2, -(3.1 * this.getElevatorHeight() - 0.65));
             driveBase.rotSpeedLimiter = Math.pow(2, -(3.1 * this.getElevatorHeight() - 0.65)) + 0.2;
             if (driveBase.speedLimiter > 1) {

@@ -81,7 +81,7 @@ public class AlignToTag extends Command {
             robotDrive.setTrackingRotation(rotation);
         }
 
-        if(rotation < 0.07){
+        if(rotation < 0.08){
             finished = true;
         }
     }

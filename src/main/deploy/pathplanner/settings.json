@@ -14,13 +14,7 @@
     "Reefs to Pickups (good) ",
     "Starts to Reefs"
   ],
-  "autoFolders": [
-    "Glacier Peak",
-    "Best Autos",
-    "No Vision",
-    "Noah Time Analysis",
-    "Vision"
-  ],
+  "autoFolders": [],
   "defaultMaxVel": 2.0,
   "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 540.0,

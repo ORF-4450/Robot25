@@ -83,6 +83,7 @@ public class ElevatedManipulator extends SubsystemBase {
 
             case CORAL_STATION_INTAKE:
                 endGoalElevatorHeight = 0.3655;
+                // endGoalElevatorHeight = 0.389;
                 endGoalCoralPivotStatus = true;
                 if(algaeManipulator.hasAlgae())
                     endGoalAlgaeExtendStatus = true;
@@ -181,7 +182,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
 
             case ALGAE_GROUND_INTAKE:
-                endGoalElevatorHeight = 0.03;
+                endGoalElevatorHeight = 0.05;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;

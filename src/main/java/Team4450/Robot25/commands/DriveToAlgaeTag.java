@@ -100,7 +100,7 @@ public class DriveToAlgaeTag extends Command {
         Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
 
         if (alsoDrive) {
-            robotDrive.driveRobotRelative(rotation, -movement, 0);
+            robotDrive.driveRobotRelative(0, -movement, rotation);
 
         } else {
             robotDrive.setTrackingRotation(rotation);
