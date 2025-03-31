@@ -33,8 +33,6 @@ public class AlignToTag extends Command {
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
 
-        if (alsoDrive) addRequirements(robotDrive);
-
         SendableRegistry.addLW(rotationController, "AlignToTag Rotation PID");
     }
 
@@ -81,7 +79,7 @@ public class AlignToTag extends Command {
             robotDrive.setTrackingRotation(rotation);
         }
 
-        if(rotation < 0.08){
+        if(rotation < 0.07){
             finished = true;
         }
     }

@@ -20,7 +20,7 @@ public class IntakeAlgaeGround extends Command {
     }
 
     public void initialize(){
-        state = State.INTAKE_ALGAE;
+        state = State.MOVING;
         elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_GROUND_INTAKE); //Moves the algae manipulator and elevator to the intake position and extends the ground intake
         SmartDashboard.putString("Algae Ground Intake Status", state.name());
     }
@@ -38,7 +38,7 @@ public class IntakeAlgaeGround extends Command {
             case INTAKE_ALGAE:
                 elevatedManipulator.algaeManipulator.startIntaking();
                 elevatedManipulator.algaeGroundIntake.startRollers();
-                if(elevatedManipulator.algaeManipulator.getCurrent() > 75.0){
+                if(elevatedManipulator.algaeManipulator.hasAlgae() == true){
                     state = State.FEEDING;
                 }
                 break;

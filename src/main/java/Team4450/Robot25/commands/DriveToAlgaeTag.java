@@ -36,8 +36,6 @@ public class DriveToAlgaeTag extends Command {
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
 
-        if (alsoDrive) addRequirements(robotDrive);
-
         SendableRegistry.addLW(translationController, "DriveToAlgaeTag Translation PID");
         SendableRegistry.addLW(rotationController, "DriveToAlgaeTag Rotation PID");
     }
