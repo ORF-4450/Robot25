@@ -62,7 +62,7 @@ public final class Constants
     // Multiply by 2π for radians traveled/angular displacement and by the spool radius in meters to get linear displacement.
     // The spool radius is 0.875 inches, which is 0.022225 meters (source: looked it up).
     // The factor is negative, likely because the gears swap rotation direction, but this is not a significant issue.
-    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (38.0 / 8.0)) * (2 * Math.PI) * 0.022225; //Changed to 2025 Value!
+    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (38.0 / 9.0)) * (2 * Math.PI) * 0.022225; //Changed to 2025 Value!
     
     // Pneumatic valve controller port assignments.
 	public static final int		COMPRESSOR = 1;
