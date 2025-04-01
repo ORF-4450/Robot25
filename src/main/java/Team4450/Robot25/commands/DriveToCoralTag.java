@@ -28,6 +28,7 @@ public class DriveToCoralTag extends Command {
     PhotonVision photonVision;
     private boolean alsoDrive;
     private boolean initialFieldRel;
+    private int nullTagCounter;
     /**
      * @param robotDrive the drive subsystem
      */
@@ -62,29 +63,28 @@ public class DriveToCoralTag extends Command {
 
     @Override
     public void execute() {
+        if (nullTagCounter > 5) {
+            robotDrive.drive(0, 0, 0, false);
+        }
       // logic for chosing "closest" target in PV subsystem
       Optional<PhotonPipelineResult> pipeline = photonVision.getLatestResult();
       //PhotonTrackedTarget target = photonVision.getLatestResult();
       if (pipeline.isEmpty() || pipeline == null) {
-        robotDrive.drive(0, 0, 0, false);
+        nullTagCounter += 1;
         return;
       }
 
       if(pipeline.get().getTargets().size() == 0){
-        robotDrive.drive(0, 0, 0, false);
+        nullTagCounter += 1;
         return;
       }
 
       PhotonTrackedTarget target = pipeline.get().getTargets().get(0);
 
       if (target == null) {
-          Util.consoleLog("What why");
-      }
-
-      if (target == null) {
         robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
         robotDrive.clearPPRotationOverride();
-        robotDrive.drive(0, 0, 0, false);
+        nullTagCounter += 1;
         return;
       }
         double targetYaw = target.getYaw();
@@ -98,6 +98,7 @@ public class DriveToCoralTag extends Command {
 
         if (alsoDrive) {
             robotDrive.driveRobotRelative(rotation, movement, 0);
+            nullTagCounter = 0;
 
         } else {
             robotDrive.setTrackingRotation(rotation);
