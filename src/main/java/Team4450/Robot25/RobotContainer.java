@@ -403,7 +403,7 @@ public class RobotContainer
 			.onTrue(new InstantCommand(driveBase::zeroGyro));
 
 		// toggle field-oriented driving mode.
-		new Trigger(() -> driverController.getBackButton())
+		new Trigger(() -> driverController.getAButton())
 			.onTrue(new InstantCommand(driveBase::toggleFieldRelative));
 
 		//Holding Right D-Pad button sets X pattern to stop movement.
@@ -471,12 +471,8 @@ public class RobotContainer
                 new ExtendClimber(climber),
 				new InstantCommand(() -> algaeManipulator.extendOut())));
 
-		new Trigger(() -> driverController.getBButton() && climber.pistonStatus() == true)
+		new Trigger(() -> driverController.getPOV() == 0)
 			.onTrue(new RetractClimber(climber));
-		
-
-		new Trigger(() -> driverController.getAButton())
-    		.onTrue(new RetractClimber(climber));
 
         new Trigger(() -> driverController.getXButton())
             .onTrue(new IntakeAlgaeGround(elevatedManipulator));
@@ -487,19 +483,19 @@ public class RobotContainer
 		new Trigger(() -> driverController.getRightBumperButton())
 			.whileTrue(new DriveToAlgaeTag(driveBase, pvAlgaeTagCamera, true, true));
 
-		new Trigger(() -> driverController.getLeftTrigger())
-			.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraRight, true, true)
-			.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true)));
-
-		new Trigger(() -> driverController.getRightTrigger())
-			.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraLeft, true, true)
-			.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true)));
+		// new Trigger(() -> driverController.getLeftTrigger())
+		// 	.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraRight, true, true)
+		// 	.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true)));
 
 		// new Trigger(() -> driverController.getRightTrigger())
-		// 	.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true));
+		// 	.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraLeft, true, true)
+		// 	.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true)));
 
-		// new Trigger(() -> driverController.getLeftTrigger())
-		// 	.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true));
+		new Trigger(() -> driverController.getRightTrigger())
+			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true));
+
+		new Trigger(() -> driverController.getLeftTrigger())
+			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true));
         
 			// new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		
