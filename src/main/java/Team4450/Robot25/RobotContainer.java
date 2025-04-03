@@ -471,7 +471,7 @@ public class RobotContainer
                 new ExtendClimber(climber),
 				new InstantCommand(() -> algaeManipulator.extendOut())));
 
-		new Trigger(() -> driverController.getRightBumperButton())
+		new Trigger(() -> driverController.getPOV() == 0)
     		.onTrue(new RetractClimber(climber));
 
         new Trigger(() -> driverController.getXButton())
