@@ -403,7 +403,7 @@ public class RobotContainer
 			.onTrue(new InstantCommand(driveBase::zeroGyro));
 
 		// toggle field-oriented driving mode.
-		new Trigger(() -> driverController.getBackButton())
+		new Trigger(() -> driverController.getAButton())
 			.onTrue(new InstantCommand(driveBase::toggleFieldRelative));
 
 		//Holding Right D-Pad button sets X pattern to stop movement.
@@ -471,7 +471,7 @@ public class RobotContainer
                 new ExtendClimber(climber),
 				new InstantCommand(() -> algaeManipulator.extendOut())));
 
-		new Trigger(() -> driverController.getAButton())
+		new Trigger(() -> driverController.getRightBumperButton())
     		.onTrue(new RetractClimber(climber));
 
         new Trigger(() -> driverController.getXButton())

@@ -154,8 +154,8 @@ public final class Constants
         public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.
         
         //TrackingMode Speed:
-        public static final double kTrackingModeFactor = 0.20;
-        public static final double kRotTrackingModeFactor = 0.20;
+        public static final double kTrackingModeFactor = 0.17;
+        public static final double kRotTrackingModeFactor = 0.17;
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.
         public static final double kDirectionSlewRate = Double.POSITIVE_INFINITY; // radians per second.
