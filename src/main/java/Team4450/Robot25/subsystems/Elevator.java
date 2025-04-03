@@ -163,6 +163,7 @@ public class Elevator extends SubsystemBase {
             if (driveBase.rotSpeedLimiter < 0.4) {
                 driveBase.rotSpeedLimiter = 0.4;
             }
+            Util.consoleLog("%.2f %.2f", driveBase.speedLimiter, driveBase.rotSpeedLimiter);
         }
     }
     }

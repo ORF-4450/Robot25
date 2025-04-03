@@ -22,7 +22,7 @@ import Team4450.Robot25.subsystems.DriveBase;
  */
 
 public class DriveToAlgaeTag extends Command {
-    PIDController rotationController = new PIDController(0.03, 0, 0); // for rotating drivebase
+    PIDController rotationController = new PIDController(0.03, 0.004, 0); // for rotating drivebase
     PIDController translationController = new PIDController(0.08, 0.005, 0); // for moving drivebase in X,Y plane
     DriveBase robotDrive;
     PhotonVision photonVision;
@@ -97,7 +97,7 @@ public class DriveToAlgaeTag extends Command {
         Util.consoleLog("in[yaw=%f, pitch=%f] out[rot=%f, mov=%f]", target.getYaw(), target.getPitch(), rotation, movement);
 
         if (alsoDrive) {
-            robotDrive.driveRobotRelative(rotation, -movement, 0);
+            robotDrive.driveRobotRelative(0, -movement, rotation);
 
         } else {
             robotDrive.setTrackingRotation(rotation);
