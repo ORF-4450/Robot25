@@ -110,8 +110,8 @@ public class DriveBase extends SubsystemBase {
   private double currentTranslationMag = 0.0;
 
   // multiplied by X,Y translation and rotation outputs for "slow mode".
-  private double speedLimiter = 1;
-  private double rotSpeedLimiter = 1;
+  public double speedLimiter = 1;
+  public double rotSpeedLimiter = 1;
   
   // we limit magnitude changes in the positive direction (acceleration), but allow crazy high rates in negative direction
   // (deceleration). this has effect that deceleration is instant but acceleration is limited
@@ -122,7 +122,7 @@ public class DriveBase extends SubsystemBase {
   private double prevTime = WPIUtilJNI.now() * 1e-6;
 
 
-  private boolean slowModeEnabled = false;
+  public boolean slowModeEnabled = false;
 
   // Odometry class for tracking robot pose
   // SwerveDriveOdometry odometry = new SwerveDriveOdometry(
@@ -258,6 +258,7 @@ public class DriveBase extends SubsystemBase {
     setField2dModulePoses();
 
     AdvantageScope.getInstance().setSwerveModules(frontLeft, frontRight, rearLeft, rearRight);
+
   }
 
   /**
@@ -846,6 +847,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void enableSlowMode()
   {
+    slowModeEnabled = true;
     speedLimiter = DriveConstants.kSlowModeFactor;
     rotSpeedLimiter = DriveConstants.kRotSlowModeFactor;
 
@@ -859,6 +861,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void disableSlowMode()
   {
+    slowModeEnabled = false;
     Util.consoleLog();
 
     speedLimiter = 1;
@@ -868,6 +871,8 @@ public class DriveBase extends SubsystemBase {
   }
   public void enableTrackingSlowMode(){
 
+    slowModeEnabled = true;
+    magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
     speedLimiter = DriveConstants.kTrackingModeFactor;
     rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
   
@@ -877,7 +882,11 @@ public class DriveBase extends SubsystemBase {
   }
   
   public void disableTrackingSlowMode(){
-  
+    
+    slowModeEnabled = false;
+
+    magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate, Double.NEGATIVE_INFINITY, 0);
+
     Util.consoleLog();
   
     speedLimiter = 1;
@@ -889,22 +898,22 @@ public class DriveBase extends SubsystemBase {
    /**
    * Set max drivebase speed based on the height of the elevator. Height 0 will set speed to 1.
    */
-  public void setElevatorHeightSpeed(double height)
-  {
-    // Change to based on height
-    if (!slowModeEnabled && height == 0.99) {
-        speedLimiter = 0.45;
-        rotSpeedLimiter = 0.65;
-        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
-        updateDS();
-    }
-    if (!slowModeEnabled && height >= 1.0) {
-        speedLimiter = Math.pow(2, -(1.2 * height));
-        rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
-        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
-        updateDS();
-    }
-  }
+  // public void setElevatorHeightSpeed(double height)
+  // {
+  //   // Change to based on height
+  //   if (!slowModeEnabled && height == 0.99) {
+  //       speedLimiter = 0.45;
+  //       rotSpeedLimiter = 0.65;
+  //       Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+  //       updateDS();
+  //   }
+  //   if (!slowModeEnabled && height >= 1.0) {
+  //       speedLimiter = Math.pow(2, -(1.2 * height));
+  //       rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
+  //       Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+  //       updateDS();
+  //   }
+  // }
 
   /**
    * Sets an override rotation joystick value for tracking to objects or tags. Must call enableTracking first!
