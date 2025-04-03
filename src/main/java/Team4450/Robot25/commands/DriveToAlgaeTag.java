@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import Team4450.Robot25.subsystems.PhotonVision;
 
 import org.photonvision.targeting.PhotonTrackedTarget;
+import org.photonvision.targeting.PhotonPipelineResult;
+
+import java.util.Optional;
 
 import Team4450.Robot25.subsystems.DriveBase;
 
@@ -62,13 +65,27 @@ public class DriveToAlgaeTag extends Command {
     @Override
     public void execute() {
       // logic for chosing "closest" target in PV subsystem
-      PhotonTrackedTarget target = photonVision.getClosestTarget();
+      Optional<PhotonPipelineResult> pipeline = photonVision.getLatestResult();
+      //PhotonTrackedTarget target = photonVision.getLatestResult();
+      if (pipeline.isEmpty()) {
+          return;
+      }
+
+      if (!pipeline.get().hasTargets()) {
+        return;
+      }
+      PhotonTrackedTarget target = pipeline.get().getTargets().get(0);
+
+
+      if (target == null) {
+          Util.consoleLog("What why");
+      }
 
       if (target == null) {
         robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
         robotDrive.clearPPRotationOverride();
         return;
-    }
+      }
 
         double targetYaw = target.getYaw();
         double targetPitch = target.getPitch();
