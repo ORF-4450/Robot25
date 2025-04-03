@@ -16,7 +16,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -40,7 +39,6 @@ public class Elevator extends SubsystemBase {
     private double targetPosition = Double.NaN; //in units of Rotations
     private boolean isManualControl = false;
     private boolean isSlow = false;
-    public boolean limiter = false;
 
     private DriveBase driveBase;
 
@@ -136,35 +134,6 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putNumber("Elevator Speed", motorOutput);
         motorMain.set(motorOutput);
         SmartDashboard.putNumber("Elevator Amperage", motorMain.getOutputCurrent());
-
-        
-        // if (!driveBase.slowModeEnabled && this.getElevatorHeight() == 0.99) {
-        //     driveBase.speedLimiter = 0.45;
-        //     driveBase.rotSpeedLimiter = 0.65;
-        //     Util.consoleLog("%.2f %.2f", driveBase.speedLimiter, driveBase.rotSpeedLimiter);
-        // }
-
-        // height 0.59 L2 1 drive speed and rotation speed
-        // height 0.99 L3 0.48 drive speed and 0.68 rotation speed
-        // height 1.59 L4 0.2 drive speed and 0.4 rotation speed
-        if(limiter == true){
-            if (!driveBase.slowModeEnabled) {
-            driveBase.speedLimiter = Math.pow(2, -(3.1 * this.getElevatorHeight() - 0.65));
-            driveBase.rotSpeedLimiter = Math.pow(2, -(3.1 * this.getElevatorHeight() - 0.65)) + 0.2;
-            if (driveBase.speedLimiter > 1) {
-                driveBase.speedLimiter = 1;
-            }
-            if (driveBase.rotSpeedLimiter > 1) {
-                driveBase.rotSpeedLimiter = 1;
-            }
-            if (driveBase.speedLimiter < 0.2) {
-                driveBase.speedLimiter = 0.2;
-            }
-            if (driveBase.rotSpeedLimiter < 0.4) {
-                driveBase.rotSpeedLimiter = 0.4;
-            }
-        }
-    }
     }
 
     /**

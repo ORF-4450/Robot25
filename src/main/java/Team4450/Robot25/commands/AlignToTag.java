@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import Team4450.Robot25.subsystems.PhotonVision;
 
-import java.util.Optional;
-
-import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import Team4450.Robot25.subsystems.DriveBase;
@@ -36,6 +33,8 @@ public class AlignToTag extends Command {
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
 
+        // if (alsoDrive) addRequirements(robotDrive);
+
         SendableRegistry.addLW(rotationController, "AlignToTag Rotation PID");
     }
 
@@ -59,33 +58,16 @@ public class AlignToTag extends Command {
 
     @Override
     public void execute() {
-    
-      Optional<PhotonPipelineResult> pipeline = photonVision.getLatestResult();
-      //PhotonTrackedTarget target = photonVision.getLatestResult();
-      if (pipeline.isEmpty() || pipeline == null) {
-        robotDrive.drive(0, 0, 0, false);
-        return;
-      }
-
-      if(pipeline.get().getTargets().size() == 0){
-        robotDrive.drive(0, 0, 0, false);
-        return;
-      }
-
-      PhotonTrackedTarget target = pipeline.get().getTargets().get(0);
-
-      if (target == null) {
-          Util.consoleLog("What why");
-      }
+      // logic for chosing "closest" target in PV subsystem
+      PhotonTrackedTarget target = photonVision.getClosestTarget();
 
       if (target == null) {
         robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
         robotDrive.clearPPRotationOverride();
-        robotDrive.drive(0, 0, 0, false);
         return;
-      }
-        double targetYaw = target.getYaw();
+    }
 
+        double targetYaw = target.getYaw();
         double rotation = rotationController.calculate(targetYaw); // attempt to minimize
 
 
@@ -93,6 +75,7 @@ public class AlignToTag extends Command {
 
         if (alsoDrive) {
             robotDrive.driveRobotRelative(0, 0, rotation);
+            
 
         } else {
             robotDrive.setTrackingRotation(rotation);
