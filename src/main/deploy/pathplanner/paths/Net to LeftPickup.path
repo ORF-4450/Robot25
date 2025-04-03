@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.435802526130922,
-        "y": 7.788875227913172
+        "x": 7.598679577464789,
+        "y": 7.653169014084507
       },
       "isLocked": false,
       "linkedName": "Net"
     },
     {
       "anchor": {
-        "x": 1.6809253246753246,
-        "y": 7.424837662337662
+        "x": 1.0575889518992114,
+        "y": 7.099006835581519
       },
       "prevControl": {
-        "x": 7.347559931506854,
-        "y": 7.142829623287671
+        "x": 3.1781619148951195,
+        "y": 6.95222996091509
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,15 +30,15 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.3309178743961347,
       "rotationDegrees": -145.0
     }
   ],
   "constraintZones": [
     {
       "name": "Runway",
-      "minWaypointRelativePos": 0.5322033898305085,
-      "maxWaypointRelativePos": 0.9118644067796612,
+      "minWaypointRelativePos": 0.33,
+      "maxWaypointRelativePos": 0.86,
       "constraints": {
         "maxVelocity": 4.0,
         "maxAcceleration": 6.0,
@@ -50,7 +50,7 @@
     },
     {
       "name": "Slow ahh residential area",
-      "minWaypointRelativePos": 0.91,
+      "minWaypointRelativePos": 0.86,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 2.0,
