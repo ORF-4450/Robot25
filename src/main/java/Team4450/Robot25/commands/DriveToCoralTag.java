@@ -51,7 +51,7 @@ public class DriveToCoralTag extends Command {
         if(initialFieldRel)
             robotDrive.toggleFieldRelative();
         robotDrive.enableTracking();
-        robotDrive.enableTrackingSlowMode();
+        robotDrive.enableCoralTrackingSlowMode();
         
         rotationController.setSetpoint(0);
         rotationController.setTolerance(0.5);

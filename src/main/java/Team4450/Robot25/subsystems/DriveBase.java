@@ -869,12 +869,24 @@ public class DriveBase extends SubsystemBase {
 
     updateDS();
   }
-  public void enableTrackingSlowMode(){
+  public void enableCoralTrackingSlowMode(){
 
     slowModeEnabled = true;
     magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
     speedLimiter = DriveConstants.kTrackingModeFactor;
     rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
+  
+    Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+    updateDS();
+  
+  }
+
+  public void enableAlgaeTrackingSlowMode(){
+
+    slowModeEnabled = true;
+    magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
+    speedLimiter = DriveConstants.kAlgaeTrackingModeFactor;
+    rotSpeedLimiter = DriveConstants.kAlgaeRotTrackingModeFactor;
   
     Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
     updateDS();

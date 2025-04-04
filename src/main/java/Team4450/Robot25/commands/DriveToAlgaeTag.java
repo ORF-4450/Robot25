@@ -51,7 +51,7 @@ public class DriveToAlgaeTag extends Command {
         if(initialFieldRel)
             robotDrive.toggleFieldRelative();
         robotDrive.enableTracking();
-        robotDrive.enableTrackingSlowMode();
+        robotDrive.enableAlgaeTrackingSlowMode();
         
         rotationController.setSetpoint(0);
         rotationController.setTolerance(0.5);
