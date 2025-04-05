@@ -472,7 +472,7 @@ public class RobotContainer
 				new InstantCommand(() -> algaeManipulator.extendOut())));
 
 		new Trigger(() -> driverController.getPOV() == 0)
-			.onTrue(new RetractClimber(climber));
+    		.onTrue(new RetractClimber(climber));
 
         new Trigger(() -> driverController.getXButton())
             .onTrue(new IntakeAlgaeGround(elevatedManipulator));
@@ -543,8 +543,7 @@ public class RobotContainer
 		
 		//Moves the elevator and algae manipulator to the scoring position for the algae processor.
 		new Trigger(()-> utilityController.getPOV() == 270)
-		.onTrue(new ParallelCommandGroup(new Preset(elevatedManipulator, PresetPosition.ALGAE_PROCESSOR_SCORING), 
-		new InstantCommand(() -> elevatedManipulator.outtakeProcessor = true)));
+		.onTrue(new Preset(elevatedManipulator, PresetPosition.ALGAE_LOLLIPOP));
 			// new InstantCommand(() -> elevatedManipulator.scoreCoralInsteadOfAlgae = false)));
 		
 		// Moves the coral manipulator/elevator to the intake position for the coral station and runs the intake until it has coral.

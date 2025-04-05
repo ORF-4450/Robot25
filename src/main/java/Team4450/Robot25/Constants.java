@@ -154,6 +154,8 @@ public final class Constants
         public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.
         
         //TrackingMode Speed:
+        public static final double kAlgaeTrackingModeFactor = 0.25;
+        public static final double kAlgaeRotTrackingModeFactor = 0.25;
         public static final double kTrackingModeFactor = 0.20;
         public static final double kRotTrackingModeFactor = 0.20;
 

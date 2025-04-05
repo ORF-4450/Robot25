@@ -869,12 +869,24 @@ public class DriveBase extends SubsystemBase {
 
     updateDS();
   }
-  public void enableTrackingSlowMode(){
+  public void enableCoralTrackingSlowMode(){
 
     slowModeEnabled = true;
     magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
     speedLimiter = DriveConstants.kTrackingModeFactor;
     rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
+  
+    Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+    updateDS();
+  
+  }
+
+  public void enableAlgaeTrackingSlowMode(){
+
+    slowModeEnabled = true;
+    magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
+    speedLimiter = DriveConstants.kAlgaeTrackingModeFactor;
+    rotSpeedLimiter = DriveConstants.kAlgaeRotTrackingModeFactor;
   
     Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
     updateDS();
@@ -898,22 +910,22 @@ public class DriveBase extends SubsystemBase {
    /**
    * Set max drivebase speed based on the height of the elevator. Height 0 will set speed to 1.
    */
-  public void setElevatorHeightSpeed(double height)
-  {
-    // Change to based on height
-    if (!slowModeEnabled && height == 0.99) {
-        speedLimiter = 0.45;
-        rotSpeedLimiter = 0.65;
-        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
-        updateDS();
-    }
-    if (!slowModeEnabled && height >= 1.0) {
-        speedLimiter = Math.pow(2, -(1.2 * height));
-        rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
-        Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
-        updateDS();
-    }
-  }
+  // public void setElevatorHeightSpeed(double height)
+  // {
+  //   // Change to based on height
+  //   if (!slowModeEnabled && height == 0.99) {
+  //       speedLimiter = 0.45;
+  //       rotSpeedLimiter = 0.65;
+  //       Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+  //       updateDS();
+  //   }
+  //   if (!slowModeEnabled && height >= 1.0) {
+  //       speedLimiter = Math.pow(2, -(1.2 * height));
+  //       rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
+  //       Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+  //       updateDS();
+  //   }
+  // }
 
   /**
    * Sets an override rotation joystick value for tracking to objects or tags. Must call enableTracking first!

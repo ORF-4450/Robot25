@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import Team4450.Robot25.subsystems.PhotonVision;
 
+import java.util.Optional;
+
+import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import Team4450.Robot25.subsystems.DriveBase;
@@ -48,7 +51,7 @@ public class DriveToCoralTag extends Command {
         if(initialFieldRel)
             robotDrive.toggleFieldRelative();
         robotDrive.enableTracking();
-        robotDrive.enableTrackingSlowMode();
+        robotDrive.enableCoralTrackingSlowMode();
         
         rotationController.setSetpoint(0);
         rotationController.setTolerance(0.5);
@@ -62,13 +65,28 @@ public class DriveToCoralTag extends Command {
     @Override
     public void execute() {
       // logic for chosing "closest" target in PV subsystem
+    //   Optional<PhotonPipelineResult> pipeline = photonVision.getLatestResult();
+    //   //PhotonTrackedTarget target = photonVision.getLatestResult();
+    //   if (pipeline.isEmpty()) {
+    //       return;
+    //   }
+
+    //   if (!pipeline.get().hasTargets()) {
+    //     return;
+    //   }
+    //   PhotonTrackedTarget target = pipeline.get().getTargets().get(0);
       PhotonTrackedTarget target = photonVision.getClosestTarget();
+
+
+      if (target == null) {
+          Util.consoleLog("What why");
+      }
 
       if (target == null) {
         robotDrive.setTrackingRotation(Double.NaN); // temporarily disable tracking
         robotDrive.clearPPRotationOverride();
         return;
-    }
+      }
 
         double targetYaw = target.getYaw();
         double targetPitch = target.getPitch();

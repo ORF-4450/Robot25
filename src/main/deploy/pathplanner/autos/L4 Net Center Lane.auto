@@ -5,6 +5,18 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Raise to L4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -12,12 +24,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "MidStart To D-Right"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise to L4"
                 }
               }
             ]
@@ -30,7 +36,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 1.0
                 }
               },
               {
@@ -47,15 +53,28 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "D-Right to D-Algae"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Remove Algae L2"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.3
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "D-Right to D-Algae"
                 }
               }
             ]
@@ -99,62 +118,6 @@
           }
         },
         {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Net to E"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Remove Algae L3"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Remove Algae"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "E-Algae to Net"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Algae Net Scoring"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Outtake Algae"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 0.25
@@ -177,13 +140,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.15
+                        "waitTime": 0.25
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Net To End"
+                        "pathName": "D Net To End"
                       }
                     }
                   ]
