@@ -151,11 +151,10 @@ public class PhotonVision extends SubsystemBase
             closest = targets.get(0); // start with first target
 
             for (int i = 0; i < targets.size(); i++) {
-                if (targets.get(i).getPitch() < closest.getPitch()) // compare picth to closest
+                if (targets.get(i).getArea() > closest.getArea()) // compare picth to closest
                     // if it's closer that closest, replace closest with it!
                     closest = targets.get(i);
             }
-
             return closest;
         }
         else

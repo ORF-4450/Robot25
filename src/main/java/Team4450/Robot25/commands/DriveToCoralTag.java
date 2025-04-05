@@ -65,16 +65,17 @@ public class DriveToCoralTag extends Command {
     @Override
     public void execute() {
       // logic for chosing "closest" target in PV subsystem
-      Optional<PhotonPipelineResult> pipeline = photonVision.getLatestResult();
-      //PhotonTrackedTarget target = photonVision.getLatestResult();
-      if (pipeline.isEmpty()) {
-          return;
-      }
+    //   Optional<PhotonPipelineResult> pipeline = photonVision.getLatestResult();
+    //   //PhotonTrackedTarget target = photonVision.getLatestResult();
+    //   if (pipeline.isEmpty()) {
+    //       return;
+    //   }
 
-      if (!pipeline.get().hasTargets()) {
-        return;
-      }
-      PhotonTrackedTarget target = pipeline.get().getTargets().get(0);
+    //   if (!pipeline.get().hasTargets()) {
+    //     return;
+    //   }
+    //   PhotonTrackedTarget target = pipeline.get().getTargets().get(0);
+      PhotonTrackedTarget target = photonVision.getClosestTarget();
 
 
       if (target == null) {

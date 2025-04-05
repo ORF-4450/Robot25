@@ -163,7 +163,8 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
             
             case ALGAE_NET_SCORING:
-                endGoalElevatorHeight = 1.72;
+                // endGoalElevatorHeight = 1.72;
+                endGoalElevatorHeight = 1.62;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 if(hasAlgae() == true)
@@ -190,7 +191,7 @@ public class ElevatedManipulator extends SubsystemBase {
                 break;
 
             case ALGAE_GROUND_INTAKE:
-                endGoalElevatorHeight = 0;
+                endGoalElevatorHeight = 0.05;
                 endGoalCoralPivotStatus = false;
                 endGoalAlgaeExtendStatus = true;
                 endGoalAlgaePivotStatus = false;

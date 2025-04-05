@@ -22,8 +22,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //Elevator Subsystem that shouldn't be used on it's own, but rather as a part of the ElevatedManipulator Subsystem
 public class Elevator extends SubsystemBase {
-    private SparkFlex motorFollower = new SparkFlex(ELEVATOR_LEFT, MotorType.kBrushless);
-    private SparkFlex motorMain = new SparkFlex(ELEVATOR_RIGHT, MotorType.kBrushless);
+    private SparkFlex motorMain = new SparkFlex(ELEVATOR_LEFT, MotorType.kBrushless);
+    private SparkFlex motorFollower = new SparkFlex(ELEVATOR_RIGHT, MotorType.kBrushless);
     private SparkFlexConfig mainConfig = new SparkFlexConfig();
     private SparkFlexConfig followerConfig = new SparkFlexConfig();
 
@@ -63,7 +63,7 @@ public class Elevator extends SubsystemBase {
         resetEncoders();
 
         mainPID = new ProfiledPIDController(0.12, 0, 0, new Constraints(
-                (3.25 / -ELEVATOR_WINCH_FACTOR), 6 / -ELEVATOR_WINCH_FACTOR // velocity / acceleration
+                (0.8125/ -ELEVATOR_WINCH_FACTOR), 2 / -ELEVATOR_WINCH_FACTOR // velocity / acceleration
             ));
 
         // slowPID = new ProfiledPIDController(0.12, 0, 0, new Constraints(
@@ -89,8 +89,8 @@ public class Elevator extends SubsystemBase {
         if (Double.isNaN(targetPosition)) return;
 
         //SOFT LIMITS
-        if (targetPosition < -59) 
-            targetPosition = -59;
+        if (targetPosition < -52) 
+            targetPosition = -52;
         if (targetPosition > 0) 
             targetPosition = 0; 
 
@@ -127,7 +127,7 @@ public class Elevator extends SubsystemBase {
             motorOutput = Util.clampValue(nonclamped * slowDownFactor, 0.15);
             SmartDashboard.putString("Elevator Position Phase", "Slowing Down Elevator");
         } else {
-            motorOutput = Util.clampValue(nonclamped, 0.80);
+            motorOutput = Util.clampValue(nonclamped, 0.40);
             // motorOutput = Util.clampValue(nonclamped, 0.40);
 
         }
