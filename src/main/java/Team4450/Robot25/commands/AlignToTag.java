@@ -36,7 +36,7 @@ public class AlignToTag extends Command {
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
 
-        if (alsoDrive) addRequirements(robotDrive);
+        // if (alsoDrive) addRequirements(robotDrive);
 
         SendableRegistry.addLW(rotationController, "AlignToTag Rotation PID");
     }

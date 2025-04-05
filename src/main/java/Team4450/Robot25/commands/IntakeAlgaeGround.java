@@ -27,7 +27,6 @@ public class IntakeAlgaeGround extends Command {
 
     public void execute(){
         switch(state){
-
             case MOVING:
                 if(elevatedManipulator.executeSetPosition(PresetPosition.ALGAE_GROUND_INTAKE)) { //Checks if the manipulator and elevator are in the ground intake position
                     state = State.INTAKE_ALGAE; //Then move to the intake state

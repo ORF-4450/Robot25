@@ -230,8 +230,8 @@ public class RobotContainer
 	    // with AprilTags (if it sees them). (As well as vision simulator)
 
 		// pvAlgaeTagCamera.setDefaultCommand(new UpdateVisionPose(driveBase, pvAlgaeTagCamera));
-		pvCoralTagCameraLeft.setDefaultCommand(new UpdateVisionPose(driveBase, pvCoralTagCameraLeft));
-		pvCoralTagCameraRight.setDefaultCommand(new UpdateVisionPose(driveBase, pvCoralTagCameraRight));
+		// pvCoralTagCameraLeft.setDefaultCommand(new UpdateVisionPose(driveBase, pvCoralTagCameraLeft));
+		// pvCoralTagCameraRight.setDefaultCommand(new UpdateVisionPose(driveBase, pvCoralTagCameraRight));
 
 		// Set the default drive command. This command will be scheduled automatically to run
 		// every teleop period and so use the gamepad joy sticks to drive the robot. 
@@ -466,7 +466,7 @@ public class RobotContainer
 		// // 	.andThen(new RotateToPose(driveBase, true, true))
 		// // 	.andThen(new GoToPose(driveBase, true, true)));
 		
-		new Trigger(() -> driverController.getBButton())
+		new Trigger(() -> driverController.getBButton() && climber.pistonStatus() == false)
 			.onTrue(new ParallelCommandGroup(new InstantCommand(() -> elevatedManipulator.executeSetPosition(PresetPosition.CLIMB), elevatedManipulator),
                 new ExtendClimber(climber),
 				new InstantCommand(() -> algaeManipulator.extendOut())));
@@ -483,13 +483,19 @@ public class RobotContainer
 		new Trigger(() -> driverController.getRightBumperButton())
 			.whileTrue(new DriveToAlgaeTag(driveBase, pvAlgaeTagCamera, true, true));
 
-		new Trigger(() -> driverController.getLeftTrigger())
-			.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraRight, true, true)
-			.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true)));
+		// new Trigger(() -> driverController.getLeftTrigger())
+		// 	.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraRight, true, true)
+		// 	.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true)));
+
+		// new Trigger(() -> driverController.getRightTrigger())
+		// 	.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraLeft, true, true)
+		// 	.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true)));
 
 		new Trigger(() -> driverController.getRightTrigger())
-			.whileTrue(new AlignToTag(driveBase, pvCoralTagCameraLeft, true, true)
-			.andThen(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true)));
+			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraLeft, true, true));
+
+		new Trigger(() -> driverController.getLeftTrigger())
+			.whileTrue(new DriveToCoralTag(driveBase, pvCoralTagCameraRight, true, true));
         
 			// new Trigger(() -> driverController.getYButton())
         //     .onTrue(new InstantCommand(() -> algaeGroundIntake.stop()));		

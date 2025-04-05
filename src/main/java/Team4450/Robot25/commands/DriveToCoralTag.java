@@ -36,7 +36,7 @@ public class DriveToCoralTag extends Command {
         this.photonVision = photonVision;
         this.alsoDrive = alsoDrive;
 
-        if (alsoDrive) addRequirements(robotDrive);
+        // if (alsoDrive) addRequirements(robotDrive);
 
         SendableRegistry.addLW(translationController, "DriveToCoralTag Translation PID");
         SendableRegistry.addLW(rotationController, "DriveToCoralTag Rotation PID");
