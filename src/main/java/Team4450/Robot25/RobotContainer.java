@@ -48,6 +48,8 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -697,7 +699,7 @@ public class RobotContainer
 	}
 		
 	/**
-	 * Reset sticky faults in PDP and PCM and turn compressor on/off as
+	 * Reset sticky faults in PDP and turn compressor on/off as
 	 * set by switch on DS.
 	 */
 	public void resetFaults()

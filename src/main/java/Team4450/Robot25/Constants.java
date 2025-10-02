@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "VR25-03.02.25";
+	public static String		PROGRAM_NAME = "VR25-10.02.25";
 
 	public static Robot			robot;
 
@@ -165,11 +165,12 @@ public final class Constants
         public static final double kRotationalSlewRate = Double.POSITIVE_INFINITY; // percent per second (1 = 100%).
 
         // Chassis configuration:
-
+      
         // Distance between centers of right and left wheels
         public static final double kTrackWidth = Units.inchesToMeters(23.5);
 
         // Distance between front and back wheel centers
+      
         public static final double kWheelBase = Units.inchesToMeters(23.5);
 
         // Drive base radius in meters. Distance from robot center to furthest module.
