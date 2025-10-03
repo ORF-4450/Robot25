@@ -183,6 +183,9 @@ public class Robot extends TimedRobot
 
     LCD.printLine(LCD_1, "Mode: Disabled");
 
+    // This is here because Pathplanner Autos don't stop the robot when it is disabled.
+    RobotContainer.driveBase.stop();
+
     // Reset driver station LEDs.
 
     RobotContainer.shuffleBoard.resetLEDs();

@@ -5,11 +5,11 @@
 
 package Team4450.Robot25.subsystems;
 
+import static Team4450.Robot25.Constants.DEG_INCR_MULTIPLIER;
 import static Team4450.Robot25.Constants.alliance;
 
 import java.util.Optional;
 
-import com.ctre.phoenix.unmanaged.Unmanaged;
 import com.studica.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -27,11 +27,6 @@ import Team4450.Robot25.AdvantageScope;
 import Team4450.Robot25.Constants;
 import Team4450.Robot25.RobotContainer;
 import Team4450.Lib.Util;
-import Team4450.Lib.FXEncoder;
-import Team4450.Lib.Talon_FX;
-
-import edu.wpi.first.hal.SimDouble;
-import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -43,7 +38,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -267,26 +261,16 @@ public class DriveBase extends SubsystemBase {
   @Override
   public void simulationPeriodic()
   {
-    // We are not using this call now because the REV simulation does not work
-    // correctly. Will leave the code in place in case this issue gets fixed.
-    //if (robot.isEnabled()) REVPhysicsSim.getInstance().run();
+    // Want to simulate navX gyro changing as robot turns.
+    // Information available is radians per second and this happens every robot period seconds.
+    // radians/2pi = 360 degrees so 1 degree per second is radians / 2pi.
+    // Increment is made every robot period so radian adder would be (rads/sec) * .02.
+    // Degree adder would be radian adder * 360/2pi or 57.2957795.
+    // So degree increment multiplier for rad/sec is period * 57.2957... = 1.1459155 (for .02 period)
 
-    // want to simulate navX gyro changing as robot turns
-    // information available is radians per second and this happens every 20ms
-    // radians/2pi = 360 degrees so 1 degree per second is radians / 2pi
-    // increment is made every 20 ms so radian adder would be (rads/sec) * (20/1000)
-    // degree adder would be radian adder * 360/2pi
-    // so degree increment multiplier is 360/100pi = 1.1459
+    simAngle += chassisSpeeds.omegaRadiansPerSecond * DEG_INCR_MULTIPLIER; 
 
-    double temp = chassisSpeeds.omegaRadiansPerSecond * 1.1459155;
-
-    simAngle += temp;
-
-    RobotContainer.navx.setSimAngle(simAngle);
-
-    Unmanaged.feedEnable(20);
-
-    //talon_FX.simulationPeriodic();
+    RobotContainer.navx.setSimAngle(simAngle); // This is total angle we have rotated.
   }
 
   /**

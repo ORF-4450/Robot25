@@ -40,6 +40,12 @@ public final class Constants
 	    
     public static String                     functionMarker = "-".repeat(30);
 
+    public static final double  ROBOT_PERIOD_SEC = .02;
+    public static final int     ROBOT_PERIOD_MS = 20;
+
+    // See DriveBase SimulationPeriodic for an explanation of this constant.
+    public static final double  DEG_INCR_MULTIPLIER = ROBOT_PERIOD_SEC * 57.2957795;
+
 	// Non-drive base motor controller port assignments
     public static final int     CORAL_MANIPULATOR = 9;
     public static final int     ALGAE_MANIPULATOR = 10;

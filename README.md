@@ -16,6 +16,15 @@ Operates the robot **USS LEVIATHAN** for FRC game **REEFSCAPE**.
 ### If RobotLib gets an update:
 Download the RobotLib.json file from the RobotLib Github repo and drop it into the vendordeps folder inside the project folder. Build the project.
 ************************************************************************************************************
+Version 25.3
+
+*   Fixed failure to obey disable during PathPlanner Autos.
+*   Rewrote simulation of REV motors in drive base to use built-in sim support.
+*   Improved simulation of Navx.
+*   Modified build.gradle to clear the deploy directory on RobRio.
+
+R. Corn, October 3, 2025
+
 Version 25.2
 
 *   Vikaat's code as of end of DCMP.

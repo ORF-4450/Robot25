@@ -16,7 +16,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -93,8 +92,6 @@ public class Elevator extends SubsystemBase {
             targetPosition = -52;
         if (targetPosition > 0) 
             targetPosition = 0; 
-
-        
         
         // Calculate the distance to the target
         double distanceToTarget = Math.abs(targetPosition - mainEncoder.getPosition());
@@ -132,11 +129,9 @@ public class Elevator extends SubsystemBase {
 
         }
         
-
         SmartDashboard.putNumber("Elevator Speed", motorOutput);
         motorMain.set(motorOutput);
         SmartDashboard.putNumber("Elevator Amperage", motorMain.getOutputCurrent());
-
         
         // if (!driveBase.slowModeEnabled && this.getElevatorHeight() == 0.99) {
         //     driveBase.speedLimiter = 0.45;
@@ -163,9 +158,9 @@ public class Elevator extends SubsystemBase {
             if (driveBase.rotSpeedLimiter < 0.4) {
                 driveBase.rotSpeedLimiter = 0.4;
             }
-            Util.consoleLog("%.2f %.2f", driveBase.speedLimiter, driveBase.rotSpeedLimiter);
         }
-    }
+            //Util.consoleLog("%.2f %.2f", driveBase.speedLimiter, driveBase.rotSpeedLimiter);
+        }
     }
 
     /**
