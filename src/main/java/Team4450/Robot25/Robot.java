@@ -218,6 +218,7 @@ public class Robot extends TimedRobot
     robotContainer.getMatchInformation();
 
     robotContainer.resetFaults();
+    RobotContainer.elevator.limiter = false;
     
     // RobotContainer function determines which auto command is selected to run.
 
@@ -263,8 +264,13 @@ public class Robot extends TimedRobot
     SmartDashboard.putBoolean("Teleop Mode", true);
 
     robotContainer.resetFaults();
-    robotContainer.fixPathPlannerGyro();
+    robotContainer.fixPathPlannerGyro(); // Because of this only use blue alliance during practice
 
+    RobotContainer.algaeManipulator.intialize();
+    RobotContainer.algaeGroundIntake.intialize();
+    RobotContainer.coralManipulator.intialize();
+    RobotContainer.driveBase.setFieldRelative(true);
+    RobotContainer.elevator.limiter = true;
     // Driving handled by DriveCommand which is default command for the DriveBase.
     // Other commands scheduled by joystick buttons.
 

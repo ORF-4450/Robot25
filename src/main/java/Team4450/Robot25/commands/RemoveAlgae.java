@@ -1,0 +1,59 @@
+package Team4450.Robot25.commands;
+
+import Team4450.Lib.Util;
+import Team4450.Robot25.subsystems.ElevatedManipulator;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class RemoveAlgae extends Command {
+    // private final AlgaeManipulator algaeManipulator;
+    private final ElevatedManipulator elevatedManipulator;
+
+    private static enum State{REMOVE, HOLD};
+    private State state = State.REMOVE;
+
+    double startTime;
+    public RemoveAlgae(ElevatedManipulator elevatedManipulator){
+        // this.algaeManipulator = algaeManipulator;
+        this.elevatedManipulator = elevatedManipulator;
+    }
+
+    public void initialize(){
+        state = State.REMOVE;
+        SmartDashboard.putString("Algae Manipulator Status", state.name());
+        Util.consoleLog("Remove Algae Initialized");
+        // startTime = Util.timeStamp();
+    }
+
+    public void execute(){
+        switch(state){
+            case REMOVE:
+                elevatedManipulator.algaeManipulator.startIntaking();
+
+                if(elevatedManipulator.algaeManipulator.hasAlgae())
+                    state = State.HOLD;
+            break;
+
+            // case RETURN:
+            //     if(elevatedManipulator.algaeManipulator.algaeExtendStatus == false)
+            //         state = State.STOP;
+            //     break;
+
+            case HOLD:
+                elevatedManipulator.algaeManipulator.holdAlgae();
+                SmartDashboard.putBoolean("Has Algae", elevatedManipulator.algaeManipulator.hasAlgae());
+                break;
+        }
+    }
+
+    public boolean isFinished(){
+        return state == State.HOLD;
+    }   
+
+    public void end(boolean interrupted){
+        Util.consoleLog("interrupted=%b", interrupted);
+        elevatedManipulator.algaeManipulator.holdAlgae();    
+        elevatedManipulator.intakeCoralInsteadOfAlgae = true; // Change to true to intake coral instead of algae
+    }
+}

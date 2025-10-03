@@ -1,10 +1,10 @@
-### Robot25
+### Robot25 (Vikaat's Fork)
 ----------------------------------------------------------------------------
 FRC Team 4450 2025 Robot Control program used in competition.
 
 This is the 2025 competition robot control program created by the Olympia Robotics Federation (FRC Team 4450). 
 
-Operates the robot **?** for FRC game **REEFSCAPE**.
+Operates the robot **USS LEVIATHAN** for FRC game **REEFSCAPE**.
 
 ----------------------------------------------------------------------------
 ## Instructions to setup development environment for VS Code
@@ -16,6 +16,12 @@ Operates the robot **?** for FRC game **REEFSCAPE**.
 ### If RobotLib gets an update:
 Download the RobotLib.json file from the RobotLib Github repo and drop it into the vendordeps folder inside the project folder. Build the project.
 ************************************************************************************************************
+Version 25.1
+
+*   Moving toward functional 2025 code base.
+
+4450 Software Team, February 21 2025
+
 Version 25.0
 
 *   First version of 2025 Base Code.

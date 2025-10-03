@@ -16,12 +16,17 @@ Port	Device			Description
 6       SparkMax        RL steer motor.
 7       SparkFlex       RR drive motor.
 8       SparkMax        RR steer motor.
+9       SparkFlex       Coral Motor.
+10      SparkFlex       Algae Motor.
+11      SparkFlex       Left Elevator Motor.
+12      SparkFlex       Right Elevator Motor.
+13      SparkFlex       Algae Ground Intake Motor.
 
 
 SparkMax CAN Limit Switches (Plugged into the controllers)
 Port    Type            Description
 -----------------------------------------------------------------------------------
-13      Forward         QMRN Beam Break note sensor for shooter.
+13               
 
 
 PWM Ports
@@ -41,9 +46,20 @@ Port	Device blk-pos	Description
 -----------------------------------------------------------------------------------
        
 
-PCM 1 Ports
+PCM 1 Ports (REV PH)
 Port	Device blk-pos	Description
 -----------------------------------------------------------------------------------
+0       ValveDA   0     CORAL_PIVOT_A
+1       ValveDA   0     CORAL_PIVOT_B
+2       ValveDA   1     ALGAE_EXTEND_A
+3       ValveDA   1     ALGAE_EXTEND_B
+4       ValveDA   2     ALGAE_PIVOT_A
+5       ValveDA   2     ALGAE_PIVOT_B
+6       ValveDA   3     ALGAE_GROUND_A
+7       ValveDA   3     ALGAE_GROUND_B
+8       
+9
+10
 
 
 Digital I/O Ports
@@ -72,25 +88,26 @@ X Axis                  Rotate.
 Driver GamePad - Buttons
 Button Name				Function
 -----------------------------------------------------------------------------------
-LEFT_TRIGGER            
-RIGHT_TRIGGER           
+LEFT_TRIGGER            Drive To Left Branch
+RIGHT_TRIGGER           Drive to Right Branch
 LEFT_BUMPER             Slow Mode (hold)
 RIGHT_BUMPER            Alternate Rotation (hold + R Stick)
-POV_0
-POV_90                   
-POV_180
-POV_270                 
+POV_0 (DPAD UP)
+POV_90 (DPAD RIGHT)     Park Wheels      
+POV_180 (DPAD DOWN)
+POV_270 (DPAD LEFT)             
 BACK                    Toggle Field Relative
 START                   Reset Gyro
-A                       
-B                       [reserved]
-X                       Park Wheels
+A                       Brake Mode
+B                       
+X                       Drive To Center of AprilTag
 Y                       
 
 
 Utility GamePad - Left Joystick
 Button Name				Function
 -----------------------------------------------------------------------------------
+Y Axis                  Move Elevator Up/Down
 
 
 Utility GamePad - Right Joystick
@@ -101,19 +118,19 @@ Button Name				Function
 Utility GamePad - Buttons
 Button Name				Function
 -----------------------------------------------------------------------------------
-A                       
-B                       
-X                       
-Y                       
-LEFT_TRIGGER            
-RIGHT_TRIGGER           
-LEFT_BUMPER             
+A                       Set L2 Coral Scoring Position                     
+B                       Set L3 Coral Scoring Position
+X                       Set L1 Coral Scoring Position
+Y                       Set L4 Coral Scoring Position
+LEFT_TRIGGER            Intake Coral/Algae
+RIGHT_TRIGGER           Outtake Coral/Algae
+LEFT_BUMPER             Intake Algae (Ground)
 RIGHT_BUMPER            
-BACK                    
-POV_0                   
-POV_90                  
-POV_180                 
-POV_270                 
+BACK                    Set Elevator and all Manipulators to RESET Position
+POV_0                   Set L3 Algae Removing Position
+POV_90                  Set Net Algae Scoring Position
+POV_180                 Set L2 Algae Removing Position
+POV_270                 Set Processor Algae Scoring Position
 
 
 Dashboard Indicators/Controls
@@ -133,6 +150,9 @@ Auto Program            Chooser         List of autonomous programs.
 Autonomous active       boolean         True if any auto program is active.
 Field Oriented          boolean         True when swerve drive is in field orientation mode.
 Alternate Drive         boolean         True when alternate driving mode is enabled.
+CompressorEnabled       boolean         True when/to enable compresspr.
+LowPressure             boolean         Toggles true/false when pressure is low.
+AirPressure             numeric         Actual high side air pressure.
 
 Drive Base gearbox ratios: MaxSwerve 12 tooth pinion for approx 16.1 f/s or 4.9 m/s.
 

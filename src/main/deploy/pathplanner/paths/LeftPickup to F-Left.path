@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.0575889518992114,
+        "y": 7.099006835581519
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2921994357638873,
+        "y": 5.602914134837963
+      },
+      "isLocked": false,
+      "linkedName": "LeftPickup"
+    },
+    {
+      "anchor": {
+        "x": 3.2350929542824063,
+        "y": 6.011528501157407
+      },
+      "prevControl": {
+        "x": 1.5012099752383792,
+        "y": 6.76202631863671
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.5,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -153.99614475099776
+  },
+  "reversed": false,
+  "folder": "Pickups To Reefs (good)",
+  "idealStartingState": {
+    "velocity": 1.0,
+    "rotation": -145.0
+  },
+  "useDefaultConstraints": false
+}

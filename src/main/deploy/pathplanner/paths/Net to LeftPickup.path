@@ -1,0 +1,86 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.4292570891203695,
+        "y": 5.554756221064816
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.598679577464789,
+        "y": 7.653169014084507
+      },
+      "isLocked": false,
+      "linkedName": "Net"
+    },
+    {
+      "anchor": {
+        "x": 1.0575889518992114,
+        "y": 7.099006835581519
+      },
+      "prevControl": {
+        "x": 3.1781619148951195,
+        "y": 6.95222996091509
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftPickup"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.3309178743961347,
+      "rotationDegrees": -145.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Runway",
+      "minWaypointRelativePos": 0.33,
+      "maxWaypointRelativePos": 0.86,
+      "constraints": {
+        "maxVelocity": 4.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Slow ahh residential area",
+      "minWaypointRelativePos": 0.86,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 4.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -145.0
+  },
+  "reversed": false,
+  "folder": "Net to Pickup (good)",
+  "idealStartingState": {
+    "velocity": 1.0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": false
+}

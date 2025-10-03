@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF25-02.18.25";
+	public static String		PROGRAM_NAME = "VR25-10.02.25";
 
 	public static Robot			robot;
 
@@ -41,16 +41,81 @@ public final class Constants
     public static String                     functionMarker = "-".repeat(30);
 
 	// Non-drive base motor controller port assignments
+    public static final int     CORAL_MANIPULATOR = 9;
+    public static final int     ALGAE_MANIPULATOR = 10;
+    public static final int     ALGAE_GROUND_INTAKE = 13;
+    public static final int     CORAL_GROUND_PIVOT = 14;
+    public static final int     CORAL_GROUND_INTAKE = 15;
+    public static final int     CORAL_GROUND_FEED = 16;
 
+    //ELEVATOR:
+    public static final int     ELEVATOR_LEFT = 11;
+    public static final int     ELEVATOR_RIGHT = 12;
+
+    // ELEVATOR_WINCH_FACTOR is a conversion factor from motor rotations to meters of height change.
+    // It is multiplied by the native rotations of the motor shaft to get the height change in the MAXSpline shaft since startup or the last encoder reset.
+    // MATH EXPLANATION (2025):
+    // Gear Reduction of Gearbox: 38:8 (38 rotations of the motor shaft rotates the spool 9 times).
+    // To solve for the winch factor, you need the ratio of winch rotations to motor rotations.
+    // So, 38 motor rotations / 9 winch rotations, and you need to take the reciprocal to get the winch factor.
+    // The ratio is (1.0 / (38.0 / 9.0)) spool rotations for every turn of the shaft.
+    // Multiply by 2π for radians traveled/angular displacement and by the spool radius in meters to get linear displacement.
+    // The spool radius is 0.875 inches, which is 0.022225 meters (source: looked it up).
+    // The factor is negative, likely because the gears swap rotation direction, but this is not a significant issue.
+    public static final double  ELEVATOR_WINCH_FACTOR = (-1.0 / (38.0 / 9.0)) * (2 * Math.PI) * 0.022225; //Changed to 2025 Value!
+    
+    // Pneumatic valve controller port assignments.
+	public static final int		COMPRESSOR = 1;
+	public static final int		CORAL_PIVOT = 0;		
+	public static final int		ALGAE_EXTEND = 2;	
+	public static final int		ALGAE_PIVOT = 4;
+    public static final int		ALGAE_GROUND = 6;   
+    public static final int		CLIMBER_PISTON = 8;
+    
     // CAMERAS 
 
-    public static Transform3d   CAMERA_SHOOTER_TRANSFORM = new Transform3d(
-        new Translation3d(0, 0, 0.5207), // change last value to height in METERS of lens
-        new Rotation3d(0, Math.toRadians(-10), Math.toRadians(180)) // keep the 180, the -10 is the camera angle (negative!)
+    public static Transform3d   CORAL_CAMERA_TAG_LEFT_TRANSFORM = new Transform3d(
+        new Translation3d(-0.15, 0.18, 0.31), // change last value to height in METERS of lens
+        new Rotation3d(0, 0, Math.toRadians(90)) // keep the 180, the -10 is the camera angle (negative!)
     );
 
+    public static Transform3d   CORAL_CAMERA_TAG_RIGHT_TRANSFORM = new Transform3d(
+        new Translation3d(0.22, 0.18, 0.27), // change last value to height in METERS of lens
+        new Rotation3d(0, 0, Math.toRadians(90)) // keep the 180, the -10 is the camera angle (negative!)
+    );
+
+    public static Transform3d ALGAE_CAMERA_TAG_TRANSFORM = new Transform3d(
+        new Translation3d(0.18, 0.21, 0.60),
+        new Rotation3d(0, 0, Math.toRadians(90))
+    );
+
+    public static double robotCoralLongitudinalScoringDistance = 0.0; // 0.3 meters distance from the tag for scoring coral.
+    public static double robotCoralLateralScoringOffset = 0.0; // Added to the target position if scoring left and subtracted if scoring right.
+
+    public static double maxVisionDistance = 3.0; // meters
+    
+    public static double xCameraOffset = 0;
+    public static double yCameraOffset = 0;
+
     // the names of the cameras in the PhotonVision software
-    public static String        CAMERA_SHOOTER = "Arducam_OV9281_USB_Camera (1)";
+    public static String        ALGAE_CAMERA_TAG = "Arducam_OV9782_USB_Camera";
+    public static String        CORAL_CAMERA_TAG_LEFT = "HD_USB_Camera";
+    public static String        CORAL_CAMERA_TAG_RIGHT = "CORAL_RIGHT_USB";
+
+    //Limelight Constants:
+    public static final double X_REEF_ALIGNMENT_P = 0.05;
+	public static final double Y_REEF_ALIGNMENT_P = 0.05;
+	public static final double ROT_REEF_ALIGNMENT_P = 0.03;
+
+	public static final double ROT_SETPOINT_REEF_ALIGNMENT = 0;  // Rotation (Needs to be changed to our value)
+	public static final double ROT_TOLERANCE_REEF_ALIGNMENT = 1;
+	public static final double X_SETPOINT_REEF_ALIGNMENT = -0.34;  // Vertical pose (Needs to be changed to our value)
+	public static final double X_TOLERANCE_REEF_ALIGNMENT = 0.02;
+	public static final double Y_SETPOINT_REEF_ALIGNMENT = 0.16;  // Horizontal pose (Needs to be changed to our value)
+	public static final double Y_TOLERANCE_REEF_ALIGNMENT = 0.02; 
+
+	public static final double DONT_SEE_TAG_WAIT_TIME = 1;
+	public static final double POSE_VALIDATION_TIME = 0.3;
 
     public static final int     REV_PDB = 20;
     public static final int     CTRE_CANDLE = 21;
@@ -59,11 +124,6 @@ public final class Constants
 	public static final int		DRIVER_PAD = 0, UTILITY_PAD = 1;
     public static final double  DRIVE_DEADBAND = 0.1, ROTATION_DEADBAND = .1;
 
-	// Pneumatic valve controller port assignments.
-	public static final int		COMPRESSOR = 1; // 0 for CTRE, 1 for REV.
-	  
-	// Analog Input port assignments.
-	
 	// LCD display line number constants showing class where the line is set.
 	public static final int		LCD_1 = 1;	    // Robot, Auto Commands.
 	public static final int		LCD_2 = 2;	    // Swerve Drive command.
@@ -83,20 +143,34 @@ public final class Constants
         public static final double kMaxSpeedMetersPerSecond = 4.92;  // 1.0; Speed limited for demos.
         //public static final double kMaxSpeedMetersPerSecond = ModuleConstants.kDriveWheelFreeSpeedRps; // max speed
         public static final double kMaxAngularSpeed = 1.5 * (2 * Math.PI); // radians per second (1.5 rots / sec)
-        public static final double kSlowModeFactor = .50; // 50% of normal.
+        public static final double kSlowModeFactor = .20; // 50% of normal.
         public static final double kRotSlowModeFactor = .20; // 20% of normal.
+
+        // For vision testing only!!!
+        //public static final double kSlowModeFactor = .05; // 50% of normal.
+        //public static final double kRotSlowModeFactor = .10; // 20% of normal.
+                                                             //
+        public static final double kElevatorModeFactor = .030; // 0.03% of normal.
+        public static final double kRotElevatorModeFactor = .020; // 0.02% of normal.
+        
+        //TrackingMode Speed:
+        public static final double kAlgaeTrackingModeFactor = 0.25;
+        public static final double kAlgaeRotTrackingModeFactor = 0.25;
+        public static final double kTrackingModeFactor = 0.20;
+        public static final double kRotTrackingModeFactor = 0.20;
 
         // these were 1.2, 1.8, 2.0 in REV base code. Controls drivebase slew limiting.
         public static final double kDirectionSlewRate = Double.POSITIVE_INFINITY; // radians per second.
-        public static final double kMagnitudeSlewRate = 1; // percent per second (1 = 100%).
+        public static final double kMagnitudeSlewRate = 0.60; // percent per second (1 = 100%).
         public static final double kRotationalSlewRate = Double.POSITIVE_INFINITY; // percent per second (1 = 100%).
 
         // Chassis configuration:
-
-        // Distance between centers of right and left wheels in meters.
+      
+        // Distance between centers of right and left wheels
         public static final double kTrackWidth = Units.inchesToMeters(23.5);
 
-        // Distance between front and back wheel centersin meters.
+        // Distance between front and back wheel centers
+      
         public static final double kWheelBase = Units.inchesToMeters(23.5);
 
         // Drive base radius in meters. Distance from robot center to furthest module.
@@ -214,3 +288,4 @@ public final class Constants
   //-------------------- No student code above this line ------------------------------------------------------
 
 }
+;

@@ -87,7 +87,7 @@ public class DriveBase extends SubsystemBase {
   private final AHRS    navx = RobotContainer.navx.getAHRS();
 
   private double        simAngle; // used to drive navx sim.
-
+  
   private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
   private Pose2d        lastPose;
@@ -110,8 +110,8 @@ public class DriveBase extends SubsystemBase {
   private double currentTranslationMag = 0.0;
 
   // multiplied by X,Y translation and rotation outputs for "slow mode".
-  private double speedLimiter = 1;
-  private double rotSpeedLimiter = 1;
+  public double speedLimiter = 1;
+  public double rotSpeedLimiter = 1;
   
   // we limit magnitude changes in the positive direction (acceleration), but allow crazy high rates in negative direction
   // (deceleration). this has effect that deceleration is instant but acceleration is limited
@@ -120,6 +120,9 @@ public class DriveBase extends SubsystemBase {
   private SlewRateLimiter magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate, Double.NEGATIVE_INFINITY, 0);
   private SlewRateLimiter rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
   private double prevTime = WPIUtilJNI.now() * 1e-6;
+
+
+  public boolean slowModeEnabled = false;
 
   // Odometry class for tracking robot pose
   // SwerveDriveOdometry odometry = new SwerveDriveOdometry(
@@ -159,7 +162,6 @@ public class DriveBase extends SubsystemBase {
     // This thread will wait until NavX calibration is complete then reset the navx while 
     // this constructor continues to run. We do this because we can't reset during the
     // calibration process.
-
     new Thread(() -> {
       try {
         do {
@@ -256,6 +258,7 @@ public class DriveBase extends SubsystemBase {
     setField2dModulePoses();
 
     AdvantageScope.getInstance().setSwerveModules(frontLeft, frontRight, rearLeft, rearRight);
+
   }
 
   /**
@@ -293,6 +296,14 @@ public class DriveBase extends SubsystemBase {
    */
   public Pose2d getPose() {
     return odometry.getEstimatedPosition();
+  }
+
+  public Rotation2d getRotation2d() {
+    return getPose().getRotation();
+  }
+
+  public double getAngle(){
+    return this.getRotation2d().getDegrees();
   }
 
   /**
@@ -343,7 +354,6 @@ public class DriveBase extends SubsystemBase {
     ppGyroReversed = alliance == Alliance.Red;
     resetOdometry(pose);
   }
-
   /**
    * Must be called every teleop init. in Robot.java.
    * Fixes the issue(/feature?) where red alliance PathPlanner has an
@@ -511,6 +521,22 @@ public class DriveBase extends SubsystemBase {
     updateDS();
   }
 
+  public void driveFieldRelative(double xSpeed, double ySpeed, double rotSpeed) {
+    //// store the current state of field-relative toggle to restore later
+    //boolean previousState = fieldRelative;
+    fieldRelative = true;
+
+    updateDS();
+
+    // drive using the robot relative speeds/joystick values
+    drive(xSpeed, ySpeed, rotSpeed, false);
+
+    //// restore previous state of field-relative.
+    //fieldRelative = previousState;
+
+    updateDS();
+  }
+
   /**
    * Sets the wheels into an X formation to prevent movement.
    */
@@ -643,6 +669,15 @@ public class DriveBase extends SubsystemBase {
       Util.consoleLog();
 
       fieldRelative = !fieldRelative;
+
+      updateDS();
+  }
+
+  public void setFieldRelative(boolean fieldRelativeSet)
+  {
+      Util.consoleLog("%b", fieldRelativeSet);
+
+      fieldRelative = fieldRelativeSet;
 
       updateDS();
   }
@@ -784,8 +819,8 @@ public class DriveBase extends SubsystemBase {
   }
 
   /**
-   * Enables tracking: overrides the drive command's joystick rotation input
-   * and instead uses user provided values as emulated joystick input (to track to game peices or tags)
+   * Enables tracking: overrides the drive command's joystick translation & rotation input
+   * and instead uses user provided values as emulated joystick input (to track AprilTags)
    */
   public void enableTracking() {
     Util.consoleLog();
@@ -812,6 +847,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void enableSlowMode()
   {
+    slowModeEnabled = true;
     speedLimiter = DriveConstants.kSlowModeFactor;
     rotSpeedLimiter = DriveConstants.kRotSlowModeFactor;
 
@@ -825,6 +861,7 @@ public class DriveBase extends SubsystemBase {
    */
   public void disableSlowMode()
   {
+    slowModeEnabled = false;
     Util.consoleLog();
 
     speedLimiter = 1;
@@ -832,6 +869,63 @@ public class DriveBase extends SubsystemBase {
 
     updateDS();
   }
+  public void enableCoralTrackingSlowMode(){
+
+    slowModeEnabled = true;
+    magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
+    speedLimiter = DriveConstants.kTrackingModeFactor;
+    rotSpeedLimiter = DriveConstants.kRotTrackingModeFactor;
+  
+    Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+    updateDS();
+  
+  }
+
+  public void enableAlgaeTrackingSlowMode(){
+
+    slowModeEnabled = true;
+    magLimiter = new SlewRateLimiter((DriveConstants.kMagnitudeSlewRate)/10, Double.NEGATIVE_INFINITY, 0);
+    speedLimiter = DriveConstants.kAlgaeTrackingModeFactor;
+    rotSpeedLimiter = DriveConstants.kAlgaeRotTrackingModeFactor;
+  
+    Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+    updateDS();
+  
+  }
+  
+  public void disableTrackingSlowMode(){
+    
+    slowModeEnabled = false;
+
+    magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate, Double.NEGATIVE_INFINITY, 0);
+
+    Util.consoleLog();
+  
+    speedLimiter = 1;
+    rotSpeedLimiter = 1;
+  
+    updateDS();
+    
+  }
+   /**
+   * Set max drivebase speed based on the height of the elevator. Height 0 will set speed to 1.
+   */
+  // public void setElevatorHeightSpeed(double height)
+  // {
+  //   // Change to based on height
+  //   if (!slowModeEnabled && height == 0.99) {
+  //       speedLimiter = 0.45;
+  //       rotSpeedLimiter = 0.65;
+  //       Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+  //       updateDS();
+  //   }
+  //   if (!slowModeEnabled && height >= 1.0) {
+  //       speedLimiter = Math.pow(2, -(1.2 * height));
+  //       rotSpeedLimiter = Math.pow(2, -(1.2 * height)) + 0.2;
+  //       Util.consoleLog("%.2f %.2f", speedLimiter, rotSpeedLimiter);
+  //       updateDS();
+  //   }
+  // }
 
   /**
    * Sets an override rotation joystick value for tracking to objects or tags. Must call enableTracking first!
@@ -863,6 +957,63 @@ public class DriveBase extends SubsystemBase {
     odometry.addVisionMeasurement(pose, timestamp);
   }
 
+  private double goalPitch;
+  private double goalYaw;
+
+  private Pose2d targetPose = new Pose2d(0,0, new Rotation2d(0));
+  private int targetID = 0;
+  private boolean rotatedToTargetPose = false;
+
+  public void setTargetPose(Pose2d targetPose) {
+    this.targetPose = targetPose;
+    this.rotatedToTargetPose = false;
+    Util.consoleLog("target pose:" + targetPose.toString());
+  }
+
+  public Pose2d getTargetPose() {
+    if (this.targetPose == null) {
+      return new Pose2d(0, 0, new Rotation2d(0));
+    } 
+    else {
+      return this.targetPose;
+    }
+  }
+
+  public void setTargetID(int targetID){
+    this.targetID = targetID;
+  }
+
+  public int getTargetID(){
+    if(this.targetID == 0){
+      return 0;
+    }
+    else {
+      return this.targetID;
+    }
+  }
+
+  public void setRotatedToTargetPose(boolean isRotatedToTargetPose) {
+    this.rotatedToTargetPose = true;
+}
+
+  public boolean getRotatedToTargetPose() {
+    return this.rotatedToTargetPose;
+  }
+  public void setTargetPitch(double targetPitch){
+    goalPitch = targetPitch;
+  }
+
+  public double getTargetPitch(){
+    return goalPitch;
+  }
+
+  public void setTargetYaw(double targetYaw){
+    goalYaw = targetYaw;
+  }
+
+  public double getTargetYaw(){
+    return goalYaw;
+  }
   /**
    * Configures the PathPlanner auto generation of paths/autos by telling
    * PathPlaner about our the drive train.

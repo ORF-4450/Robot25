@@ -1,0 +1,59 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.954398765114775,
+        "y": 5.1216718677374296
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.496982522572171,
+        "y": 6.165938161384584
+      },
+      "isLocked": false,
+      "linkedName": "E Algae"
+    },
+    {
+      "anchor": {
+        "x": 7.4292570891203695,
+        "y": 5.554756221064816
+      },
+      "prevControl": {
+        "x": 5.573310810810811,
+        "y": 5.9222972972972965
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Net"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.22024983563445513,
+      "rotationDegrees": 149.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 2.8,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "Reefs to Net (good)",
+  "idealStartingState": {
+    "velocity": 1.0,
+    "rotation": 149.0
+  },
+  "useDefaultConstraints": false
+}

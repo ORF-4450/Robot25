@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.06332628404772,
+        "y": 0.47555789432010104
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.541066035665704,
+        "y": 2.125765328283475
+      },
+      "isLocked": false,
+      "linkedName": "Processor"
+    },
+    {
+      "anchor": {
+        "x": 3.792344300981833,
+        "y": 2.8295457268224835
+      },
+      "prevControl": {
+        "x": 4.467503655340254,
+        "y": 2.1521237436326883
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "B Algae"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -29.000000000000004
+  },
+  "reversed": false,
+  "folder": "Processor to reef (good)",
+  "idealStartingState": {
+    "velocity": 1.0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
