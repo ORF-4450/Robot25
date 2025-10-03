@@ -1,4 +1,4 @@
-### Robot25 (Vikaat's Fork)
+### Robot25
 ----------------------------------------------------------------------------
 FRC Team 4450 2025 Robot Control program used in competition.
 
@@ -16,6 +16,12 @@ Operates the robot **USS LEVIATHAN** for FRC game **REEFSCAPE**.
 ### If RobotLib gets an update:
 Download the RobotLib.json file from the RobotLib Github repo and drop it into the vendordeps folder inside the project folder. Build the project.
 ************************************************************************************************************
+Version 25.2
+
+*   Vikaat's code as of end of DCMP.
+
+4450 Software Team, October 3 2025
+
 Version 25.1
 
 *   Moving toward functional 2025 code base.
